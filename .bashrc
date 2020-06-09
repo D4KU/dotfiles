@@ -2,6 +2,9 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# init fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # set default editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -129,11 +132,12 @@ export DISPLAY=localhost:0.0
 # show when running in a shell spawned by ranger
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
-# init fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 # init fasd
 eval "$(fasd --init auto)"
 
+# init forgit
+source ~/.forgit/forgit.plugin.bash
+
 # init dotbare
 source ~/.dotbare/dotbare.plugin.bash
+
