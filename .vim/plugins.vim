@@ -63,7 +63,6 @@ silent! if plug#begin('~/.vim/plugged')
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine', { 'for': [ 'python', 'cs' ] }
-    let g:indentLine_color_term = 233
     let g:indentLine_char_list = ['│']
 
     " ============================== New motions =============================
@@ -270,7 +269,6 @@ silent! if plug#begin('~/.vim/plugged')
     Plug 'junegunn/limelight.vim'
         nnoremap <Leader>L :<C-U>Limelight!!<CR>
         xnoremap <Leader>L :<C-U>Limelight!!<CR>
-        let g:limelight_conceal_ctermfg = 238
 
     " Highlight bad word choices
     Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }

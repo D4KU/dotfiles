@@ -51,5 +51,8 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 noremap <Leader>y :call system('clip.exe', GetSelectedText())<CR>
 noremap <Leader>Y :call system('clip.exe', GetSelectedText())<CR>gvx
 
-nnoremap <F2> 72\|Bi"<CR>"<Esc>
-:execute 'nnoremap <F3> ' . &textwidth . '\|Bi"<CR>"<Esc>'
+" Break strings at textwidth
+nnoremap <Leader>b 72\|Bi"<CR>"<Esc>
+" :execute 'nnoremap <F3> ' . &textwidth . '\|Bi"<CR>"<Esc>'
+
+nnoremap <F2> :call ToggleLight()<CR>
