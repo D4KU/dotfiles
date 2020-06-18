@@ -9,7 +9,7 @@ try
 endtry
 
 " Background
-" hi clear Normal
+hi clear Normal
 hi Normal ctermbg=black
 
 " Status line

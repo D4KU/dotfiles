@@ -1,8 +1,3 @@
-let $RCFILES = "D:/Documents/Scripts/rcfiles/vim"
-source $RCFILES/commands.vim
-source $RCFILES/functions.vim
-source $RCFILES/mappings.vim
+let g:lightactive = 0
+let $RCFILES = "//wsl$/Ubuntu/home/david/.vim"
 source $RCFILES/plugins.vim
-source $RCFILES/settings.vim
-source $RCFILES/highlight.vim
-source $RCFILES/Rename2.vim

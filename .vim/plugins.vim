@@ -1,4 +1,10 @@
-silent! if plug#begin('~/.vim/plugged')
+if has('win32')
+    let $plugDir = "~/vimfiles/plugged"
+else
+    let $plugDir = "~/.vim/plugged"
+endif
+
+call plug#begin($plugDir)
     " =========================== Tool integration ===========================
     " Ranger integration
     Plug 'francoiscabrol/ranger.vim'
@@ -63,6 +69,7 @@ silent! if plug#begin('~/.vim/plugged')
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine', { 'for': [ 'python', 'cs' ] }
+    let g:indentLine_enabled = 0
     let g:indentLine_char_list = ['│']
 
     " ============================== New motions =============================
@@ -274,4 +281,3 @@ silent! if plug#begin('~/.vim/plugged')
     Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }
 
 call plug#end()
-endif

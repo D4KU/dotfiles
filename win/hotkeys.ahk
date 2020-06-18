@@ -1,14 +1,11 @@
 ﻿#c::Run calc
-#q::Run ubuntu run cd /mnt/d/Documents; . ~/.bashrc; tmux new-session vim
-#y::Run ubuntu run cd /mnt/d/Documents; tmux new-session python
-#m::Run explorer.exe shell:appsFolder\microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowsl runive.mail
-#a::Run ubuntu run tmux new-session vim "/mnt/d/Documents/Scripts/rcfiles/autohotkey/Hotkeys.ahk"
 #n::Run evernote
-#F1::Run ubuntu run cd /mnt/d; tmux
-#F2::Run ubuntu run cd /mnt/d; source ~/.bashrc; tmux new-session ranger
-#F3::Run ubuntu run cd /mnt/d; source ~/.bashrc; tmux new-session ranger $(wslpath -u '%clipboard%')
+#q::Run wt -p "Vim"
+#y::Run wt -p "Python"
+#F2::Run wt -p "Ranger"
+#F3::Run ubuntu run . ~/.profile; tmux new-session ranger $(wslpath -u '%clipboard%')
 #F4::Run ubuntu run wslpath -u '%clipboard%' | clip.exe
-#F5::Run ubuntu run source ~/.bashrc; tmux new-session ranger $(echo '%clipboard%' | sed "0,/./{/./!d}")
+#F5::Run ubuntu run . ~/.profile; tmux new-session ranger $(echo '%clipboard%' | sed "0,/./{/./!d}")
 
 #SingleInstance forceA
 SetTitleMatchMode, 2
