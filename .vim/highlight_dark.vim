@@ -22,7 +22,7 @@ hi TabLineSel ctermbg=235
 hi TabLineFill cterm=None ctermbg=None
 
 " End of Buffer
-hi EndOfBuffer ctermfg=black
+hi EndOfBuffer ctermfg=232
 
 " Vertical split bar
 hi VertSplit ctermfg=None ctermbg=None
