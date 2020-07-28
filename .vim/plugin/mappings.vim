@@ -1,3 +1,6 @@
+" Space in normal mode inserts an empty line above
+nnoremap <Space> O<Esc>j
+
 " Redo more intuitive
 nnoremap U <C-R>
 nnoremap <C-R> U
