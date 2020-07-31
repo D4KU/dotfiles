@@ -1,6 +1,11 @@
-set hlsearch
-set incsearch
-set smartcase
+set hlsearch        " Highlight search results
+set incsearch       " Show matches as search pattern is typed
+set smartcase       " Override 'ignore case' if search contains capitals
+
+" Easier navigate between tabs
+nnoremap K gT
+nnoremap J gt
+nnoremap zj J
 
 " Space in normal mode inserts an empty line above
 nnoremap <Space> O<Esc>j
@@ -22,7 +27,10 @@ nnoremap gk k
 nnoremap Q @q
 
 " Switch panes
-noremap <A-L> <C-W>w
+nnoremap <A-L> <C-W>w
+
+" Jump out of insert mode, move left, jump back in
+inoremap <A-L> <Esc>la
 
 " Swap semicolon and colon
 nnoremap ; :
@@ -34,9 +42,27 @@ vnoremap : ;
 nnoremap <A-J> <C-Y>
 nnoremap <A-K> <C-E>
 
-" Map Alt-L and Alt-H to resize vertical splits
-nnoremap <A-L> <C-W>5>
-nnoremap <A-H> <C-W>5<
-
 " Break strings at textwidth
 nnoremap <Leader>b 80\|Bi"<CR>"<Esc>
+
+" PeasyMotion
+" Whole viewport jump-to-word beginning mode:
+nnoremap <Tab> gS:vsc Tools.InvokePeasyMotion<CR>
+
+" Select text from current caret position to desired jump label (fwd and
+" reverse directions supported)
+nmap <Leader>; gS:vsc Tools.InvokePeasyMotionTextSelect<CR>
+
+"Jump to word beginning in current line
+nmap zw gS:vsc Tools.InvokePeasyMotionLineJumpToWordBegining<CR>
+"Jump to word ending in current line
+nmap ze gS:vsc Tools.InvokePeasyMotionLineJumpToWordEnding<CR>
+
+"Jump to any open document tab
+nmap <Leader>w gS:vsc Tools.InvokePeasyMotionJumpToDocumentTab<CR>
+
+"Jump to line beginning:
+nmap <Leader>l gS:vsc Tools.InvokePeasyMotionJumpToLineBegining<CR>
+
+"Two char search mode:
+nmap <Leader>c gS:vsc Tools.InvokePeasyMotionTwoCharJump<CR>
