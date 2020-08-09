@@ -13,7 +13,7 @@ fi
 source "/home/david/.fzf/shell/key-bindings.bash"
 
 
-######################## Opening files ######################## 
+######################## Opening files ########################
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
@@ -74,7 +74,7 @@ vg() {
 #   fi
 # }
 
-######################## Changing directory ######################## 
+######################## Changing directory ########################
 # fd - cd to selected directory
 fd() {
   local dir
@@ -130,13 +130,13 @@ cdf() {
    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
-######################## Command history ######################## 
+######################## Command history ########################
 # fh - repeat history
 fh() {
   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -r 's/ *[0-9]*\*? *//' | sed -r 's/\\/\\\\/g')
 }
 
-######################## Tmux ######################## 
+######################## Tmux ########################
 # tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
 # `tm` will allow you to select your tmux session via fzf.
 # `tm irc` will attach to the irc session (if it exists), else it will create it.
@@ -179,8 +179,10 @@ ftpane() {
   fi
 }
 
-######################## Fasd ######################## 
-# fasd & fzf change directory - open best matched file using `fasd` if given argument, filter output of `fasd` using `fzf` else
+######################## Fasd ########################
+# fasd & fzf change directory
+# open best matched file using `fasd` if given argument,
+# filter output of `fasd` using `fzf` else
 fv() {
     [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return
     local file

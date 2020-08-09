@@ -33,8 +33,15 @@ nnoremap j <C-Y>
 nnoremap k <C-E>
 
 " Map Alt-L and Alt-H to resize vertical splits
-nnoremap l <C-W>5>
-nnoremap h <C-W>5<
+nnoremap l <C-W>5<
+nnoremap h <C-W>5>
+
+" Move without leaving insert mode
+inoremap l <Esc>la
+inoremap h <Esc>i
+
+" Fix last spell error without leaving insert mode (with undo breaks)
+inoremap s <C-G>u<Esc>[s1z=`]a<C-G>u
 
 " Remap semicolon to colon in normal and visual mode
 nnoremap ; :
@@ -55,7 +62,7 @@ noremap <Leader>y :call system('clip.exe', GetSelectedText())<CR>
 noremap <Leader>Y :call system('clip.exe', GetSelectedText())<CR>gvx
 
 " Break strings at textwidth
-nnoremap <Leader>b 72\|Bi"<CR>"<Esc>
+nnoremap <Leader>s 72\|Bi"<CR>"<Esc>
 " :execute 'nnoremap <F3> ' . &textwidth . '\|Bi"<CR>"<Esc>'
 
 nnoremap <F2> :call ToggleLight()<CR>

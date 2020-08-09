@@ -229,11 +229,11 @@ call plug#begin($plugDir)
         " let g:ale_set_quickfix = 1
         let g:ale_echo_msg_format = '[%linter%] %s'
         let g:ale_linters = {
-            \ 'cs': ['OmniSharp']
+            \ 'cs': [ 'OmniSharp' ]
             \ }
         let g:ale_fixers = {
-            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \ 'python': ['autopep8', 'isort']
+            \ '*': [ 'remove_trailing_lines', 'trim_whitespace' ],
+            \ 'python': [ 'autopep8', 'isort' ]
             \ }
 
     " Wrap and unwrap function arguments
@@ -248,6 +248,12 @@ call plug#begin($plugDir)
     " Visual debugging
     " let g:vimspector_enable_mappings = 'HUMAN'
     " Plug 'puremourning/vimspector', { 'for': [ 'python' ] }
+
+    " Adjust indentation of pasted text
+    Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
+        let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
+        let g:pasta_paste_before_mapping = '[P'
+        let g:pasta_paste_after_mapping = ']P'
 
     " =========================== Writing prose ==============================
     " Preview markdown in browser

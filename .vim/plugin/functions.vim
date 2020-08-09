@@ -1,37 +1,3 @@
-" Add ranger as a file chooser in vim
-" Once you select one or more files, press enter and ranger will quit again
-" and vim will open the selected files.
-" Compatible with ranger 1.4.2 through 1.7.*
-"func! Ranger()
-"    let temp = tempname()
-"    " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
-"    " with ranger 1.4.2 through 1.5.0 instead.
-"    "exec 'silent !ranger --choosefile=' . shellescape(temp)
-"    if has("gui_running")
-"        exec 'silent !xterm -e ranger --choosefiles=' . shellescape(temp)
-"    else
-"        exec 'silent !ranger --choosefiles=' . shellescape(temp)
-"    endif
-"    if !filereadable(temp)
-"        redraw!
-"        " Nothing to read.
-"        return
-"    endif
-"    let names = readfile(temp)
-"    if empty(names)
-"        redraw!
-"        " Nothing to open.
-"        return
-"    endif
-"    " Edit the first item.
-"    exec 'edit ' . fnameescape(names[0])
-"    " Add any remaning items to the arg list/buffer list.
-"    for name in names[1:]
-"        exec 'argadd ' . fnameescape(name)
-"    endfor
-"    redraw!
-"endfunction
-
 " Copy text into Windows Clipboard
 func! GetSelectedText()
     normal gv"xy
@@ -63,3 +29,19 @@ function! Undoline()
     call setline(pos[1], old)
   endif
 endfunction
+
+" Print output in split instead of shell escape
+function! s:ExecuteInShell(command)
+  let command = join(map(split(a:command), 'expand(v:val)'))
+  let winnr = bufwinnr('^' . command . '$')
+  silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
+  setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+  echo 'Execute ' . command . '...'
+  silent! execute 'silent %!'. command
+  " silent! execute 'resize ' . line('$')
+  silent! redraw
+  silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+  silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
+  echo 'Shell command ' . command . ' executed.'
+endfunction
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
