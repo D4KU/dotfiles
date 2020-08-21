@@ -67,25 +67,29 @@ call plug#begin($plugDir)
     " Improved feedback on search
     Plug 'vim-scripts/IndexedSearch'
 
+    " Shader file highlighting
+    Plug 'vim-scripts/ShaderHighLight'
+
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine', { 'for': [ 'python', 'cs' ] }
-    let g:indentLine_enabled = 0
-    let g:indentLine_char_list = ['│']
+        let g:indentLine_enabled = 0
+        let g:indentLine_char_list = ['│']
 
-    " ============================== New motions =============================
-    " Camel case word motion
-    Plug 'chaoren/vim-wordmotion'
-        " Map original vim motions to meta key
-        nnoremap w w
-        nnoremap b b
-        nnoremap e e
-        nnoremap ge ge
+        " ============================== New motions =============================
+        " Camel case word motion
+        Plug 'chaoren/vim-wordmotion'
         " Jump over these signs:
-	let g:wordmotion_spaces = '_-./\(\)\[\]'
+        let g:wordmotion_spaces = '_-./\(\)\[\]'
+        " Map original vim motions to meta key
+        noremap w w
+        noremap b b
+        noremap e e
+        noremap ge ge
 
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
-        map <Leader> <Plug>(easymotion-prefix)
+        let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyz12;,.'["
+        map <Space> <Plug>(easymotion-overwin-w)
 
     " Motions based on indent depths
     Plug 'jeetsukumaran/vim-indentwise'
@@ -98,13 +102,13 @@ call plug#begin($plugDir)
     " ============================= New mappings =============================
     " Switch word under cursor if it matches a pattern
     Plug 'AndrewRadev/switch.vim'
-    let g:switch_custom_definitions =
-        \ [
-        \   ['if', 'else', 'elif'],
-        \   ['and', 'or'],
-        \   ['is', 'is not'],
-        \   ["'", '"'],
-        \ ]
+        let g:switch_custom_definitions =
+            \ [
+            \   ['if', 'else', 'elif'],
+            \   ['and', 'or'],
+            \   ['is', 'is not'],
+            \   ["'", '"'],
+            \ ]
 
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align'
@@ -130,17 +134,11 @@ call plug#begin($plugDir)
 
     " Exchange text
     Plug 'tommcdo/vim-exchange'
-        " Map Alt-L and Alt-H to exchange words
+        " Swap adjacent words and move cursor to their start or end
         nmap ]} cxiwwcxiw
         nmap [{ cxiwbcxiw
         nmap ]{ cxiwwcxiwb
         nmap [} cxiwbcxiww
-
-    " Yank history navigation
-    Plug 'vim-scripts/YankRing.vim'
-        function! YRRunAfterMaps()
-            nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-        endfunction
 
     " ============================== Autocommands ============================
     " Make plugin commands repeatable
@@ -148,10 +146,6 @@ call plug#begin($plugDir)
 
     " Automatically close parenthesis
     Plug 'Townk/vim-autoclose'
-
-    " ============================== Text objects ============================
-    " Select next bigger text object
-    Plug 'gcmt/wildfire.vim'
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'
@@ -217,15 +211,15 @@ call plug#begin($plugDir)
     " Linting and completion
     " let g:ale_completion_enabled = 1
     Plug 'dense-analysis/ale', { 'for': [ 'python', 'cs' ] }
-        nmap <Leader><Leader> <Plug>(ale_lint)
+        nmap gl <Plug>(ale_lint)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_python_pylint_executable = 'pylint3'
         let g:ale_lint_on_text_changed = 'never'
         let g:ale_sign_error = '!'
         let g:ale_sign_warning = '.'
-        let g:ale_lint_on_insert_leave = 0
-        let g:ale_lint_on_save = 0
-        let g:ale_lint_on_enter = 0
+        let g:ale_lint_on_insert_leave = 1
+        let g:ale_lint_on_save = 1
+        let g:ale_lint_on_enter = 1
         " let g:ale_set_quickfix = 1
         let g:ale_echo_msg_format = '[%linter%] %s'
         let g:ale_linters = {
@@ -242,12 +236,15 @@ call plug#begin($plugDir)
         let g:argwrap_tail_comma = 1
         let g:argwrap_tail_indent_braces = '('
 
+    " Look up documentation in browser
+    Plug 'keith/investigate.vim'
+
     " C# coding
     Plug 'OmniSharp/omnisharp-vim', { 'for': 'cs' }
 
     " Visual debugging
     " let g:vimspector_enable_mappings = 'HUMAN'
-    " Plug 'puremourning/vimspector', { 'for': [ 'python' ] }
+    " Plug 'puremourning/vimspector', { 'for': [ 'cs' ] }
 
     " Adjust indentation of pasted text
     Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
