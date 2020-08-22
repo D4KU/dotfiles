@@ -63,10 +63,11 @@ hi Search cterm=inverse
 hi QuickfixLine cterm=bold
 
 " Autocompletion popup
-hi clear Pmenu
-hi clear PmenuSbar
-hi clear PmenuThumb
-hi PmenuThumb ctermbg=235
+hi Pmenu ctermfg=250 ctermbg=234
+" hi clear Pmenu
+" hi clear PmenuSbar
+" hi clear PmenuThumb
+" hi PmenuThumb ctermbg=235
 
 " Diff mode
 hi clear DiffAdd

@@ -42,8 +42,8 @@ inoremap s <C-G>u<Esc>[s1z=`]a<C-G>u
 noremap ; :
 
 " Open and close stuff
-noremap <Leader>n :<C-U>tabnew<CR>
-noremap <Leader>N :<C-U>tabclose<CR>
+" noremap <Leader>n :<C-U>tabnew<CR>
+" noremap <Leader>N :<C-U>tabclose<CR>
 noremap <Leader>l :<C-U>lopen<CR>
 noremap <Leader>L :<C-U>lclose<CR>
 
@@ -56,7 +56,6 @@ noremap <Leader>y :call system('clip.exe', GetSelectedText())<CR>
 noremap <Leader>Y :call system('clip.exe', GetSelectedText())<CR>gvx
 
 " Break strings at textwidth
-nnoremap <Leader>s 72\|Bi"<CR>"<Esc>
-" :execute 'nnoremap <F3> ' . &textwidth . '\|Bi"<CR>"<Esc>'
+nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
 
-noremap <F2> :call ToggleLight()<CR>
+noremap <F3> :call ToggleLight()<CR>

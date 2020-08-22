@@ -33,11 +33,12 @@ call plug#begin($plugDir)
         nmap <leader><tab>    <Plug>(fzf-maps-n)
         xmap <leader><tab>    <Plug>(fzf-maps-x)
         omap <leader><tab>    <Plug>(fzf-maps-o)
+        imap <C-X><C-M>       <Plug>(fzf-maps-i)
         " Insert mode completion
-        imap <c-x><c-k>       <Plug>(fzf-complete-word)
-        imap <c-x><c-f>       <Plug>(fzf-complete-path)
-        imap <c-x><c-j>       <Plug>(fzf-complete-file-ag)
-        imap <c-x><c-l>       <Plug>(fzf-complete-line)
+        imap <C-X><C-K>       <Plug>(fzf-complete-word)
+        imap <C-X><C-F>       <Plug>(fzf-complete-path)
+        imap <c-X><C-J>       <Plug>(fzf-complete-file-ag)
+        imap <C-X><C-L>       <Plug>(fzf-complete-line)
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -75,16 +76,18 @@ call plug#begin($plugDir)
         let g:indentLine_enabled = 0
         let g:indentLine_char_list = ['│']
 
-        " ============================== New motions =============================
-        " Camel case word motion
-        Plug 'chaoren/vim-wordmotion'
+    " ============================== New motions =============================
+    " Camel case word motion
+    Plug 'chaoren/vim-wordmotion'
         " Jump over these signs:
         let g:wordmotion_spaces = '_-./\(\)\[\]'
         " Map original vim motions to meta key
-        noremap w w
-        noremap b b
-        noremap e e
-        noremap ge ge
+        noremap <Esc>w w
+        noremap <Esc>b b
+        noremap <Esc>e e
+        noremap <Esc>ge ge
+        noremap <Esc>iw iw
+        noremap <Esc>aw aw
 
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
@@ -108,6 +111,7 @@ call plug#begin($plugDir)
             \   ['and', 'or'],
             \   ['is', 'is not'],
             \   ["'", '"'],
+            \   ["<", '>'],
             \ ]
 
     " Easily align multiple lines of text
@@ -135,10 +139,10 @@ call plug#begin($plugDir)
     " Exchange text
     Plug 'tommcdo/vim-exchange'
         " Swap adjacent words and move cursor to their start or end
-        nmap ]} cxiwwcxiw
-        nmap [{ cxiwbcxiw
-        nmap ]{ cxiwwcxiwb
-        nmap [} cxiwbcxiww
+        nmap cl cxiwwcxiw
+        nmap ch cxiwbcxiw
+        nmap cL cxiwwcxiwb
+        nmap cH cxiwbcxiww
 
     " ============================== Autocommands ============================
     " Make plugin commands repeatable
@@ -203,7 +207,9 @@ call plug#begin($plugDir)
 
     " ============================== Coding ==================================
     " Switch between single and multi line forms of code
-    Plug 'andrewradev/splitjoin.vim', { 'for': [ 'python', 'cs' ] }
+    " TODO find out if it's adding anything to Argwrap
+    " Plug 'andrewradev/splitjoin.vim', { 'for': [ 'python', 'cs' ] }
+    "     let g:splitjoin_trailing_comma = 1
 
     " Autocompletion
     Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
@@ -231,10 +237,9 @@ call plug#begin($plugDir)
             \ }
 
     " Wrap and unwrap function arguments
-    Plug 'foosoft/vim-argwrap', { 'for': [ 'python' ] }
-        nnoremap <silent> <leader>p :<C-U>ArgWrap<CR>
-        let g:argwrap_tail_comma = 1
-        let g:argwrap_tail_indent_braces = '('
+    Plug 'foosoft/vim-argwrap', { 'for': [ 'python', 'cs' ] }
+        nmap <silent> <Leader>p <Plug>(ArgWrapToggle)
+        let g:argwrap_wrap_closing_brace = 0
 
     " Look up documentation in browser
     Plug 'keith/investigate.vim'
