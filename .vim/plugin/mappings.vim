@@ -14,7 +14,7 @@ noremap gk k
 " qq to record, Q to replay
 noremap Q @q
 
-" Tab to forward to jump list, backspace to rewind
+" Alt-Backspace to forward to jump list, backspace to rewind
 noremap <BS> <C-O>
 
 " Use original mapping to switch window and maximize it
@@ -30,10 +30,6 @@ noremap k <C-E>
 " Map Alt-L and Alt-H to resize vertical splits
 noremap l <C-W>5<
 noremap h <C-W>5>
-
-" Move without leaving insert mode
-inoremap l <Esc>la
-inoremap h <Esc>i
 
 " Fix last spell error without leaving insert mode (with undo breaks)
 inoremap s <C-G>u<Esc>[s1z=`]a<C-G>u
@@ -59,3 +55,4 @@ noremap <Leader>Y :call system('clip.exe', GetSelectedText())<CR>gvx
 nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
 
 noremap <F3> :call ToggleLight()<CR>
+noremap <silent> gK :call Doc()<CR>

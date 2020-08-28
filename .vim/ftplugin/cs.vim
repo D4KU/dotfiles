@@ -41,8 +41,8 @@ augroup omnisharp_commands
 augroup END
 
 " Trigger completion when certain characters are inserted
-inoremap <buffer> , ,<Plug>(omnisharp_signature_help)
-inoremap <buffer> ( (<Plug>(omnisharp_signature_help)
+imap <buffer> , ,<C-X><C-S>
+imap <buffer> ( (<C-X><C-S>
 inoremap <buffer> . .<C-X><C-O>
 inoremap <buffer> <C-@> <C-X><C-O>
 
@@ -60,7 +60,7 @@ nmap <silent> <buffer> <Leader>x <Plug>(omnisharp_fix_usages)
 nmap <silent> <buffer> <Leader>h <Plug>(omnisharp_type_lookup)
 nmap <silent> <buffer> <F1> <Plug>(omnisharp_documentation)
 nmap <silent> <buffer> <Leader>s <Plug>(omnisharp_signature_help)
-imap <silent> <buffer> <C-x><C-s> <Plug>(omnisharp_signature_help)
+imap <silent> <buffer> <C-X><C-S> <Plug>(omnisharp_signature_help)
 
 " Find all code errors/warnings for the current solution and populate
 " the quickfix window
@@ -81,10 +81,10 @@ xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
 xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
 
 " Rename with dialog
-nmap <silent> <buffer> <Leader>n <Plug>(omnisharp_rename)
+nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
 
 " Rename without dialog - with cursor on the symbol to rename
-command! -nargs=1 Rnm :call OmniSharp#RenameTo("<args>")
+command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 
 nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
 

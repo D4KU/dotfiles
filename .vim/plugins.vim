@@ -9,10 +9,10 @@ call plug#begin($plugDir)
     " Ranger integration
     Plug 'francoiscabrol/ranger.vim'
         let g:ranger_map_keys = 0
-        nnoremap <leader>f :<C-U>Ranger<CR>
-        nnoremap <leader>F :<C-U>RangerNewTab<CR>
-        nnoremap <leader>r :<C-U>RangerWorkingDirectory<CR>
-        nnoremap <leader>k :<C-U>RangerWorkingDirectoryNewTab<CR>
+        nnoremap <Leader>f :<C-U>Ranger<CR>
+        nnoremap <Leader>F :<C-U>RangerNewTab<CR>
+        nnoremap <Leader>r :<C-U>RangerWorkingDirectory<CR>
+        nnoremap <Leader>k :<C-U>RangerWorkingDirectoryNewTab<CR>
         " Redirect the dependency on the BClose plugin to Bbye
         " command -bang Bclose :Bwipeout
         " let g:ranger_replace_netrw = 1
@@ -30,14 +30,14 @@ call plug#begin($plugDir)
         nnoremap <Leader>,    :<C-U>Helptags<CR>
         nnoremap <Leader><CR> :<C-U>Commands<CR>
         " Selecting mappings
-        nmap <leader><tab>    <Plug>(fzf-maps-n)
-        xmap <leader><tab>    <Plug>(fzf-maps-x)
-        omap <leader><tab>    <Plug>(fzf-maps-o)
+        nmap <Leader><Tab>    <Plug>(fzf-maps-n)
+        xmap <Leader><Tab>    <Plug>(fzf-maps-x)
+        omap <Leader><Tab>    <Plug>(fzf-maps-o)
         imap <C-X><C-M>       <Plug>(fzf-maps-i)
         " Insert mode completion
         imap <C-X><C-K>       <Plug>(fzf-complete-word)
         imap <C-X><C-F>       <Plug>(fzf-complete-path)
-        imap <c-X><C-J>       <Plug>(fzf-complete-file-ag)
+        imap <C-X><C-J>       <Plug>(fzf-complete-file-ag)
         imap <C-X><C-L>       <Plug>(fzf-complete-line)
 
     " Tmux
@@ -80,14 +80,8 @@ call plug#begin($plugDir)
     " Camel case word motion
     Plug 'chaoren/vim-wordmotion'
         " Jump over these signs:
+        let g:wordmotion_prefix = '<Leader>'
         let g:wordmotion_spaces = '_-./\(\)\[\]'
-        " Map original vim motions to meta key
-        noremap <Esc>w w
-        noremap <Esc>b b
-        noremap <Esc>e e
-        noremap <Esc>ge ge
-        noremap <Esc>iw iw
-        noremap <Esc>aw aw
 
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
@@ -114,6 +108,9 @@ call plug#begin($plugDir)
             \   ["<", '>'],
             \ ]
 
+    " Tab completion in insert mode
+    Plug 'ervandew/supertab'
+
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align'
         " Interactive align for a motion/text object
@@ -123,6 +120,10 @@ call plug#begin($plugDir)
 
     " Close buffer without closing window
     Plug 'moll/vim-bbye'
+
+    " Add Readline commands to insert mode
+    Plug 'tpope/vim-rsi'
+        " let g:rsi_no_meta = 1
 
     " Comment text in and out
     Plug 'tpope/vim-commentary'
@@ -240,9 +241,6 @@ call plug#begin($plugDir)
     Plug 'foosoft/vim-argwrap', { 'for': [ 'python', 'cs' ] }
         nmap <silent> <Leader>p <Plug>(ArgWrapToggle)
         let g:argwrap_wrap_closing_brace = 0
-
-    " Look up documentation in browser
-    Plug 'keith/investigate.vim'
 
     " C# coding
     Plug 'OmniSharp/omnisharp-vim', { 'for': 'cs' }

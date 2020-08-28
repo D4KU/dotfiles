@@ -30,6 +30,20 @@ function! Undoline()
   endif
 endfunction
 
+" Online documentation search
+function! Doc()
+    if &filetype =~ "cs"
+        let s:urlTemplate = "https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%"
+    else
+        return
+    endif
+    let s:browser = "firefox.exe"
+    let s:wordUnderCursor = expand("<cword>")
+    let s:url = substitute(s:urlTemplate, "%", s:wordUnderCursor, "g")
+    let s:cmd = "silent !" . s:browser . " " . s:url . "&"
+    execute s:cmd
+endfunction
+
 " Print output in split instead of shell escape
 function! s:ExecuteInShell(command)
   let command = join(map(split(a:command), 'expand(v:val)'))
