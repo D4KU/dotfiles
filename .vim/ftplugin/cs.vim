@@ -41,10 +41,10 @@ augroup omnisharp_commands
 augroup END
 
 " Trigger completion when certain characters are inserted
-imap <buffer> , ,<C-X><C-S>
-imap <buffer> ( (<C-X><C-S>
-inoremap <buffer> . .<C-X><C-O>
-inoremap <buffer> <C-@> <C-X><C-O>
+imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
+imap <silent> <buffer> ( (<Esc><Plug>(omnisharp_signature_help)a
+imap <buffer> . .<C-X><C-O>
+imap <buffer> <C-@> <C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)

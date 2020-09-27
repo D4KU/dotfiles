@@ -24,15 +24,15 @@ noremap <Leader>v :<C-U>vsplit<CR>
 noremap <Leader>V :<C-U>vsplit<CR><C-W>H
 
 " Map Alt-J and Alt-K to move view up and down
-noremap j <C-Y>
-noremap k <C-E>
+noremap <Esc>j <C-Y>
+noremap <Esc>k <C-E>
 
 " Map Alt-L and Alt-H to resize vertical splits
-noremap l <C-W>5<
-noremap h <C-W>5>
+noremap <Esc>l <C-W>5<
+noremap <Esc>h <C-W>5>
 
 " Fix last spell error without leaving insert mode (with undo breaks)
-inoremap s <C-G>u<Esc>[s1z=`]a<C-G>u
+inoremap <Esc>s <C-G>u<Esc>[s1z=`]a<C-G>u
 
 " Remap semicolon to colon in normal and visual mode
 noremap ; :
@@ -56,3 +56,6 @@ nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
 
 noremap <F3> :call ToggleLight()<CR>
 noremap <silent> gK :call Doc()<CR>
+
+" Esc during completion confirms and exits insert mode
+inoremap <expr> <Esc> pumvisible() ? '<C-Y><Esc>' : '<Esc>'

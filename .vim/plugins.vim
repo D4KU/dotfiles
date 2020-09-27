@@ -9,10 +9,10 @@ call plug#begin($plugDir)
     " Ranger integration
     Plug 'francoiscabrol/ranger.vim'
         let g:ranger_map_keys = 0
-        nnoremap <Leader>f :<C-U>Ranger<CR>
-        nnoremap <Leader>F :<C-U>RangerNewTab<CR>
-        nnoremap <Leader>r :<C-U>RangerWorkingDirectory<CR>
-        nnoremap <Leader>k :<C-U>RangerWorkingDirectoryNewTab<CR>
+        nnoremap <silent> <Leader>f :<C-U>Ranger<CR>
+        nnoremap <silent> <Leader>F :<C-U>RangerNewTab<CR>
+        nnoremap <silent> <Leader>r :<C-U>RangerWorkingDirectory<CR>
+        nnoremap <silent> <Leader>k :<C-U>RangerWorkingDirectoryNewTab<CR>
         " Redirect the dependency on the BClose plugin to Bbye
         " command -bang Bclose :Bwipeout
         " let g:ranger_replace_netrw = 1
@@ -21,14 +21,14 @@ call plug#begin($plugDir)
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
         " Due to clever-f plugin, : and , are free
-        nnoremap ,            :<C-U>Buffers<CR>
-        nnoremap :            :<C-U>History<CR>
-        noremap  <Leader>.    :<C-U>Files<CR>
-        nnoremap <Leader>`    :<C-U>Marks<CR>
-        nnoremap <Leader>/    :<C-U>History/<CR>
-        nnoremap <Leader>;    :<C-U>History:<CR>
-        nnoremap <Leader>,    :<C-U>Helptags<CR>
-        nnoremap <Leader><CR> :<C-U>Commands<CR>
+        nnoremap <silent> ,            :<C-U>Buffers<CR>
+        nnoremap <silent> :            :<C-U>History<CR>
+        noremap  <silent> <Leader>.    :<C-U>Files<CR>
+        nnoremap <silent> <Leader>`    :<C-U>Marks<CR>
+        nnoremap <silent> <Leader>/    :<C-U>History/<CR>
+        nnoremap <silent> <Leader>;    :<C-U>History:<CR>
+        nnoremap <silent> <Leader>,    :<C-U>Helptags<CR>
+        nnoremap <silent> <Leader><CR> :<C-U>Commands<CR>
         " Selecting mappings
         nmap <Leader><Tab>    <Plug>(fzf-maps-n)
         xmap <Leader><Tab>    <Plug>(fzf-maps-x)
@@ -111,6 +111,9 @@ call plug#begin($plugDir)
     " Tab completion in insert mode
     Plug 'ervandew/supertab'
 
+    " Automatically close brackets
+    Plug 'jiangmiao/auto-pairs'
+
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align'
         " Interactive align for a motion/text object
@@ -123,7 +126,7 @@ call plug#begin($plugDir)
 
     " Add Readline commands to insert mode
     Plug 'tpope/vim-rsi'
-        " let g:rsi_no_meta = 1
+        let g:rsi_no_meta = 1
 
     " Comment text in and out
     Plug 'tpope/vim-commentary'
@@ -150,7 +153,7 @@ call plug#begin($plugDir)
     Plug 'tpope/vim-repeat'
 
     " Automatically close parenthesis
-    Plug 'Townk/vim-autoclose'
+    " Plug 'Townk/vim-autoclose'
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'
@@ -219,6 +222,10 @@ call plug#begin($plugDir)
     " let g:ale_completion_enabled = 1
     Plug 'dense-analysis/ale', { 'for': [ 'python', 'cs' ] }
         nmap gl <Plug>(ale_lint)
+        nmap [k <Plug>(ale_previous_wrap)
+        nmap ]k <Plug>(ale_next_wrap)
+        nmap [K <Plug>(ale_first)
+        nmap ]K <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_python_pylint_executable = 'pylint3'
         let g:ale_lint_on_text_changed = 'never'
