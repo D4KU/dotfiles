@@ -12,7 +12,7 @@ call plug#begin($plugDir)
         nnoremap <silent> <Leader>f :<C-U>Ranger<CR>
         nnoremap <silent> <Leader>F :<C-U>RangerNewTab<CR>
         nnoremap <silent> <Leader>r :<C-U>RangerWorkingDirectory<CR>
-        nnoremap <silent> <Leader>k :<C-U>RangerWorkingDirectoryNewTab<CR>
+        nnoremap <silent> <Leader>R :<C-U>RangerWorkingDirectoryNewTab<CR>
         " Redirect the dependency on the BClose plugin to Bbye
         " command -bang Bclose :Bwipeout
         " let g:ranger_replace_netrw = 1
@@ -20,6 +20,7 @@ call plug#begin($plugDir)
     " Fuzzy file finder
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
+        let g:fzf_layout = { 'window': 'enew' }
         " Due to clever-f plugin, : and , are free
         nnoremap <silent> ,            :<C-U>Buffers<CR>
         nnoremap <silent> :            :<C-U>History<CR>
@@ -30,15 +31,15 @@ call plug#begin($plugDir)
         nnoremap <silent> <Leader>,    :<C-U>Helptags<CR>
         nnoremap <silent> <Leader><CR> :<C-U>Commands<CR>
         " Selecting mappings
-        nmap <Leader><Tab>    <Plug>(fzf-maps-n)
-        xmap <Leader><Tab>    <Plug>(fzf-maps-x)
-        omap <Leader><Tab>    <Plug>(fzf-maps-o)
-        imap <C-X><C-M>       <Plug>(fzf-maps-i)
+        nmap <Leader><Tab> <Plug>(fzf-maps-n)
+        xmap <Leader><Tab> <Plug>(fzf-maps-x)
+        omap <Leader><Tab> <Plug>(fzf-maps-o)
+        imap <C-X><C-M>    <Plug>(fzf-maps-i)
         " Insert mode completion
-        imap <C-X><C-K>       <Plug>(fzf-complete-word)
-        imap <C-X><C-F>       <Plug>(fzf-complete-path)
-        imap <C-X><C-J>       <Plug>(fzf-complete-file-ag)
-        imap <C-X><C-L>       <Plug>(fzf-complete-line)
+        imap <C-X><C-K>    <Plug>(fzf-complete-word)
+        imap <C-X><C-F>    <Plug>(fzf-complete-path)
+        imap <C-X><C-J>    <Plug>(fzf-complete-file-ag)
+        imap <C-X><C-L>    <Plug>(fzf-complete-line)
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -111,9 +112,6 @@ call plug#begin($plugDir)
     " Tab completion in insert mode
     Plug 'ervandew/supertab'
 
-    " Automatically close brackets
-    Plug 'jiangmiao/auto-pairs'
-
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align'
         " Interactive align for a motion/text object
@@ -149,11 +147,8 @@ call plug#begin($plugDir)
         nmap cH cxiwbcxiww
 
     " ============================== Autocommands ============================
-    " Make plugin commands repeatable
-    Plug 'tpope/vim-repeat'
-
-    " Automatically close parenthesis
-    " Plug 'Townk/vim-autoclose'
+    " Automatically close brackets
+    Plug 'jiangmiao/auto-pairs'
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'
@@ -174,6 +169,9 @@ call plug#begin($plugDir)
     " Indent text object
     Plug 'michaeljsmith/vim-indent-object'
 
+    " Make plugin commands repeatable
+    Plug 'tpope/vim-repeat'
+
     " ============================== New gadgets =============================
     " Calculator
     Plug 'sk1418/HowMuch'
@@ -185,11 +183,11 @@ call plug#begin($plugDir)
         let g:translator_default_engines = ['google']
         let g:translator_window_type = 'preview'
         " Display translation in command line
-        nmap <silent> <Leader>t <Plug>Translate
-        vmap <silent> <Leader>t <Plug>TranslateV
+        nmap <Leader>t <Plug>Translate
+        vmap <Leader>t <Plug>TranslateV
         " Replace the text with translation
-        nmap <silent> <Leader>T <Plug>TranslateR
-        vmap <silent> <Leader>T <Plug>TranslateRV
+        nmap <Leader>T <Plug>TranslateR
+        vmap <Leader>T <Plug>TranslateRV
 
         func! ToggleTargetLang()
             if g:translator_target_lang ==? 'en'
@@ -200,7 +198,7 @@ call plug#begin($plugDir)
                 echo "New target lang: en"
             endif
         endfunc
-        noremap <Leader>z :call ToggleTargetLang()<CR>
+        noremap <silent> <Leader>z :<C-U>call ToggleTargetLang()<CR>
 
     " ======================= Command line improvements ======================
     " Search for multiple variants of a word
@@ -246,11 +244,18 @@ call plug#begin($plugDir)
 
     " Wrap and unwrap function arguments
     Plug 'foosoft/vim-argwrap', { 'for': [ 'python', 'cs' ] }
-        nmap <silent> <Leader>p <Plug>(ArgWrapToggle)
+        nmap <Leader>p <Plug>(ArgWrapToggle)
         let g:argwrap_wrap_closing_brace = 0
 
+    " Template texts to insert automatically
+    Plug 'honza/vim-snippets'
+
+    " Show 'Code Actions available' icon
+    " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
+    "     let g:sharpenup_codeactions_glyph = '*'
+
     " C# coding
-    Plug 'OmniSharp/omnisharp-vim', { 'for': 'cs' }
+    Plug 'omniSharp/omnisharp-vim', { 'for': 'cs' }
 
     " Visual debugging
     " let g:vimspector_enable_mappings = 'HUMAN'
@@ -262,6 +267,12 @@ call plug#begin($plugDir)
         let g:pasta_paste_before_mapping = '[P'
         let g:pasta_paste_after_mapping = ']P'
 
+    " Snippet engine
+    Plug 'sirver/ultisnips'
+        let g:UltiSnipsExpandTrigger="<C-S>"
+        let g:UltiSnipsJumpForwardTrigger="<C-B>"
+        let g:UltiSnipsJumpBackwardTrigger="<C-Z>"
+
     " =========================== Writing prose ==============================
     " Preview markdown in browser
     " Plug 'iamcco/markdown-preview.nvim', {
@@ -271,7 +282,7 @@ call plug#begin($plugDir)
 
     " Show only small text area
     Plug 'junegunn/goyo.vim'
-        nnoremap <Leader>G :<C-U>Goyo<CR>
+        nnoremap <silent> <F4> :<C-U>Goyo<CR>
 
         function! s:goyo_enter()
             Limelight
@@ -287,8 +298,6 @@ call plug#begin($plugDir)
         
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'
-        nnoremap <Leader>L :<C-U>Limelight!!<CR>
-        xnoremap <Leader>L :<C-U>Limelight!!<CR>
 
     " Highlight bad word choices
     Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }

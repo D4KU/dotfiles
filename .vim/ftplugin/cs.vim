@@ -1,3 +1,6 @@
+" Automatically close angled brackets when preceded by word
+let b:AutoPairs = AutoPairsDefine({'\w\zs<':'>'})
+
 " Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
 
@@ -16,7 +19,8 @@ set completeopt=longest,menuone,preview,popuphidden
 " Fetch full documentation during omnicomplete requests.
 " By default, only Type/Method signatures are fetched. Full documentation can
 " still be fetched when you need it with the :OmniSharpDocumentation command.
-let g:omnicomplete_fetch_full_documentation = 1
+let g:omnicomplete_fetch_full_documentation = 0
+let g:OmniSharp_selector_findusages = 'fzf'
 let g:OmniSharp_highlighting = 0
 
 " Popup behaviour
@@ -32,7 +36,7 @@ let g:OmniSharp_popup_options = {
     \}
 
 " Enable snippet completion using ultisnips plugin
-" let g:OmniSharp_want_snippet=1
+let g:OmniSharp_want_snippet = 1
 
 augroup omnisharp_commands
     autocmd!
@@ -43,15 +47,15 @@ augroup END
 " Trigger completion when certain characters are inserted
 imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
 imap <silent> <buffer> ( (<Esc><Plug>(omnisharp_signature_help)a
-imap <buffer> . .<C-X><C-O>
-imap <buffer> <C-@> <C-X><C-O>
+" imap <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
 nmap <silent> <buffer> <Leader>D <Plug>(omnisharp_preview_definition)
 nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementation)
 nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
-nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_symbol)
+nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
+nmap <silent> <buffer> <Leader>G <Plug>(omnisharp_find_symbol)
 nmap <silent> <buffer> <Leader>u <Plug>(omnisharp_find_usages)
 
 " Finds members in the current buffer

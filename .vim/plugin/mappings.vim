@@ -58,4 +58,4 @@ noremap <F3> :call ToggleLight()<CR>
 noremap <silent> gK :call Doc()<CR>
 
 " Esc during completion confirms and exits insert mode
-inoremap <expr> <Esc> pumvisible() ? '<C-Y><Esc>' : '<Esc>'
+" inoremap <expr> <Esc> pumvisible() ? '<C-Y><Esc>' : '<Esc>'
