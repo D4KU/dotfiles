@@ -1,3 +1,6 @@
+" Remap semicolon to colon in normal and visual mode
+noremap ; :
+
 " Redo more intuitive
 nnoremap U <C-R>
 nnoremap <C-R> U
@@ -14,6 +17,9 @@ noremap gk k
 " qq to record, Q to replay
 noremap Q @q
 
+" Select lastly pasted text
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " Alt-Backspace to forward to jump list, backspace to rewind
 noremap <BS> <C-O>
 
@@ -27,15 +33,20 @@ noremap <Leader>V :<C-U>vsplit<CR><C-W>H
 noremap <Esc>j <C-Y>
 noremap <Esc>k <C-E>
 
+" Insert a single character in front or behind cursor
+nnoremap ci i_<Esc>r
+nnoremap ca a_<Esc>r
+
 " Map Alt-L and Alt-H to resize vertical splits
 noremap <Esc>l <C-W>5<
 noremap <Esc>h <C-W>5>
 
+" Move between errors and automatically pick first fix
+nnoremap [S [s1z=
+nnoremap ]S ]s1z=
+
 " Fix last spell error without leaving insert mode (with undo breaks)
 inoremap <Esc>s <C-G>u<Esc>[s1z=`]a<C-G>u
-
-" Remap semicolon to colon in normal and visual mode
-noremap ; :
 
 " Open and close stuff
 " noremap <Leader>n :<C-U>tabnew<CR>

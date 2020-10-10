@@ -86,8 +86,8 @@ call plug#begin($plugDir)
 
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
-        let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyz12;,.'["
-        map <Space> <Plug>(easymotion-overwin-w)
+        let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyz"
+        map <Space> <Plug>(easymotion-overwin-f)
 
     " Motions based on indent depths
     Plug 'jeetsukumaran/vim-indentwise'
@@ -231,7 +231,7 @@ call plug#begin($plugDir)
         let g:ale_sign_warning = '.'
         let g:ale_lint_on_insert_leave = 1
         let g:ale_lint_on_save = 1
-        let g:ale_lint_on_enter = 1
+        " let g:ale_lint_on_enter = 1
         " let g:ale_set_quickfix = 1
         let g:ale_echo_msg_format = '[%linter%] %s'
         let g:ale_linters = {
@@ -253,6 +253,15 @@ call plug#begin($plugDir)
     " Show 'Code Actions available' icon
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
     "     let g:sharpenup_codeactions_glyph = '*'
+
+    " Smart comma & semicolon insertion
+    Plug 'kovetskiy/cosco.vim', { 'for': ['cs', 'shaderlab'] }
+        let g:cosco_ignore_comment_lines = 1        
+        autocmd FileType cs,shaderlab
+            \ imap <silent> <buffer> ; <C-O><Plug>(cosco-smartSemicolon)
+        " let g:cosco_ignore_ft_pattern = {
+        "   \ 'cs': '^#',
+        "   \}
 
     " C# coding
     Plug 'omniSharp/omnisharp-vim', { 'for': 'cs' }
@@ -301,5 +310,4 @@ call plug#begin($plugDir)
 
     " Highlight bad word choices
     Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }
-
 call plug#end()
