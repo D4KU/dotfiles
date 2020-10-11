@@ -27,6 +27,9 @@ autocmd BufReadPost *
     \ |   exe "normal! g`\""
     \ | endif
 
+" Add every opened file to fasd
+autocmd BufReadPost * silent call system('fasd -A'.expand('%'))
+
 " Dir of current file
 cabbrev <expr> %% expand('%:p:h')
 
@@ -35,3 +38,8 @@ cabbrev w!! w !sudo tee "%"
 
 " Save and source
 cabbrev ws w <bar> so %
+
+" Fasd support
+command! Fasd call fzf#run(fzf#wrap({'source': 'fasd -al', 'options': '--no-sort --tac --tiebreak=index'}))
+command! -nargs=? Z call FasdZ(<q-args>)
+command! -nargs=? V call FasdV(<q-args>)

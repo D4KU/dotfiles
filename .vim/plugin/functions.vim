@@ -59,3 +59,31 @@ function! s:ExecuteInShell(command)
   echo 'Shell command ' . command . ' executed.'
 endfunction
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+
+" Add opened file to fasd
+" jobstart not found!?
+" function! s:fasd_update() abort
+"   if empty(&buftype) || &filetype ==# 'dirvish'
+"      call jobstart(['fasd', '-A', expand('%:p')])
+"   endif
+" endfunction
+
+" Open best Fasd file match if arg passed, open FZF if not
+function! FasdV(str)
+    if a:str == ""
+        call fzf#run({'source': 'fasd -flR', 'sink': 'e'})
+    else
+        let cmd = 'fasd -f1 ' . a:str
+        execute 'e ' . system(cmd)
+    endif
+endfunction
+
+" Change to best Fasd directory match if arg passed, open FZF if not
+function! FasdZ(str)
+    if a:str == ""
+        call fzf#run({'source': 'fasd -dlR', 'sink': 'cd'})
+    else
+        let cmd = 'fasd -d1 ' . a:str
+        execute 'e ' . system(cmd)
+    endif
+endfunction
