@@ -5,6 +5,26 @@ func! GetSelectedText()
     return result
 endfunc
 
+" Switch between light and dark color schemes
+func! ToggleLight()
+  if g:lightactive
+    try
+      colorscheme despacio
+      hi Number ctermfg=9
+    catch
+      colorscheme delek
+    endtry
+    colorscheme daku_dark
+    let g:lightactive = 0
+  else
+    colorscheme morning
+    colorscheme daku_light
+    let g:lightactive = 1
+  endif
+endfunc
+let g:lightactive = 1
+call ToggleLight()
+
 " Undo all changes on current line
 function! Undoline()
   let pos = getpos(".")

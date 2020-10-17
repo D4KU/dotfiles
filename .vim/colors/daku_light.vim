@@ -1,4 +1,6 @@
-colorscheme morning
+let colors_name = "daku_light"
+let g:limelight_conceal_ctermfg = 250
+let g:indentLine_color_term = 254
 
 " Spell check
 hi clear SpellBad
@@ -23,15 +25,13 @@ hi StatusLine cterm=None ctermbg=254 ctermfg=9
 hi StatusLineNC cterm=None ctermbg=254 ctermfg=242
 hi VertSplit ctermfg=white
 hi Visual ctermbg=253
+hi Folded ctermbg=None
 
 " Signature plugin
 hi clear SignColumn
+" hi SignatureMarkText ctermbg=None
 hi clear SignatureMarkText
 hi SignatureMarkText ctermfg=245
 
 " Illuminate Plugin
 hi IlluminatedWord ctermbg=253
-
-let g:limelight_conceal_ctermfg = 250
-let g:indentLine_color_term = 254
-

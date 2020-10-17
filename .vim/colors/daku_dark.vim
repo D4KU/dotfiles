@@ -1,16 +1,10 @@
-try
-    colorscheme despacio
-    hi Number ctermfg=9
-    catch
-        try
-            colorscheme delek
-            catch
-        endtry
-endtry
+let colors_name = "daku_dark"
+let g:limelight_conceal_ctermfg = 238
+let g:indentLine_color_term = 233
 
 " Background
 hi clear Normal
-hi Normal ctermbg=black
+hi Normal ctermbg=16
 
 " Status line
 hi StatusLine cterm=None ctermbg=233 ctermfg=9
@@ -32,7 +26,7 @@ hi CursorLine cterm=None ctermbg=233
 hi clear CursorColumn
 hi link CursorColumn CursorLine
 hi clear ColorColumn
-hi ColorColumn ctermbg=black
+hi ColorColumn ctermbg=16
 
 hi LineNr ctermbg=None ctermfg=238
 hi clear CursorLineNr
@@ -92,6 +86,3 @@ hi ALEWarningSign ctermfg=220
 
 " Illuminate Plugin
 hi IlluminatedWord ctermbg=235
-
-let g:limelight_conceal_ctermfg = 238
-let g:indentLine_color_term = 233
