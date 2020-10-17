@@ -10,9 +10,7 @@ call plug#begin($plugDir)
     Plug 'francoiscabrol/ranger.vim'
         let g:ranger_map_keys = 0
         nnoremap <silent> <Leader>f :<C-U>Ranger<CR>
-        nnoremap <silent> <Leader>F :<C-U>RangerNewTab<CR>
-        nnoremap <silent> <Leader>r :<C-U>RangerWorkingDirectory<CR>
-        nnoremap <silent> <Leader>R :<C-U>RangerWorkingDirectoryNewTab<CR>
+        nnoremap <silent> <Leader>F :<C-U>RangerWorkingDirectory<CR>
         " Redirect the dependency on the BClose plugin to Bbye
         " command -bang Bclose :Bwipeout
         " let g:ranger_replace_netrw = 1
@@ -51,8 +49,8 @@ call plug#begin($plugDir)
     " Preview registers
     Plug 'junegunn/vim-peekaboo'
 
-    " Show marks on left border
-    Plug 'kshenoy/vim-signature'
+    " " Show marks on left border
+    " Plug 'kshenoy/vim-signature'
 
     " Highlight colors in their... color
     Plug 'lilydjwg/colorizer'
@@ -149,6 +147,8 @@ call plug#begin($plugDir)
     " ============================== Autocommands ============================
     " Automatically close brackets
     Plug 'jiangmiao/auto-pairs'
+	let g:AutoPairsFlyMode = 1
+        let g:AutoPairsShortcutToggle = '<C-X><C-X>'
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'
@@ -227,7 +227,7 @@ call plug#begin($plugDir)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_python_pylint_executable = 'pylint3'
         let g:ale_lint_on_text_changed = 'never'
-        let g:ale_sign_error = '!'
+        let g:ale_sign_error = '.'
         let g:ale_sign_warning = '.'
         let g:ale_lint_on_insert_leave = 1
         let g:ale_lint_on_save = 1
@@ -255,7 +255,7 @@ call plug#begin($plugDir)
     "     let g:sharpenup_codeactions_glyph = '*'
 
     " Smart comma & semicolon insertion
-    Plug 'kovetskiy/cosco.vim', { 'for': ['cs', 'shaderlab'] }
+    Plug 'lfilho/cosco.vim', { 'for': ['cs', 'shaderlab'] }
         let g:cosco_ignore_comment_lines = 1        
         autocmd FileType cs,shaderlab
             \ imap <silent> <buffer> ; <C-O><Plug>(cosco-smartSemicolon)
@@ -270,17 +270,19 @@ call plug#begin($plugDir)
     " let g:vimspector_enable_mappings = 'HUMAN'
     " Plug 'puremourning/vimspector', { 'for': [ 'cs' ] }
 
-    " Adjust indentation of pasted text
-    Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
-        let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
-        let g:pasta_paste_before_mapping = '[P'
-        let g:pasta_paste_after_mapping = ']P'
+    " " Adjust indentation of pasted text
+    " Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
+    "     let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
+    "     let g:pasta_paste_before_mapping = '[P'
+    "     let g:pasta_paste_after_mapping = ']P'
 
     " Snippet engine
-    Plug 'sirver/ultisnips'
-        let g:UltiSnipsExpandTrigger="<C-S>"
-        let g:UltiSnipsJumpForwardTrigger="<C-B>"
-        let g:UltiSnipsJumpBackwardTrigger="<C-Z>"
+    if has('python3')
+        Plug 'sirver/ultisnips'
+            let g:UltiSnipsExpandTrigger="<C-S>"
+            let g:UltiSnipsJumpForwardTrigger="<C-B>"
+            let g:UltiSnipsJumpBackwardTrigger="<C-Z>"
+    endif
 
     " =========================== Writing prose ==============================
     " Preview markdown in browser

@@ -34,10 +34,16 @@ noremap <Esc>j <C-Y>
 noremap <Esc>k <C-E>
 
 " Insert a single character in front or behind cursor
-nnoremap ci i_<Esc>r
-nnoremap ca a_<Esc>r
+nnoremap cd i_<Esc>r
+nnoremap cD a_<Esc>r
 
-" Map Alt-L and Alt-H to resize vertical splits
+" Delete line without yanking line break
+nnoremap dD ^D"_dd
+
+" Paste without newline
+nnoremap zP mzp^D"_ddg`zp
+
+"Test" Map Alt-L and Alt-H to resize vertical splits
 noremap <Esc>l <C-W>5<
 noremap <Esc>h <C-W>5>
 
