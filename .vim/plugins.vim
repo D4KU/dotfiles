@@ -147,7 +147,8 @@ call plug#begin($plugDir)
     " ============================== Autocommands ============================
     " Automatically close brackets
     Plug 'jiangmiao/auto-pairs'
-	let g:AutoPairsFlyMode = 1
+        " let g:AutoPairsMultilineClose = 0
+	" let g:AutoPairsFlyMode = 1
         let g:AutoPairsShortcutToggle = '<C-X><C-X>'
 
     " Comment text object
@@ -294,18 +295,8 @@ call plug#begin($plugDir)
     " Show only small text area
     Plug 'junegunn/goyo.vim'
         nnoremap <silent> <F4> :<C-U>Goyo<CR>
-
-        function! s:goyo_enter()
-            Limelight
-        endfunction
-        function! s:goyo_leave()
-            Limelight!
-            " Goyo somehow unloads my highlighting
-            source ~/.vim/plugin/highlight.vim
-        endfunction
-
-        autocmd! User GoyoEnter nested call <SID>goyo_enter()
-        autocmd! User GoyoLeave nested call <SID>goyo_leave()
+        autocmd! User GoyoEnter nested Limelight
+        autocmd! User GoyoLeave nested Limelight!
         
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'

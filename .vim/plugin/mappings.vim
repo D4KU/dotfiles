@@ -8,11 +8,11 @@ nnoremap <C-R> U
 " Match y behavior to d and c
 nnoremap Y y$
 
-" Wrapped lines goes down/up to next row, rather than next line in file.
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+" " Wrapped lines goes down/up to next row, rather than next line in file.
+" noremap j gj
+" noremap k gk
+" noremap gj j
+" noremap gk k
 
 " qq to record, Q to replay
 noremap Q @q
@@ -30,12 +30,12 @@ noremap <Leader>v :<C-U>vsplit<CR>
 noremap <Leader>V :<C-U>vsplit<CR><C-W>H
 
 " Map Alt-J and Alt-K to move view up and down
-noremap <Esc>j <C-Y>
-noremap <Esc>k <C-E>
+nnoremap <Esc>j <C-Y>
+nnoremap <Esc>k <C-E>
 
 " Insert a single character in front or behind cursor
-nnoremap cd i_<Esc>r
-nnoremap cD a_<Esc>r
+nnoremap cD i_<Esc>r
+nnoremap cd a_<Esc>r
 
 " Delete line without yanking line break
 nnoremap dD ^D"_dd
@@ -44,15 +44,19 @@ nnoremap dD ^D"_dd
 nnoremap zP mzp^D"_ddg`zp
 
 "Test" Map Alt-L and Alt-H to resize vertical splits
-noremap <Esc>l <C-W>5<
-noremap <Esc>h <C-W>5>
+nnoremap <Esc>l <C-W>5<
+nnoremap <Esc>h <C-W>5>
+
+" Move to first and last word in paragraph
+nnoremap z{ {w
+nnoremap z} }ge
 
 " Move between errors and automatically pick first fix
 nnoremap [S [s1z=
 nnoremap ]S ]s1z=
 
 " Fix last spell error without leaving insert mode (with undo breaks)
-inoremap <Esc>s <C-G>u<Esc>[s1z=`]a<C-G>u
+inoremap <C-X>s <C-G>u<Esc>[s1z=`]a<C-G>u
 
 " Open and close stuff
 " noremap <Leader>n :<C-U>tabnew<CR>
