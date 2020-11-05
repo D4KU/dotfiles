@@ -34,8 +34,8 @@ nnoremap <Esc>j <C-Y>
 nnoremap <Esc>k <C-E>
 
 " Insert a single character in front or behind cursor
-nnoremap cD i_<Esc>r
 nnoremap cd a_<Esc>r
+nnoremap cD i_<Esc>r
 
 " Delete line without yanking line break
 nnoremap dD ^D"_dd
@@ -50,6 +50,9 @@ nnoremap <Esc>h <C-W>5>
 " Move to first and last word in paragraph
 nnoremap z{ {w
 nnoremap z} }ge
+
+" Substitute word under cursor
+nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
 
 " Move between errors and automatically pick first fix
 nnoremap [S [s1z=

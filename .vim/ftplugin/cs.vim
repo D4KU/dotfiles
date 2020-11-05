@@ -92,6 +92,13 @@ command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 
 nmap <silent> <buffer> <LocalLeader>= <Plug>(omnisharp_code_format)
 
-" Start the omnisharp server for the current solution
-nmap <silent> <buffer> <LocalLeader>S <Plug>(omnisharp_start_sever)
-nmap <silent> <buffer> <LocalLeader>Z <Plug>(omnisharp_stop_server)
+let g:OmniSharp_highlight_groups = {
+    \ 'FieldName': 'Normal',
+    \ 'LocalName': 'Normal',
+    \ 'PropertyName': 'Normal',
+    \ 'Operator': 'Operator',
+    \ 'Punctuation': 'Operator',
+    \ 'ClassName': 'Special',
+    \ 'StructName': 'Special',
+    \ 'EnumName': 'Special'
+    \}

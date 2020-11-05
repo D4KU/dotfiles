@@ -150,6 +150,7 @@ call plug#begin($plugDir)
         " let g:AutoPairsMultilineClose = 0
 	" let g:AutoPairsFlyMode = 1
         let g:AutoPairsShortcutToggle = '<C-X><C-X>'
+        let b:autopairs_enabled = 0
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'

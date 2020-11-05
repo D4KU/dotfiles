@@ -16,10 +16,12 @@ hi TabLineSel ctermbg=235
 hi TabLineFill cterm=None ctermbg=None
 
 " End of Buffer
-hi EndOfBuffer ctermfg=232
+hi EndOfBuffer ctermfg=16
 
 " Vertical split bar
 hi VertSplit ctermfg=None ctermbg=None
+
+" hi clear Cursor
 
 " Cursor line
 hi CursorLine cterm=None ctermbg=233
@@ -70,7 +72,7 @@ hi clear DiffDelete
 hi clear DiffText
 hi clear FoldColumn
 hi DiffAdd ctermbg=234
-"hi DiffChange ctermbg=232
+"hi DiffChange ctermbg=16
 hi DiffDelete ctermfg=236
 hi DiffText ctermbg=52
 
@@ -80,7 +82,7 @@ hi clear SignatureMarkText
 hi SignatureMarkText ctermfg=245
 
 " ALE plugin
-hi ALEError ctermbg=red
+hi ALEError ctermbg=52
 hi ALEErrorSign ctermfg=red
 hi ALEWarningSign ctermfg=220
 
