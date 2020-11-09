@@ -100,11 +100,10 @@ call plug#begin($plugDir)
     Plug 'AndrewRadev/switch.vim'
         let g:switch_custom_definitions =
             \ [
-            \   ['if', 'else', 'elif'],
+            \   ['&&', '||'],
             \   ['and', 'or'],
-            \   ['is', 'is not'],
-            \   ["'", '"'],
-            \   ["<", '>'],
+            \   ['int', 'float', 'bool'],
+            \   ['public', 'protected', 'private'],
             \ ]
 
     " Tab completion in insert mode
@@ -257,7 +256,7 @@ call plug#begin($plugDir)
     "     let g:sharpenup_codeactions_glyph = '*'
 
     " Smart comma & semicolon insertion
-    Plug 'lfilho/cosco.vim', { 'for': ['cs', 'shaderlab'] }
+    Plug 'd4ku/cosco.vim', { 'for': ['cs', 'shaderlab'] }
         let g:cosco_ignore_comment_lines = 1        
         autocmd FileType cs,shaderlab
             \ imap <silent> <buffer> ; <C-O><Plug>(cosco-smartSemicolon)

@@ -23,3 +23,10 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#completions_command = ""
 let g:jedi#rename_command = "<F2>"
+
+" Switch.vim plugin settings
+let g:switch_custom_definitions +=
+    \ [
+    \   ['if', 'elif'],
+    \   ['is', 'is not'],
+    \ ]

@@ -63,7 +63,7 @@ function! DisableIfNonCounted(move) range
 endfunction
 
 function! SetDisablingOfBasicMotionsIfNonCounted(on)
-    let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k", "l", "h", "w", "b", "gj", "gk"])
+    let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k", "l", "h"])
     if a:on
         for key in keys_to_disable
             execute "noremap <expr> <silent> " . key . " DisableIfMultipleNonCounted('" . key . "')"
