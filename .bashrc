@@ -136,7 +136,7 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 eval "$(fasd --init auto)"
 
 # init forgit
-source ~/.forgit/forgit.plugin.bash
+source ~/.forgit/forgit.plugin.sh
 
 # init dotbare
 source ~/.dotbare/dotbare.plugin.bash
