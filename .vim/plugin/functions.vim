@@ -43,12 +43,13 @@ function! SmartSemicolon()
     let nextLineEmpty = nextLine =~ '^\s*$'
 
     if !CursorInComment()
+            \ && pos[2] < col('$')
             \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
             \ && nextLine !~ '{$'
             \ && (curLineInd >= nextLineInd || nextLineEmpty)
         exec("normal! A;")
         call setpos('.', pos)
-        return "\<Esc>"
+        return ""
     else
         return ";"
     endif

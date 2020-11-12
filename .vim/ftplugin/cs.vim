@@ -1,5 +1,9 @@
 " Automatically close angled brackets when preceded by word
-let b:AutoPairs = AutoPairsDefine({'\w\zs<':'>'})
+let b:AutoPairs = AutoPairsDefine({
+    \ '\w\zs<' : '>',
+    \ '#region' : '#endregion',
+    \ '#if' : '#endif',
+    \})
 
 " Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
@@ -14,7 +18,7 @@ let g:OmniSharp_typeLookupInPreview = 1
 
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible).
-set completeopt=longest,menuone,preview,popuphidden
+" set completeopt=longest,menuone,preview,popuphidden
 
 " Fetch full documentation during omnicomplete requests.
 " By default, only Type/Method signatures are fetched. Full documentation can
