@@ -147,7 +147,7 @@ call plug#begin($plugDir)
     " Automatically close brackets
     Plug 'jiangmiao/auto-pairs'
         " let g:AutoPairsMultilineClose = 0
-	" let g:AutoPairsFlyMode = 1
+        " let g:AutoPairsFlyMode = 1
         let g:AutoPairsShortcutToggle = '<C-X><C-X>'
         let b:autopairs_enabled = 0
 
@@ -161,11 +161,20 @@ call plug#begin($plugDir)
     " Sub-clause / function argument text object
     Plug 'peterrincker/vim-argumentative'
 
-    " Text object for highlighted text
-    Plug 'kana/vim-textobj-syntax'
+    " I and A to prepend/append to visual selection
+    Plug 'kana/vim-niceblock'
 
     " Easily define new text objects
     Plug 'kana/vim-textobj-user'
+
+    " Text object for last searched pattern
+    Plug 'kana/vim-textobj-lastpat'
+
+    " Text object for current line
+    Plug 'kana/vim-textobj-line'
+
+    " Text object for functions
+    Plug 'kana/vim-textobj-function'
 
     " Indent text object
     Plug 'michaeljsmith/vim-indent-object'
@@ -250,19 +259,18 @@ call plug#begin($plugDir)
 
     " Template texts to insert automatically
     Plug 'honza/vim-snippets'
+    Plug 'mathijs-bakker/vim-unity-snippets', { 'for': 'cs' }
 
     " Show 'Code Actions available' icon
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
     "     let g:sharpenup_codeactions_glyph = '*'
 
-    " Smart comma & semicolon insertion
-    Plug 'd4ku/cosco.vim', { 'for': ['cs', 'shaderlab'] }
-        let g:cosco_ignore_comment_lines = 1        
-        autocmd FileType cs,shaderlab
-            \ imap <silent> <buffer> ; <C-O><Plug>(cosco-smartSemicolon)
-        " let g:cosco_ignore_ft_pattern = {
-        "   \ 'cs': '^#',
-        "   \}
+    " " Smart comma & semicolon insertion
+    " Plug 'd4ku/cosco.vim', { 'for': ['cs', 'shaderlab'] }
+    "     let g:cosco_ignore_comment_lines = 1        
+    "     " let g:cosco_ignore_ft_pattern = {
+    "     "   \ 'cs': '^#',
+    "     "   \}
 
     " C# coding
     Plug 'omniSharp/omnisharp-vim', { 'for': 'cs' }
@@ -302,5 +310,5 @@ call plug#begin($plugDir)
     Plug 'junegunn/limelight.vim'
 
     " Highlight bad word choices
-    Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }
+    " Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }
 call plug#end()

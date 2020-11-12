@@ -81,5 +81,8 @@ nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
 noremap <F3> :call ToggleLight()<CR>
 noremap <silent> gK :call Doc()<CR>
 
+autocmd FileType cs,shaderlab
+    \ inoremap <silent> <buffer> ; <C-R>=SmartSemicolon()<CR>
+
 " Esc during completion confirms and exits insert mode
 " inoremap <expr> <Esc> pumvisible() ? '<C-Y><Esc>' : '<Esc>'

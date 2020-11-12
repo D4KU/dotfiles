@@ -25,6 +25,35 @@ endfunc
 let g:lightactive = 1
 call ToggleLight()
 
+" Returns if cursor is in a commented section
+function! CursorInComment()
+    let hg = join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'))
+    return hg =~? 'comment' ? 1 : 0
+endfunction
+
+" Insert semicolon at the line's end under certain conditions
+function! SmartSemicolon()
+    let pos = getpos('.')
+    let curLineNum = pos[1]
+    let nextLineNum = curLineNum + 1
+    let curLine = getline(curLineNum)
+    let nextLine = getline(nextLineNum)
+    let curLineInd = indent(curLineNum)
+    let nextLineInd = indent(nextLineNum)
+    let nextLineEmpty = nextLine =~ '^\s*$'
+
+    if !CursorInComment()
+            \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
+            \ && nextLine !~ '{$'
+            \ && (curLineInd >= nextLineInd || nextLineEmpty)
+        exec("normal! A;")
+        call setpos('.', pos)
+        return "\<Esc>"
+    else
+        return ";"
+    endif
+endfunction
+
 " Undo all changes on current line
 function! Undoline()
   let pos = getpos(".")
