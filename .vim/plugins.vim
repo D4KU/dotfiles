@@ -28,16 +28,17 @@ call plug#begin($plugDir)
         nnoremap <silent> <Leader>;    :<C-U>History:<CR>
         nnoremap <silent> <Leader>,    :<C-U>Helptags<CR>
         nnoremap <silent> <Leader><CR> :<C-U>Commands<CR>
+        nnoremap <silent> <Leader>$    :<C-U>Snippets<CR>
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
         xmap <Leader><Tab> <Plug>(fzf-maps-x)
         omap <Leader><Tab> <Plug>(fzf-maps-o)
-        imap <C-X><C-M>    <Plug>(fzf-maps-i)
+        imap <C-X>m        <Plug>(fzf-maps-i)
         " Insert mode completion
-        imap <C-X><C-K>    <Plug>(fzf-complete-word)
-        imap <C-X><C-F>    <Plug>(fzf-complete-path)
-        imap <C-X><C-J>    <Plug>(fzf-complete-file-ag)
-        imap <C-X><C-L>    <Plug>(fzf-complete-line)
+        imap <C-X>k        <Plug>(fzf-complete-word)
+        imap <C-X>f        <Plug>(fzf-complete-path)
+        imap <C-X>j        <Plug>(fzf-complete-file-ag)
+        imap <C-X>l        <Plug>(fzf-complete-line)
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -120,8 +121,8 @@ call plug#begin($plugDir)
     Plug 'moll/vim-bbye'
 
     " Add Readline commands to insert mode
-    Plug 'tpope/vim-rsi'
-        let g:rsi_no_meta = 1
+    " Plug 'tpope/vim-rsi'
+    "     let g:rsi_no_meta = 1
 
     " Comment text in and out
     Plug 'tpope/vim-commentary'
@@ -148,7 +149,8 @@ call plug#begin($plugDir)
     Plug 'jiangmiao/auto-pairs'
         " let g:AutoPairsMultilineClose = 0
         " let g:AutoPairsFlyMode = 1
-        let g:AutoPairsShortcutToggle = '<C-X><C-X>'
+        let g:AutoPairsShortcutToggle = '<C-X>x'
+        let g:AutoPairsMapCh = ''
         let b:autopairs_enabled = 0
 
     " Comment text object
@@ -259,7 +261,9 @@ call plug#begin($plugDir)
 
     " Template texts to insert automatically
     Plug 'honza/vim-snippets'
+
     Plug 'mathijs-bakker/vim-unity-snippets', { 'for': 'cs' }
+        let g:UltiSnipsSnippetDirectories=["UltiSnips", "UnitySnippets"]
 
     " Show 'Code Actions available' icon
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }

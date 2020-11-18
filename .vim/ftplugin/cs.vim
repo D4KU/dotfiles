@@ -4,6 +4,7 @@ let b:AutoPairs = AutoPairsDefine({
     \ '#region' : '#endregion',
     \ '#if' : '#endif',
     \})
+let b:autopairs_enabled = 0
 
 " Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
@@ -18,7 +19,7 @@ let g:OmniSharp_typeLookupInPreview = 1
 
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible).
-" set completeopt=longest,menuone,preview,popuphidden
+set completeopt=longest,menuone,preview,popuphidden
 
 " Fetch full documentation during omnicomplete requests.
 " By default, only Type/Method signatures are fetched. Full documentation can
@@ -27,20 +28,8 @@ let g:omnicomplete_fetch_full_documentation = 0
 let g:OmniSharp_selector_findusages = 'fzf'
 let g:OmniSharp_highlighting = 0
 
-" Popup behaviour
-" let g:OmniSharp_popup_position = 'center'
-let g:OmniSharp_popup_mappings = {
-    \ 'sigNext': '<C-J>',
-    \ 'sigPrev': '<C-K>',
-    \ 'sigParamNext': '<C-L>',
-    \ 'sigParamPrev': '<C-H>'
-    \}
-let g:OmniSharp_popup_options = {
-    \ 'padding': [1],
-    \}
-
 " Enable snippet completion using ultisnips plugin
-let g:OmniSharp_want_snippet = 1
+" let g:OmniSharp_want_snippet = 1
 
 augroup omnisharp_commands
     autocmd!
@@ -49,8 +38,8 @@ augroup omnisharp_commands
 augroup END
 
 " Trigger completion when certain characters are inserted
-imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
-" imap <silent> <buffer> ( (<Esc><Plug>(omnisharp_signature_help)a
+imap <silent> <buffer> , ,<C-O><Plug>(omnisharp_signature_help)
+imap <silent> <buffer> ( (<C-O><Plug>(omnisharp_signature_help)
 imap <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.

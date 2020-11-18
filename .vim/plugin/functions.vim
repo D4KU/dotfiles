@@ -32,6 +32,7 @@ function! CursorInComment()
 endfunction
 
 " Insert semicolon at the line's end under certain conditions
+" Return the string to insert at the cursor position
 function! SmartSemicolon()
     let pos = getpos('.')
     let curLineNum = pos[1]
@@ -47,12 +48,19 @@ function! SmartSemicolon()
             \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
             \ && nextLine !~ '{$'
             \ && (curLineInd >= nextLineInd || nextLineEmpty)
-        exec("normal! A;")
+        try
+            " Insert semicolon at the lines' end
+            exec("normal! A;")
+        catch
+            " If insert mode can't be left, insert semicolon at
+            " end without restoring original cursor position
+            return "\<End>;"
+        endtry
+        " Restore original cursor position
         call setpos('.', pos)
         return ""
-    else
-        return ";"
     endif
+    return ";"
 endfunction
 
 " Undo all changes on current line

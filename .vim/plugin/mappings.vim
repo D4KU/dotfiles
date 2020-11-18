@@ -59,7 +59,7 @@ nnoremap [S [s1z=
 nnoremap ]S ]s1z=
 
 " Fix last spell error without leaving insert mode (with undo breaks)
-inoremap <C-X>s <C-G>u<Esc>[s1z=`]a<C-G>u
+inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u
 
 " Open and close stuff
 " noremap <Leader>n :<C-U>tabnew<CR>
