@@ -234,3 +234,11 @@ class fasd(Command):
         dirs = output.strip().split("\n")
         dirs.sort(reverse=True)  # Listed in ascending frecency
         return dirs
+
+
+# Mount last letter of current path
+class mnt(Command):
+    def execute(self):
+        drive = self.fm.thisdir.path[-1]
+        cmd = "sudo mount -t drvfs " + drive.upper() + ": /mnt/" + drive
+        self.fm.execute_command(cmd)
