@@ -1,0 +1,37 @@
+snippet mono "Unity MonoBehaviour" b
+using UnityEngine;
+
+public class $1 : MonoBehaviour
+{
+    $0
+}
+endsnippet
+
+snippet onva "OnValidate()" b
+private void OnValidate()
+{
+    $0
+}
+endsnippet
+
+snippet start "Start()" b
+private void Start()
+{
+    $0
+}
+endsnippet
+
+snippet upda "Update()" b
+private void Update()
+{
+    $0
+}
+endsnippet
+
+snippet reqc "Require Component" b
+[RequireComponent(typeof($1))]
+endsnippet
+
+snippet exa "Execute Always" b
+[ExecuteAlways]
+endsnippet
