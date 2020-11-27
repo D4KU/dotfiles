@@ -1,6 +1,8 @@
 alias rg='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias gp='git pull'
 alias gP='git push'
+alias gs='git status'
+alias gc='git commit -m'
 alias db='dotbare'
 alias gn='geeknote'
 alias x-www-browser='firefox.exe'
@@ -15,8 +17,6 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 eval "$(fasd --init auto)"
 eval "$(thefuck --alias)"
-
-. ~/.forgit/forgit.plugin.sh
 
 ######################## Opening files ########################
 # fe [FUZZY PATTERN] - Open the selected file with the default editor

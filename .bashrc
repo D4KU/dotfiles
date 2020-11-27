@@ -116,4 +116,5 @@ stty -ixon
 export DISPLAY=localhost:0.0
 
 . ~/.zinit/plugins/kazhala---dotbare/dotbare.plugin.bash
+. ~/.zinit/plugins/wfxr---forgit/forgit.plugin.sh
 [ -f ~/.posixrc ] && . ~/.posixrc

@@ -8,8 +8,7 @@ export ZSH="/home/david/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="random"
-# Good ones: kennethreitz
+ZSH_THEME="kennethreitz"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -43,7 +42,7 @@ ZSH_THEME="random"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -110,22 +109,7 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions
 
 zinit light kazhala/dotbare
+zinit light wfxr/forgit
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 [ -f ~/.posixrc ] && . ~/.posixrc
-
-# vf - fuzzy open with vim from anywhere
-# ex: vf word1 word2 ... (even part of a file name)
-# zsh autoload function
-vf() {
-  local files
-
-  files=(${(f)"$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1 -m)"})
-
-  if [[ -n $files ]]
-  then
-     vim -- $files
-     print -l $files[1]
-  fi
-}
-
