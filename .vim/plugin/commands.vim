@@ -30,6 +30,10 @@ autocmd BufReadPost *
 " Add every opened file to fasd
 autocmd BufReadPost * silent call system('fasd -A'.expand('%'))
 
+" Set filetype to shell script if file ends on 'rc' and no other filetype is
+" set
+autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=sh | endif
+
 " Dir of current file
 cabbrev <expr> %% expand('%:p:h')
 
