@@ -15,31 +15,17 @@ export EDITOR="$VISUAL"
 # show when running in a shell spawned by ranger
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
-eval "$(fasd --init auto)"
+eval "$(fasd --init posix-hook)"
 eval "$(thefuck --alias)"
 
 ######################## Opening files ########################
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
-if alias f > /dev/null; then
-    unalias f
-fi
 f() (
-  IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
+  IFS=$'\n'
+  files=($(find ${1:-.} -type f 2> /dev/null | fzf --multi --select-1 --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-)
-
-# Modified version where you can press
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
-fo() (
-  IFS=$'\n' out=("$(fzf --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)")
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
 )
 
 # fuzzy grep open via ag
@@ -56,14 +42,15 @@ vg() {
 }
 
 ######################## Changing directory ########################
-# fd - cd to selected directory
-fd() {
+# d - cd to selected directory
+d() {
   local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
+  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m)
+  cd "$dir"
 }
 
 # fdr - cd to selected parent directory
-fdr() {
+dr() {
   local declare dirs=()
   get_parent_dirs() {
     if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
@@ -73,8 +60,8 @@ fdr() {
       get_parent_dirs $(dirname "$1")
     fi
   }
-  local DIR=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
-  cd "$DIR"
+  local dir=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
+  cd "$dir"
 }
 
 # cf - fuzzy cd from anywhere
@@ -113,7 +100,6 @@ fh() {
 # tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
 # `tm` will allow you to select your tmux session via fzf.
 # `tm irc` will attach to the irc session (if it exists), else it will create it.
-
 tm() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
@@ -156,20 +142,21 @@ ftpane() {
 # open best matched file using `fasd` if given argument,
 # filter output of `fasd` using `fzf` else
 v() {
-    [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return
-    local file
-    file="$(fasd -Rfl "$1" | fzf -1 -0 --no-sort +m)" && vi "${file}" || return 1
+  [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return $?
+  local file
+  file="$(fasd -Rfl "$1" | fzf -1 -0 --no-sort +m)" && vi "${file}"
 }
 
 # open best matched dir using `fasd` if given argument,
 # filter output of `fasd` using `fzf` else
-if alias z > /dev/null; then 
-    unalias z
-fi
 z() {
-    [ $# -gt 0 ] && fasd_cd -d "$*" && return
-    local dir
-    dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort)" && cd "${dir}" || return 1
+  local dir
+  if [ $# -gt 0 ]; then
+    dir=$(fasd -de 'printf %s' $*)
+  else
+    dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort)"
+  fi
+  cd "${dir}"
 }
 
 # cd into directory of file chosen via fasd

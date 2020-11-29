@@ -8,7 +8,7 @@ export ZSH="/home/david/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="kennethreitz"
+# ZSH_THEME="daku"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -50,7 +50,7 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -69,7 +69,9 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    magic-enter
     vi-mode
+    wd
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -113,3 +115,35 @@ zinit light wfxr/forgit
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 [ -f ~/.posixrc ] && . ~/.posixrc
+
+# Theme =============================================================
+zmodload zsh/zle
+
+function zle-line-init () {
+    # Set beam cursor
+    echo -ne '\e[5 q'
+}
+
+function zle-keymap-select () {
+    # Only supported in these terminals
+    if [ "$TERM" = "xterm-256color" ]\
+    || [ "$TERM" = "xterm-kitty" ]\
+    || [ "$TERM" = "screen-256color" ]; then
+       if [ $KEYMAP = vicmd ]; then
+            # Set block cursor
+            echo -ne '\e[1 q'
+        else
+            # Set beam cursor
+            echo -ne '\e[5 q'
+        fi
+    fi
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# Reduce latency when pressing <Esc>
+export KEYTIMEOUT=1
+
+PROMPT='%F{240}%4~ %(?.%F{green}.%F{203})%(!.#.»)%f '
+# RPS1='%F{240}${${PWD//#$HOME/~}%/*}'
