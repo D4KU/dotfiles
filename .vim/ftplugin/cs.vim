@@ -1,10 +1,11 @@
 " Automatically close angled brackets when preceded by word
-let b:AutoPairs = AutoPairsDefine({
-    \ '\w\zs<' : '>',
-    \ '#region' : '#endregion',
-    \ '#if' : '#endif',
-    \})
-let b:autopairs_enabled = 0
+if exists("g:AutoPairs")
+    let b:AutoPairs = AutoPairsDefine({
+        \ '\w\zs<' : '>',
+        \ '#region' : '#endregion',
+        \ '#if' : '#endif',
+        \})
+endif
 
 " Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
@@ -40,7 +41,7 @@ augroup END
 " Trigger completion when certain characters are inserted
 imap <silent> <buffer> , ,<C-O><Plug>(omnisharp_signature_help)
 imap <silent> <buffer> ( (<C-O><Plug>(omnisharp_signature_help)
-imap <buffer> . .<C-X><C-O>
+imap <silent> <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <LocalLeader>d <Plug>(omnisharp_go_to_definition)
@@ -57,7 +58,7 @@ nmap <silent> <buffer> <LocalLeader>x <Plug>(omnisharp_fix_usages)
 nmap <silent> <buffer> <LocalLeader>h <Plug>(omnisharp_type_lookup)
 nmap <silent> <buffer> <F1> <Plug>(omnisharp_documentation)
 nmap <silent> <buffer> <LocalLeader>s <Plug>(omnisharp_signature_help)
-imap <silent> <buffer> <C-X><C-S> <Plug>(omnisharp_signature_help)
+imap <silent> <buffer> <C-X>h <Plug>(omnisharp_signature_help)
 
 " Find all code errors/warnings for the current solution and populate
 " the quickfix window

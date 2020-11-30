@@ -37,8 +37,9 @@ call plug#begin($plugDir)
         " Insert mode completion
         imap <C-X>k        <Plug>(fzf-complete-word)
         imap <C-X>f        <Plug>(fzf-complete-path)
-        imap <C-X>j        <Plug>(fzf-complete-file-ag)
-        imap <C-X>l        <Plug>(fzf-complete-line)
+        imap <C-X>j        <Plug>(fzf-complete-file)
+        imap <C-X>l        <Plug>(fzf-complete-buffer-line)
+        imap <C-X>L        <Plug>(fzf-complete-line)
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -90,6 +91,8 @@ call plug#begin($plugDir)
 
     " Motions based on indent depths
     Plug 'jeetsukumaran/vim-indentwise'
+        map [<Bar> <Plug>(IndentWiseBlockScopeBoundaryBegin)
+        map ]<Bar> <Plug>(IndentWiseBlockScopeBoundaryEnd)
 
     " Replace ; key
     Plug 'rhysd/clever-f.vim'
@@ -145,13 +148,17 @@ call plug#begin($plugDir)
         nmap cH cxiwbcxiww
 
     " ============================== Autocommands ============================
+    " Jump between pairs
+    Plug 'andymass/vim-matchup'
+
     " Automatically close brackets
-    Plug 'jiangmiao/auto-pairs'
+    " Plug 'jiangmiao/auto-pairs'
         " let g:AutoPairsMultilineClose = 0
         " let g:AutoPairsFlyMode = 1
-        let g:AutoPairsShortcutToggle = '<C-X>x'
-        let g:AutoPairsMapCh = ''
-        let b:autopairs_enabled = 0
+        " let b:autopairs_enabled = 0
+        " let g:AutoPairsCenterLine = 0
+        " let g:AutoPairsShortcutToggle = '<C-X>x'
+        " let g:AutoPairsMapCh = ''
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'
@@ -183,6 +190,12 @@ call plug#begin($plugDir)
 
     " Make plugin commands repeatable
     Plug 'tpope/vim-repeat'
+
+    " Automatically close pairs
+    Plug 'tmsvg/pear-tree'
+        let g:pear_tree_smart_openers = 1
+        let g:pear_tree_smart_closers = 1
+        let g:pear_tree_smart_backspace = 1
 
     " ============================== New gadgets =============================
     " Calculator
@@ -221,7 +234,6 @@ call plug#begin($plugDir)
 
     " ============================== Coding ==================================
     " Switch between single and multi line forms of code
-    " TODO find out if it's adding anything to Argwrap
     " Plug 'andrewradev/splitjoin.vim', { 'for': [ 'python', 'cs' ] }
     "     let g:splitjoin_trailing_comma = 1
 
