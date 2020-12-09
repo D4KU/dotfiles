@@ -1,4 +1,4 @@
-alias rg='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias gp='git pull'
 alias gP='git push'
 alias gs='git status'
@@ -18,39 +18,40 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 eval "$(fasd --init posix-hook)"
 eval "$(thefuck --alias)"
 
+# Common fzf options
+fzf_ops=(--preview "cat {}" -0 -1)
+
 ######################## Opening files ########################
-# fe [FUZZY PATTERN] - Open the selected file with the default editor
-#   - Bypass fuzzy finder if there's only one match (--select-1)
-#   - Exit if there's no match (--exit-0)
+# Open the selected file with the default editor
 f() (
   IFS=$'\n'
-  files=($(find ${1:-.} -type f 2> /dev/null | fzf --multi --select-1 --exit-0))
+  files=$(fzf ${fzf_ops[@]} --multi)
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 )
 
-# fuzzy grep open via ag
-vg() {
-  local file
-  local line
+# Like f, but also show hidden files
+fa() (
+  IFS=$'\n'
+  files=($(find ${1:-.} -type f 2> /dev/null | fzf ${fzf_ops[@]} --multi))
+  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+)
 
-  read -r file line <<<"$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
-
-  if [[ -n $file ]]
-  then
-     vim $file +$line
-  fi
+ff() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  hi="highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+  rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi
 }
 
 ######################## Changing directory ########################
-# d - cd to selected directory
-d() {
+# cd to selected directory
+c() {
   local dir
   dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m)
   cd "$dir"
 }
 
-# fdr - cd to selected parent directory
-dr() {
+# cd to selected parent directory
+cr() {
   local declare dirs=()
   get_parent_dirs() {
     if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
@@ -64,30 +65,11 @@ dr() {
   cd "$dir"
 }
 
-# cf - fuzzy cd from anywhere
-# ex: cf word1 word2 ... (even part of a file name)
-# zsh autoload function
+# cd into the directory of the selected file
 cf() {
-  local file
-
-  file="$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1)"
-
-  if [[ -n $file ]]
-  then
-     if [[ -d $file ]]
-     then
-        cd -- $file
-     else
-        cd -- "$(dirname "$file")"
-     fi
-  fi
-}
-
-# cdf - cd into the directory of the selected file
-cdf() {
    local file
    local dir
-   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+   file=$(fzf ${fzf_ops[@]} +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
 ######################## Command history ########################
@@ -144,7 +126,7 @@ ftpane() {
 v() {
   [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return $?
   local file
-  file="$(fasd -Rfl "$1" | fzf -1 -0 --no-sort +m)" && vi "${file}"
+  file="$(fasd -Rfl "$1" | fzf ${fzf_ops[@]} --no-sort +m)" && vi "${file}"
 }
 
 # open best matched dir using `fasd` if given argument,
