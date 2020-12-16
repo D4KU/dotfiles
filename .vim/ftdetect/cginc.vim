@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.cginc set filetype=shaderlab
+autocmd BufRead,BufNewFile *.cginc set filetype=hlsl

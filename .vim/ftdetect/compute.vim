@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.compute set filetype=shaderlab
+autocmd BufRead,BufNewFile *.compute set filetype=hlsl

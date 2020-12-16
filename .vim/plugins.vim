@@ -267,7 +267,7 @@ call plug#begin($plugDir)
             \ }
 
     " Wrap and unwrap function arguments
-    Plug 'foosoft/vim-argwrap', { 'for': [ 'python', 'cs' ] }
+    Plug 'foosoft/vim-argwrap'
         nmap <Leader>p <Plug>(ArgWrapToggle)
         let g:argwrap_wrap_closing_brace = 0
 
@@ -275,7 +275,7 @@ call plug#begin($plugDir)
     Plug 'honza/vim-snippets'
 
     Plug 'mathijs-bakker/vim-unity-snippets', { 'for': 'cs' }
-        let g:UltiSnipsSnippetDirectories=["UltiSnips", "UnitySnippets"]
+        let g:UltiSnipsSnippetDirectories=['UltiSnips', 'UnitySnippets']
 
     " Show 'Code Actions available' icon
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
@@ -304,9 +304,9 @@ call plug#begin($plugDir)
     " Snippet engine
     if has('python3')
         Plug 'sirver/ultisnips'
-            let g:UltiSnipsExpandTrigger="<C-S>"
-            let g:UltiSnipsJumpForwardTrigger="<C-B>"
-            let g:UltiSnipsJumpBackwardTrigger="<C-Z>"
+            let g:UltiSnipsExpandTrigger='<C-S>'
+            let g:UltiSnipsJumpForwardTrigger=g:UltiSnipsExpandTrigger
+            let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
     endif
 
     " =========================== Writing prose ==============================

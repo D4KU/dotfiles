@@ -20,7 +20,8 @@ let g:OmniSharp_typeLookupInPreview = 1
 
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible).
-set completeopt=longest,menuone,preview,popuphidden
+setlocal completeopt=longest,menuone,preview,popuphidden
+setlocal commentstring=//%s
 
 " Fetch full documentation during omnicomplete requests.
 " By default, only Type/Method signatures are fetched. Full documentation can
@@ -39,9 +40,10 @@ augroup omnisharp_commands
 augroup END
 
 " Trigger completion when certain characters are inserted
-imap <silent> <buffer> , ,<C-O><Plug>(omnisharp_signature_help)
-imap <silent> <buffer> ( (<C-O><Plug>(omnisharp_signature_help)
-imap <silent> <buffer> . .<C-X><C-O>
+" <C-O> not working correctly, <Esc>...a does
+imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
+imap <silent> <buffer> ( (<Esc><Plug>(omnisharp_signature_help)a
+inoremap <silent> <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <LocalLeader>d <Plug>(omnisharp_go_to_definition)

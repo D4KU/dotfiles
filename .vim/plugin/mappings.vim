@@ -34,14 +34,11 @@ nnoremap <Esc>j <C-Y>
 nnoremap <Esc>k <C-E>
 
 " Insert a single character in front or behind cursor
-nnoremap cd a_<Esc>r
-nnoremap cD i_<Esc>r
-
-" Delete line without yanking line break
-nnoremap dD ^D"_dd
+nnoremap cd i_<Esc>r
+nnoremap cD a_<Esc>r
 
 " Paste without newline
-nnoremap zP mzp^D"_ddg`zp
+nnoremap zp mzp^D"_ddg`zP
 
 "Test" Map Alt-L and Alt-H to resize vertical splits
 nnoremap <Esc>l <C-W>5<
@@ -53,6 +50,9 @@ nnoremap z} }ge
 
 " Substitute word under cursor
 nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
+
+" Join all non-empty lines
+nnoremap <Leader>j :%s/\(\S\s*\)\n\(\s*\S\)/\1 \2<CR>
 
 " Move between errors and automatically pick first fix
 nnoremap [S [s1z=
@@ -81,7 +81,7 @@ nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
 noremap <F3> :call ToggleLight()<CR>
 noremap <silent> gK :call Doc()<CR>
 
-autocmd FileType cs,shaderlab
+autocmd FileType cs,shaderlab,hlsl
     \ inoremap <silent> <buffer> ; <C-R>=SmartSemicolon()<CR>
 
 " Esc during completion confirms and exits insert mode
