@@ -48,6 +48,7 @@ function! SmartSemicolon()
             \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
             \ && nextLine !~ '{$'
             \ && (curLineInd >= nextLineInd || nextLineEmpty)
+            \ && curLine !~ '^\s*for\s\?('
         try
             " Insert semicolon at the lines' end
             exec("normal! A;")

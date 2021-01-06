@@ -1,12 +1,3 @@
-" Automatically close angled brackets when preceded by word
-if exists("g:AutoPairs")
-    let b:AutoPairs = AutoPairsDefine({
-        \ '\w\zs<' : '>',
-        \ '#region' : '#endregion',
-        \ '#if' : '#endif',
-        \})
-endif
-
 " Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
 
@@ -56,7 +47,7 @@ nmap <silent> <buffer> <LocalLeader>u <Plug>(omnisharp_find_usages)
 
 " Finds members in the current buffer
 nmap <silent> <buffer> <LocalLeader>m <Plug>(omnisharp_find_members)
-nmap <silent> <buffer> <LocalLeader>x <Plug>(omnisharp_fix_usages)
+nmap <silent> <buffer> <LocalLeader>x <Plug>(omnisharp_fix_usings)
 nmap <silent> <buffer> <LocalLeader>h <Plug>(omnisharp_type_lookup)
 nmap <silent> <buffer> <F1> <Plug>(omnisharp_documentation)
 nmap <silent> <buffer> <LocalLeader>s <Plug>(omnisharp_signature_help)
