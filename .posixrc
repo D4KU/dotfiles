@@ -1,4 +1,4 @@
-alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias gp='git pull'
 alias gP='git push'
 alias gs='git status'
@@ -39,7 +39,8 @@ fa() (
 ff() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   hi="highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
-  rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi
+  file=$(rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi)
+  [[ -n "$file" ]] && vim -c "call search('$1', 'c')" "$file"
 }
 
 ######################## Changing directory ########################
