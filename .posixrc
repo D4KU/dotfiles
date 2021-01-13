@@ -8,11 +8,14 @@ alias gn='geeknote'
 alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
 
-# set default editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# show when running in a shell spawned by ranger
+# Enable Ctrl-S in vim
+stty -ixon
+
+# Show when running in a shell spawned by ranger
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 eval "$(fasd --init posix-hook)"
