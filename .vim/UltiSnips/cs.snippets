@@ -28,18 +28,51 @@ private void Update()
 }
 endsnippet
 
-snippet reqc "Require Component" b
+snippet [R "Require Component" b
 [RequireComponent(typeof($1))]
 endsnippet
 
-snippet exa "Execute Always" b
+snippet [E "Execute Always" b
 [ExecuteAlways]
 endsnippet
 
-snippet tool "Tooltip" b
+snippet [T "Tooltip" b
 [Tooltip("$0")]
 endsnippet
 
-snippet head "Header" b
+snippet [H "Header" b
 [Header("$0")]
+endsnippet
+
+snippet [S "Serializable" b
+[Serialiable]
+endsnippet
+
+snippet <pr
+  <paramref name="${1}"/>
+endsnippet
+
+snippet <t
+  <typeparam name="${1}">${2:$1}</typeparam>
+endsnippet
+
+snippet <tr
+  <typeparamref name="${1}"/>
+endsnippet
+
+snippet <l
+  <list type="${1:number}">
+    <listheader>
+      <term>$2</term>
+      <description>$3</description>
+    </listheader>
+		$0
+  </list>
+endsnippet
+
+snippet <i
+  <item>
+    <term>$1</term>
+    <description>$2</description>
+  </item>
 endsnippet
