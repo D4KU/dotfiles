@@ -5,7 +5,7 @@
     "alwaysShowTabs": false,
     "confirmCloseAllTabs": false,
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-    "launchMode": "maximized",
+    "launchMode": "fullscreen",
 
     "profiles":
     {
@@ -15,7 +15,8 @@
             "fontSize": 10,
             "scrollbarState": "hidden",
             "source": "Windows.Terminal.Wsl",
-            "startingDirectory": "//wsl$/Ubuntu/home/david/"
+            "startingDirectory": "//wsl$/Ubuntu/home/david/",
+            "padding": "12, 12, 12, 0"
         },
         "list":
         [

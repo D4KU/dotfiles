@@ -5,6 +5,7 @@ alias gs='git status'
 alias gc='git commit -m'
 alias db='dotbare'
 alias gn='geeknote'
+alias up='sudo apt-get update && sudo apt-get upgrade'
 alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
 
