@@ -6,9 +6,6 @@ let g:OmniSharp_server_stdio = 1
 let g:OmniSharp_server_path = '/mnt/c/omnisharp/OmniSharp.exe'
 let g:OmniSharp_translate_cygwin_wsl = 1
 
-" Set the type lookup function to use the preview window instead of echoing it
-let g:OmniSharp_typeLookupInPreview = 1
-
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible).
 setlocal completeopt=longest,menuone,preview,popuphidden
@@ -19,9 +16,9 @@ setlocal commentstring=//%s
 " still be fetched when you need it with the :OmniSharpDocumentation command.
 let g:omnicomplete_fetch_full_documentation = 0
 let g:OmniSharp_selector_findusages = 'fzf'
+let g:OmniSharp_completion_without_overloads = 1
 let g:OmniSharp_highlighting = 0
-
-" Enable snippet completion using ultisnips plugin
+let g:OmniSharp_typeLookupInPreview = 1
 " let g:OmniSharp_want_snippet = 1
 
 augroup omnisharp_commands

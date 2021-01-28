@@ -58,6 +58,11 @@ call plug#begin($plugDir)
     Plug 'lilydjwg/colorizer'
         let g:colorizer_maxlines = 500
 
+    " Highlight trailing whitespace
+    Plug 'ntpeters/vim-better-whitespace'
+        nnoremap ]w :NextTrailingWhitespace<CR>
+        nnoremap [w :PrevTrailingWhitespace<CR>
+
     " Highlight words equal to the one under cursor
     Plug 'RRethy/vim-illuminate'
         let g:Illuminate_delay = 100
@@ -71,6 +76,11 @@ call plug#begin($plugDir)
 
     " Shader file highlighting
     Plug 'vim-scripts/ShaderHighLight'
+
+    " Keep showing outer blocks around cursor
+    Plug 'wellle/context.vim'
+        let g:context_border_char = ' '
+        let g:context_highlight_tag = '<hide>'
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine', { 'for': [ 'python', 'cs' ] }
@@ -120,6 +130,9 @@ call plug#begin($plugDir)
         " Interactive align in visual mode
         vmap <Leader>a <Plug>(EasyAlign)
 
+    " Quickly create tag hierarchies
+    Plug 'mattn/emmet-vim'
+
     " Close buffer without closing window
     Plug 'moll/vim-bbye'
 
@@ -147,9 +160,21 @@ call plug#begin($plugDir)
         nmap cL cxiwwcxiwb
         nmap cH cxiwbcxiww
 
+    " Completion for text in adjacent tmux panes
+    Plug 'wellle/tmux-complete.vim'
+
+    " Resize split to selection
+    Plug 'wellle/visual-split.vim'
+
     " ============================== Autocommands ============================
     " Jump between pairs
     Plug 'andymass/vim-matchup'
+
+    " Search for selection
+    Plug 'bronson/vim-visual-star-search'
+
+    " Word column text object
+    Plug 'coderifous/textobj-word-column.vim'
 
     " Automatically close brackets
     " Plug 'jiangmiao/auto-pairs'
@@ -162,13 +187,22 @@ call plug#begin($plugDir)
 
     " Comment text object
     Plug 'glts/vim-textobj-comment'
+        let g:textobj_comment_no_default_key_mappings = 1
+        xmap ax <Plug>(textobj-comment-a)
+        omap ax <Plug>(textobj-comment-a)
+        xmap ix <Plug>(textobj-comment-i)
+        omap ix <Plug>(textobj-comment-i)
+        xmap Ax <Plug>(textobj-comment-big-a)
+        omap Ax <Plug>(textobj-comment-big-a)
 
     " Text object for text after a character
     Plug 'junegunn/vim-after-object'
-        autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '_', '/')
+        autocmd VimEnter * call after_object#enable(
+            \ ['s', 'p'],
+            \ '=', ':', '-', '#', ' ', '_', '/')
 
     " Sub-clause / function argument text object
-    Plug 'peterrincker/vim-argumentative'
+    " Plug 'peterrincker/vim-argumentative'
 
     " I and A to prepend/append to visual selection
     Plug 'kana/vim-niceblock'
@@ -178,12 +212,6 @@ call plug#begin($plugDir)
 
     " Text object for last searched pattern
     Plug 'kana/vim-textobj-lastpat'
-
-    " Text object for current line
-    Plug 'kana/vim-textobj-line'
-
-    " Text object for functions
-    Plug 'kana/vim-textobj-function'
 
     " Indent text object
     Plug 'michaeljsmith/vim-indent-object'
@@ -196,6 +224,13 @@ call plug#begin($plugDir)
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
         let g:pear_tree_smart_backspace = 1
+
+    " Many more text objects
+    Plug 'wellle/targets.vim'
+        let g:targets_nl = 'nN'
+
+    " Line text object
+    Plug 'wellle/line-targets.vim'
 
     " ============================== New gadgets =============================
     " Calculator
@@ -230,7 +265,7 @@ call plug#begin($plugDir)
     Plug 'tpope/vim-abolish'
 
     " Rename currently edited file
-    Plug 'vim-scripts/Rename2' 
+    Plug 'vim-scripts/Rename2'
 
     " ============================== Coding ==================================
     " Switch between single and multi line forms of code
@@ -244,6 +279,7 @@ call plug#begin($plugDir)
     " let g:ale_completion_enabled = 1
     Plug 'dense-analysis/ale', { 'for': [ 'python', 'cs' ] }
         nmap gl <Plug>(ale_lint)
+        nmap gL <Plug>(ale_fix)
         nmap [k <Plug>(ale_previous_wrap)
         nmap ]k <Plug>(ale_next_wrap)
         nmap [K <Plug>(ale_first)
@@ -283,7 +319,7 @@ call plug#begin($plugDir)
 
     " " Smart comma & semicolon insertion
     " Plug 'd4ku/cosco.vim', { 'for': ['cs', 'shaderlab'] }
-    "     let g:cosco_ignore_comment_lines = 1        
+    "     let g:cosco_ignore_comment_lines = 1
     "     " let g:cosco_ignore_ft_pattern = {
     "     "   \ 'cs': '^#',
     "     "   \}
@@ -321,7 +357,7 @@ call plug#begin($plugDir)
         nnoremap <silent> <F4> :<C-U>Goyo<CR>
         autocmd! User GoyoEnter nested Limelight
         autocmd! User GoyoLeave nested Limelight!
-        
+
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'
 
