@@ -131,7 +131,7 @@ call plug#begin($plugDir)
         vmap <Leader>a <Plug>(EasyAlign)
 
     " Quickly create tag hierarchies
-    Plug 'mattn/emmet-vim'
+    " Plug 'mattn/emmet-vim'
 
     " Close buffer without closing window
     Plug 'moll/vim-bbye'
@@ -203,6 +203,9 @@ call plug#begin($plugDir)
 
     " Sub-clause / function argument text object
     " Plug 'peterrincker/vim-argumentative'
+
+    " Copy text to windows clipboard
+    Plug 'kana/vim-fakeclip'
 
     " I and A to prepend/append to visual selection
     Plug 'kana/vim-niceblock'
@@ -345,6 +348,9 @@ call plug#begin($plugDir)
             let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
     endif
 
+    " Makes vim a better merge tool for git
+    Plug 'samoshkin/vim-mergetool'
+
     " =========================== Writing prose ==============================
     " Preview markdown in browser
     " Plug 'iamcco/markdown-preview.nvim', {
@@ -362,5 +368,10 @@ call plug#begin($plugDir)
     Plug 'junegunn/limelight.vim'
 
     " Highlight bad word choices
-    " Plug 'reedes/vim-wordy', { 'for': [ 'txt', 'markdown' ] }
+    " Plug 'reedes/vim-wordy', { 'for': [ 'text', 'markdown' ] }
+
+    " Spell autocorrection
+    Plug 'sedm0784/vim-you-autocorrect', { 'for': [ 'text', 'markdown' ] }
+        " autocmd! FileType markdown EnableAutocorrect
+
 call plug#end()

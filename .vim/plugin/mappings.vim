@@ -30,8 +30,10 @@ noremap <Leader>v :<C-U>vsplit<CR>
 noremap <Leader>V :<C-U>vsplit<CR><C-W>H
 
 " Map Alt-J and Alt-K to move view up and down
-nnoremap <Esc>j <C-Y>
-nnoremap <Esc>k <C-E>
+nnoremap <Esc>j 2<C-Y>
+nnoremap <Esc>k 2<C-E>
+nnoremap <Esc>J 10<C-Y>
+nnoremap <Esc>K 10<C-E>
 
 " Insert a single character in front or behind cursor
 nnoremap cd i_<Esc>r
@@ -70,10 +72,6 @@ noremap <Leader>L :<C-U>lclose<CR>
 " In- and decrease the window size by a factor of 1.5
 noremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 noremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-
-" Copy text into Windows Clipboard
-noremap <Leader>y :call system('clip.exe', GetSelectedText())<CR>
-noremap <Leader>Y :call system('clip.exe', GetSelectedText())<CR>gvx
 
 " Break strings at textwidth
 nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
