@@ -195,6 +195,9 @@ call plug#begin($plugDir)
         xmap Ax <Plug>(textobj-comment-big-a)
         omap Ax <Plug>(textobj-comment-big-a)
 
+    " Function text object
+    Plug 'jamesl33/vim-textobj-function'
+
     " Text object for text after a character
     Plug 'junegunn/vim-after-object'
         autocmd VimEnter * call after_object#enable(
@@ -371,7 +374,7 @@ call plug#begin($plugDir)
     " Plug 'reedes/vim-wordy', { 'for': [ 'text', 'markdown' ] }
 
     " Spell autocorrection
-    Plug 'sedm0784/vim-you-autocorrect', { 'for': [ 'text', 'markdown' ] }
+    " Plug 'sedm0784/vim-you-autocorrect', { 'for': [ 'text', 'markdown' ] }
         " autocmd! FileType markdown EnableAutocorrect
 
 call plug#end()

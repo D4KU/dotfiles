@@ -42,13 +42,16 @@ nnoremap cD a_<Esc>r
 " Paste without newline
 nnoremap zp mzp^D"_ddg`zP
 
-"Test" Map Alt-L and Alt-H to resize vertical splits
+" Map Alt-L and Alt-H to resize vertical splits
 nnoremap <Esc>l <C-W>5<
 nnoremap <Esc>h <C-W>5>
 
-" Move to first and last word in paragraph
-nnoremap z{ {w
-nnoremap z} }ge
+" Remove blank lines before and after paragraph
+nnoremap <Leader>{ {dd<C-O>
+nnoremap <Leader>} }dd<C-O>
+
+" Select a C-style function from inside definition block
+nnoremap ]{ vaBo{bl
 
 " Substitute word under cursor
 nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
