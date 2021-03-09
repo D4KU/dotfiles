@@ -1,0 +1,67 @@
+snippet prop
+		${1}: bpy.props.${2}Property(${0})
+endsnippet
+
+snippet operator
+class ${1}(bpy.types.Operator):
+    bl_idname = '${2}'
+    bl_label = '${3}'
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        ${0}
+        return {"FINISHED"}
+endsnippet
+
+snippet panel
+class ${1}(bpy.types.Panel):
+    bl_label = "${2}"
+    bl_category = "${3}"
+    bl_space_type = '${4:VIEW_3D}'
+    bl_region_type = '${5:UI}'
+
+    def draw(self, context):
+				${0}
+endsnippet
+
+snippet enumitems
+items=(
+		${0}('${1}', "${2}", ""),
+)
+endsnippet
+
+snippet bl_info
+bl_info = {
+    "name": "${1}",
+    "description": (
+				""
+    ),
+    "author": "David Kutschke",
+    "version": (0, 0, 1),
+    "blender": (2, 80, 0),
+    "location": "${2:3D View > Sidebar}",
+    "category": "${3:Interface}"
+}
+endsnippet
+
+snippet reload
+from importlib import reload
+if "bpy" in locals():
+    # Blender already started once
+    reload(${1})
+endsnippet
+
+snippet register
+_to_register = (
+)
+
+
+def register():
+    for c in _to_register:
+        bpy.utils.register_class(c)
+
+
+def unregister():
+    for c in _to_register:
+        bpy.utils.unregister_class(c)
+endsnippet
