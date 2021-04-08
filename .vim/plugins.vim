@@ -83,9 +83,12 @@ call plug#begin($plugDir)
         let g:context_highlight_tag = '<hide>'
 
     " Lines mark indentation level
-    Plug 'Yggdroot/indentLine', { 'for': [ 'python', 'cs' ] }
+    Plug 'Yggdroot/indentLine'
         let g:indentLine_enabled = 0
-        let g:indentLine_char_list = ['│']
+        let g:indentLine_char_list = ['¦']
+        let g:indentLine_concealcursor = ''
+        let g:indentLine_faster = 1
+        noremap <silent> <Leader><Bar> :<C-U>IndentLinesToggle<CR>
 
     " ============================== New motions =============================
     " Camel case word motion
