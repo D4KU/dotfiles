@@ -126,9 +126,9 @@ call plug#begin($plugDir)
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align'
         " Interactive align for a motion/text object
-        nmap <Leader>a <Plug>(EasyAlign)
+        nmap <Leader>a <Plug>(LiveEasyAlign)
         " Interactive align in visual mode
-        vmap <Leader>a <Plug>(EasyAlign)
+        vmap <Leader>a <Plug>(LiveEasyAlign)
 
     " Quickly create tag hierarchies
     " Plug 'mattn/emmet-vim'
@@ -201,11 +201,11 @@ call plug#begin($plugDir)
     " Text object for text after a character
     Plug 'junegunn/vim-after-object'
         autocmd VimEnter * call after_object#enable(
-            \ ['s', 'p'],
+            \ ['P', 'p'],
             \ '=', ':', '-', '#', ' ', '_', '/')
 
     " Sub-clause / function argument text object
-    " Plug 'peterrincker/vim-argumentative'
+    Plug 'peterrincker/vim-argumentative'
 
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
@@ -364,11 +364,10 @@ call plug#begin($plugDir)
     " Show only small text area
     Plug 'junegunn/goyo.vim'
         nnoremap <silent> <F4> :<C-U>Goyo<CR>
-        autocmd! User GoyoEnter nested Limelight
-        autocmd! User GoyoLeave nested Limelight!
 
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'
+        nnoremap <silent> <Leader><F4> :<C-U>Limelight!!<CR>
 
     " Highlight bad word choices
     " Plug 'reedes/vim-wordy', { 'for': [ 'text', 'markdown' ] }

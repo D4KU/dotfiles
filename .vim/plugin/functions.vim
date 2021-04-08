@@ -1,10 +1,3 @@
-" Copy text into Windows Clipboard
-func! GetSelectedText()
-    normal gv"xy
-    let result = getreg("x")
-    return result
-endfunc
-
 " Switch between light and dark color schemes
 func! ToggleLight()
   if g:lightactive
@@ -63,6 +56,14 @@ function! SmartSemicolon()
     endif
     return ";"
 endfunction
+
+" Get syntax group under cursor
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 " Undo all changes on current line
 function! Undoline()
@@ -145,4 +146,13 @@ function! FasdZ(str)
         let cmd = 'fasd -d1 ' . a:str
         execute 'e ' . system(cmd)
     endif
+endfunction
+
+" Slower but interactive version of fzf.vim's :Rg command
+function! RgFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction

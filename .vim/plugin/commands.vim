@@ -47,3 +47,6 @@ cabbrev ws w <bar> so %
 command! Fasd call fzf#run(fzf#wrap({'source': 'fasd -al', 'options': '--no-sort --tac --tiebreak=index'}))
 command! -nargs=? Z call FasdZ(<q-args>)
 command! -nargs=? V call FasdV(<q-args>)
+
+" Slower but interactive version of fzf.vim's :Rg command
+command! -nargs=* -bang RG call RgFzf(<q-args>, <bang>0)

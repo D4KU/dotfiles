@@ -1,5 +1,19 @@
 snippet prop
-		${1}: bpy.props.${2}Property(${0})
+${1}: bpy.props.${2}Property(${0})
+endsnippet
+
+snippet Prop
+${1}: bpy.props.${2}Property(
+		name="${3}",
+		description="",
+		default=${4},
+)
+endsnippet
+
+snippet desc
+description=(
+		"${0}"
+),
 endsnippet
 
 snippet operator
@@ -24,7 +38,7 @@ class ${1}(bpy.types.Panel):
 				${0}
 endsnippet
 
-snippet enumitems
+snippet items
 items=(
 		${0}('${1}', "${2}", ""),
 )
