@@ -10,8 +10,8 @@ set ignorecase		    " Do case insensitive matching
 set autowrite		    " Automatically save before commands like :next and :make
 set hidden		    " Hide buffers when they are abandoned
 set lazyredraw              " Don't update the display while executing macros
-set number                  " Show number at center
-set relativenumber          " Show line numbers relative to current one
+" set number                  " Show number at center
+" set relativenumber          " Show line numbers relative to current one
 set ttyfast                 " Send more characters to screen at once
 set shiftwidth=4            " Use indents of 4 spaces
 set softtabstop=4           " Let backspace delete indent
@@ -29,6 +29,7 @@ set foldcolumn:0            " Don't show column indicating folds
 set fillchars+=vert:\       " Set characters in vertical split bar to spaces
 set formatoptions+=j        " Try to remove a comment leader when joining lines
 set formatoptions-=l        " Break too long lines in insert mode
+set formatoptions-=o        " Don't automatically insert comment leader on 'o'
 set belloff=all             " Play no sounds
 set cursorline              " Highlight current line
 set backspace=indent,eol,start " Allow backspacing over start position of insert mode

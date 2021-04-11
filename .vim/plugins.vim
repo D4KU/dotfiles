@@ -225,6 +225,14 @@ call plug#begin($plugDir)
     " Indent text object
     Plug 'michaeljsmith/vim-indent-object'
 
+    " Automatically adjust shiftwidth to current document
+    Plug 'roryokane/detectindent'
+        augroup DetectIndent
+           autocmd! BufReadPost * DetectIndent
+        augroup END
+    " might be better in the future:
+    " Plug 'tpope/vim-sleuth'
+
     " Make plugin commands repeatable
     Plug 'tpope/vim-repeat'
 
@@ -337,8 +345,8 @@ call plug#begin($plugDir)
     Plug 'omniSharp/omnisharp-vim', { 'for': 'cs' }
 
     " Visual debugging
-    " let g:vimspector_enable_mappings = 'HUMAN'
     " Plug 'puremourning/vimspector', { 'for': [ 'cs' ] }
+    "     let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
     " " Adjust indentation of pasted text
     " Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
