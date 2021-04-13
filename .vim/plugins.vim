@@ -35,11 +35,11 @@ call plug#begin($plugDir)
         omap <Leader><Tab> <Plug>(fzf-maps-o)
         imap <C-X>m        <Plug>(fzf-maps-i)
         " Insert mode completion
-        imap <C-X>k        <Plug>(fzf-complete-word)
-        imap <C-X>f        <Plug>(fzf-complete-path)
-        imap <C-X>j        <Plug>(fzf-complete-file)
-        imap <C-X>l        <Plug>(fzf-complete-buffer-line)
-        imap <C-X>L        <Plug>(fzf-complete-line)
+        imap <C-X>k <Plug>(fzf-complete-word)
+        imap <C-X>f <Plug>(fzf-complete-path)
+        imap <C-X>j <Plug>(fzf-complete-file)
+        imap <C-X>l <Plug>(fzf-complete-buffer-line)
+        imap <C-X>L <Plug>(fzf-complete-line)
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -60,8 +60,8 @@ call plug#begin($plugDir)
 
     " Highlight trailing whitespace
     Plug 'ntpeters/vim-better-whitespace'
-        nnoremap ]w :NextTrailingWhitespace<CR>
-        nnoremap [w :PrevTrailingWhitespace<CR>
+        nnoremap <silent> ]w :<C-U>NextTrailingWhitespace<CR>
+        nnoremap <silent> [w :<C-U>PrevTrailingWhitespace<CR>
 
     " Highlight words equal to the one under cursor
     Plug 'RRethy/vim-illuminate'
@@ -188,6 +188,9 @@ call plug#begin($plugDir)
         " let g:AutoPairsShortcutToggle = '<C-X>x'
         " let g:AutoPairsMapCh = ''
 
+    " Open file at last position
+    Plug 'farmergreg/vim-lastplace'
+
     " Comment text object
     Plug 'glts/vim-textobj-comment'
         let g:textobj_comment_no_default_key_mappings = 1
@@ -285,6 +288,19 @@ call plug#begin($plugDir)
     Plug 'vim-scripts/Rename2'
 
     " ============================== Coding ==================================
+    " Show and edit git hunks
+    Plug 'airblade/vim-gitgutter'
+        let g:gitgutter_map_keys = 0
+        nmap ]h  <Plug>(GitGutterNextHunk)
+        nmap [h  <Plug>(GitGutterPrevHunk)
+        nmap ghs <Plug>(GitGutterStageHunk)
+        nmap ghu <Plug>(GitGutterUndoHunk)
+        nmap ghp <Plug>(GitGutterPreviewHunk)
+        omap ih  <Plug>(GitGutterTextObjectInnerPending)
+        omap ah  <Plug>(GitGutterTextObjectOuterPending)
+        xmap ih  <Plug>(GitGutterTextObjectInnerVisual)
+        xmap ah  <Plug>(GitGutterTextObjectOuterVisual)
+
     " Switch between single and multi line forms of code
     " Plug 'andrewradev/splitjoin.vim', { 'for': [ 'python', 'cs' ] }
     "     let g:splitjoin_trailing_comma = 1
@@ -364,6 +380,12 @@ call plug#begin($plugDir)
 
     " Makes vim a better merge tool for git
     Plug 'samoshkin/vim-mergetool'
+        let g:mergetool_layout = 'mr'
+        let g:mergetool_prefer_revision = 'local'
+        nmap <expr> <Left>  &diff? '<Plug>(MergetoolDiffExchangeLeft)'  : '<Left>'
+        nmap <expr> <Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<Right>'
+        nmap <expr> <Up>    &diff? '[czz' : '<Up>'
+        nmap <expr> <Down>  &diff? ']czz' : '<Down>'
 
     " =========================== Writing prose ==============================
     " Preview markdown in browser
