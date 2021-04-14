@@ -48,6 +48,22 @@ call plug#begin($plugDir)
     " Color scheme
     Plug 'AlessandroYorba/Despacio'
 
+    " Status line style
+    Plug 'itchyny/lightline.vim'
+        let g:lightline = { 'colorscheme': 'daku' }
+        let g:lightline.active = {
+            \ 'left': [['paste'], ['filename'], ['modified', 'readonly', 'filetype']],
+            \ 'right': [['position']],
+            \ }
+        let g:lightline.inactive = {
+            \ 'left': [['filename'], ['modified']],
+            \ 'right': [],
+            \ }
+        let g:lightline.component = {
+            \ 'position': '%c %l/%L'
+            \ }
+		let g:lightline.enable = { 'statusline': 1 }
+
     " Preview registers
     Plug 'junegunn/vim-peekaboo'
 
@@ -408,5 +424,4 @@ call plug#begin($plugDir)
     " Spell autocorrection
     " Plug 'sedm0784/vim-you-autocorrect', { 'for': [ 'text', 'markdown' ] }
         " autocmd! FileType markdown EnableAutocorrect
-
 call plug#end()
