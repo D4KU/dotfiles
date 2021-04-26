@@ -1,6 +1,6 @@
-alias ra='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-alias gp='git pull'
-alias gP='git push'
+alias ra='ranger --choosedir=$HOME/.local/share/ranger/dir; LASTDIR=`cat $HOME/.local/share/ranger/dir`; cd "$LASTDIR"'
+alias gp='git pull --recurse-submodules'
+alias gP='git push --recurse-submodules=check'
 alias gs='git status'
 alias gc='git commit -m'
 alias db='dotbare'
@@ -53,10 +53,9 @@ ff() {
 }
 
 ######################## Changing directory ########################
-# cd to selected directory
+# cd to selected direct subdirectory
 c() {
-  local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m)
+  local dir=$(find . -mindepth 1 -maxdepth ${1:-6} -type d -print 2> /dev/null | fzf +m)
   cd "$dir"
 }
 
@@ -172,4 +171,23 @@ vz() {
     file="$(fasd -Rfl "$1" | fzf -1 -0 --no-sort)"
   fi
   cd "$(dirname "$file")"
+}
+
+######################## Warp Directory ########################
+# rename original wd
+rename() {
+    local ORIG_FUNC=$(declare -f $1)
+    local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
+    eval "$NEWNAME_FUNC"
+}
+rename wd _wd
+
+# fuzzy select dir when no parameter is passed
+wd() {
+  if [ $# -gt 0 ]; then
+    _wd $*
+  else
+    local dir=$(_wd list | grep -P '(?<=->\s\s).*' -o | fzf +m)
+    cd "$dir"
+  fi
 }
