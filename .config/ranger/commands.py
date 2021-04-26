@@ -207,9 +207,9 @@ class extracthere(Command):
 # This command uses fasd to jump to a frequently visited directory with a given
 # substring of its path.
 # https://github.com/ranger/ranger/wiki/Custom-Commands#fasd
-class fasd(Command):
+class z(Command):
     """
-    :fasd
+    :z
 
     Jump to directory using fasd
     """
@@ -230,7 +230,10 @@ class fasd(Command):
     @staticmethod
     def _get_directories(*args):
         import subprocess
-        output = subprocess.check_output(["fasd", "-dl"] + list(args), universal_newlines=True)
+        output = subprocess.check_output(
+            ["fasd", "-dl"] + list(args),
+            universal_newlines=True,
+            )
         dirs = output.strip().split("\n")
         dirs.sort(reverse=True)  # Listed in ascending frecency
         return dirs
