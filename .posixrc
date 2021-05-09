@@ -27,7 +27,7 @@ eval "$(fasd --init posix-hook)"
 eval "$(thefuck --alias)"
 
 # Common fzf options
-fzf_ops=(--preview "pygmetize {}" -0 -1)
+fzf_ops=(--preview "pygmentize {}" -0 -1)
 
 ######################## Opening files ########################
 # Open the selected file with the default editor
@@ -59,33 +59,31 @@ c() {
   cd "$dir"
 }
 
-# cd to selected parent directory
-cr() {
-  local declare dirs=()
-  get_parent_dirs() {
-    if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
-    if [[ "${1}" == '/' ]]; then
-      for _dir in "${dirs[@]}"; do echo $_dir; done
-    else
-      get_parent_dirs $(dirname "$1")
-    fi
-  }
-  local dir=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
+# cd sideways to sibling directory
+cs() {
+  local dir=$(find .. -mindepth 1 -maxdepth 1 -type d -print 2> /dev/null | fzf +m)
   cd "$dir"
 }
 
-# cd into the directory of the selected file
-cf() {
-   local file
-   local dir
-   file=$(fzf ${fzf_ops[@]} +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
-}
-
+# cd to selected parent directory
 # go up n dirs or go to dir in pwd
 u() {
     case $1 in
         *[!0-9]*)
             cd $(pwd | sed -r "s|(.*/$1[^/]*/).*|\1|")
+            ;;
+        '')
+            local declare dirs=()
+            get_parent_dirs() {
+              if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
+              if [[ "${1}" == '/' ]]; then
+                for _dir in "${dirs[@]}"; do echo $_dir; done
+              else
+                get_parent_dirs $(dirname "$1")
+              fi
+            }
+            local dir="$(get_parent_dirs $(realpath "$PWD") | fzf --tac)"
+            cd "$dir"
             ;;
         *)
             cd $(printf "%0.0s../" $(seq 1 $1));
@@ -93,10 +91,11 @@ u() {
     esac
 }
 
-######################## Command history ########################
-# fh - repeat history
-fh() {
-  eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -r 's/ *[0-9]*\*? *//' | sed -r 's/\\/\\\\/g')
+# cd into the directory of the selected file
+cf() {
+   local file=$(fzf ${fzf_ops[@]} +m -q "$1")
+   local dir=$(dirname "$file")
+   cd "$dir"
 }
 
 ######################## Tmux ########################
@@ -179,15 +178,4 @@ rename() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
-}
-rename wd _wd
-
-# fuzzy select dir when no parameter is passed
-wd() {
-  if [ $# -gt 0 ]; then
-    _wd $*
-  else
-    local dir=$(_wd list | grep -P '(?<=->\s\s).*' -o | fzf +m)
-    cd "$dir"
-  fi
 }

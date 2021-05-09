@@ -69,8 +69,15 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    magic-enter
     vi-mode
+    colored-man-pages
+    command-not-found
+    dirhistory
+    last-working-dir
+    magic-enter
+    rand-quote
+    safe-paste
+    # term_tab
     wd
 )
 
@@ -146,4 +153,23 @@ zle -N zle-keymap-select
 export KEYTIMEOUT=1
 
 PROMPT='%F{240}%4~ %(?.%F{green}.%F{203})%(!.#.»)%f '
-# RPS1='%F{240}${${PWD//#$HOME/~}%/*}'
+
+# Load version control information
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b'
+RPROMPT='%F{240}${vcs_info_msg_0_}'
+
+######################## Warp Directory ########################
+# rename original wd
+rename wd _wd
+
+# fuzzy select dir when no parameter is passed
+wd() {
+  if [ $# -gt 0 ]; then
+    _wd $*
+  else
+    local dir=$(_wd list | grep -P '(?<=->\s\s).*' -o | fzf +m)
+    cd "$dir"
+  fi
+}
