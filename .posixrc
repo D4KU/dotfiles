@@ -30,19 +30,55 @@ eval "$(thefuck --alias)"
 fzf_ops=(--preview "pygmentize {}" -0 -1)
 
 ######################## Opening files ########################
-# Open the selected file with the default editor
-f() (
-  IFS=$'\n'
-  files=$(fzf ${fzf_ops[@]} --multi)
-  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-)
+f() {
+  local cmd='sed "s|^\./||" | fzf ${fzf_ops[@]} -m --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-x,ctrl-y'
+  local show_hidden=1
+  local exact=0
+  local depth=4
 
-# Like f, but also show hidden files
-fa() (
-  IFS=$'\n'
-  files=($(find ${1:-.} -type f 2> /dev/null | fzf ${fzf_ops[@]} --multi))
-  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-)
+  while true; do
+    if [ $exact = 1 ]; then
+      local ep='-e'
+    else
+      local ep=''
+    fi
+
+    if [ $show_hidden = 1 ]; then
+      local out=$(find .                    -mindepth 1 -maxdepth $depth -type f 2> /dev/null | eval "$cmd $ep")
+    else
+      local out=$(find . -not -path '*/\.*' -mindepth 1 -maxdepth $depth -type f 2> /dev/null | eval "$cmd $ep")
+    fi
+
+    local key=$(echo "$out" | head -n 1)
+    local files=$(echo "$out" | tail -n+2)
+    case "$key" in
+      ctrl-e)
+        let "exact = (exact + 1) % 2"
+        ;;
+      ctrl-f)
+        let "show_hidden = (show_hidden + 1) % 2"
+        ;;
+      ctrl-d)
+        files=($files)
+        cd "$(dirname "${files[1]}")"
+        return 0
+        ;;
+      enter)
+        [[ -n "$files" ]] && ${EDITOR:-vim} $(echo "${files[@]}")
+        return 0
+        ;;
+      ctrl-y)
+        let "depth++"
+        ;;
+      ctrl-x)
+        let "depth--"
+        ;;
+      *)
+        return 0
+        ;;
+    esac
+  done
+}
 
 # Show grep results
 ff() {
@@ -89,13 +125,6 @@ u() {
             cd $(printf "%0.0s../" $(seq 1 $1));
             ;;
     esac
-}
-
-# cd into the directory of the selected file
-cf() {
-   local file=$(fzf ${fzf_ops[@]} +m -q "$1")
-   local dir=$(dirname "$file")
-   cd "$dir"
 }
 
 ######################## Tmux ########################
