@@ -30,48 +30,79 @@ eval "$(thefuck --alias)"
 fzf_ops=(--preview "pygmentize {}" -0 -1)
 
 ######################## Opening files ########################
+# Open file or change to its dir
 f() {
-  local cmd='sed "s|^\./||" | fzf ${fzf_ops[@]} -m --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-x,ctrl-y'
   local show_hidden=1
   local exact=0
-  local depth=4
+  local depth=2
+  local query
+
+  local header_tmpl="enter: open"
+  header_tmpl+=", ctrl-d: to dir"
+  header_tmpl+=", ctrl-e: exact [:exact:]"
+  header_tmpl+=", ctrl-f: show hidden [:sh:]"
+  header_tmpl+=", ctrl-x/ctrl-y: depth -/+ [:depth:]"
 
   while true; do
     if [ $exact = 1 ]; then
-      local ep='-e'
+      local ep='--exact'
     else
       local ep=''
     fi
 
     if [ $show_hidden = 1 ]; then
-      local out=$(find .                    -mindepth 1 -maxdepth $depth -type f 2> /dev/null | eval "$cmd $ep")
+      local pat=''
     else
-      local out=$(find . -not -path '*/\.*' -mindepth 1 -maxdepth $depth -type f 2> /dev/null | eval "$cmd $ep")
+      local pat='*/\.*'
     fi
 
-    local key=$(echo "$out" | head -n 1)
-    local files=$(echo "$out" | tail -n+2)
+    local header=$header_tmpl
+    header=${header/:sh:/$show_hidden}
+    header=${header/:exact:/$exact}
+    header=${header/:depth:/$depth}
+
+    local out=$(find . \
+        -not \
+        -path "$pat" \
+        -mindepth 1 \
+        -maxdepth $depth \
+        -type f \
+      2> /dev/null \
+      | sed 's|^\./||' \
+      | fzf \
+        --preview "pygmentize {}" \
+        --multi \
+        $ep \
+        --print-query \
+        --query="$query" \
+        --header="$header" \
+        --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-x,ctrl-y)
+
+    local query=$(echo "$out" | head -n 1)
+    local   key=$(echo "$out" | sed  -n 2p)
+    local files=$(echo "$out" | tail -n+3)
+
     case "$key" in
-      ctrl-e)
-        let "exact = (exact + 1) % 2"
-        ;;
-      ctrl-f)
-        let "show_hidden = (show_hidden + 1) % 2"
+      enter)
+        [[ -n "$files" ]] && ${EDITOR:-vim} $(echo "${files[@]}")
+        return 0
         ;;
       ctrl-d)
         files=($files)
         cd "$(dirname "${files[1]}")"
         return 0
         ;;
-      enter)
-        [[ -n "$files" ]] && ${EDITOR:-vim} $(echo "${files[@]}")
-        return 0
+      ctrl-e)
+        let "exact = (exact + 1) % 2"
         ;;
-      ctrl-y)
-        let "depth++"
+      ctrl-f)
+        let "show_hidden = (show_hidden + 1) % 2"
         ;;
       ctrl-x)
         let "depth--"
+        ;;
+      ctrl-y)
+        let "depth++"
         ;;
       *)
         return 0
