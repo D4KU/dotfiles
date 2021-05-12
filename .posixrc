@@ -36,30 +36,27 @@ f() {
   local exact=0
   local depth=${1:-2}
   local query
-
-  local header_tmpl="enter: open"
-  header_tmpl+=", ctrl-d: to dir"
-  header_tmpl+=", ctrl-e: exact [:exact:]"
-  header_tmpl+=", ctrl-f: show hidden [:sh:]"
-  header_tmpl+=", ctrl-x/ctrl-y: depth -/+ [:depth:]"
+  local header_tmpl=':exact: :sh: :depth:'
 
   while true; do
+    local header=$header_tmpl
+    header=${header/:depth:/$depth}
+
     if [ $exact = 1 ]; then
       local ep='--exact'
+      header=${header/:exact:/exact}
     else
       local ep=''
+      header=${header/:exact:/fuzzy}
     fi
 
     if [ $show_hidden = 1 ]; then
       local pat=''
+      header=${header/:sh:/all}
     else
       local pat='*/\.*'
+      header=${header/:sh:/normal}
     fi
-
-    local header=$header_tmpl
-    header=${header/:sh:/$show_hidden}
-    header=${header/:exact:/$exact}
-    header=${header/:depth:/$depth}
 
     local out=$(find . \
         -not \
@@ -76,7 +73,8 @@ f() {
         --print-query \
         --query="$query" \
         --header="$header" \
-        --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-x,ctrl-y)
+        --preview-window=border-none \
+        --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-g,ctrl-x,ctrl-y)
 
     local query=$(echo "$out" | head -n 1)
     local   key=$(echo "$out" | sed  -n 2p)
@@ -97,6 +95,10 @@ f() {
         ;;
       ctrl-f)
         let "show_hidden = (show_hidden + 1) % 2"
+        ;;
+      ctrl-g)
+        print -z "$files"
+        return 0
         ;;
       ctrl-x)
         let "depth--"
@@ -125,29 +127,27 @@ c() {
   local exact=0
   local depth=${1:-2}
   local query
-
-  local header_tmpl="enter: cd"
-  header_tmpl+=", ctrl-e: exact [:exact:]"
-  header_tmpl+=", ctrl-f: show hidden [:sh:]"
-  header_tmpl+=", ctrl-x/ctrl-y: depth -/+ [:depth:]"
+  local header_tmpl=':exact: :sh: :depth:'
 
   while true; do
+    local header=$header_tmpl
+    header=${header/:depth:/$depth}
+
     if [ $exact = 1 ]; then
       local ep='--exact'
+      header=${header/:exact:/exact}
     else
       local ep=''
+      header=${header/:exact:/fuzzy}
     fi
 
     if [ $show_hidden = 1 ]; then
       local pat=''
+      header=${header/:sh:/all}
     else
       local pat='*/\.*'
+      header=${header/:sh:/normal}
     fi
-
-    local header=$header_tmpl
-    header=${header/:sh:/$show_hidden}
-    header=${header/:exact:/$exact}
-    header=${header/:depth:/$depth}
 
     local out=$(find . \
         -not \
@@ -161,7 +161,8 @@ c() {
         --print-query \
         --query="$query" \
         --header="$header" \
-        --expect=enter,ctrl-e,ctrl-f,ctrl-x,ctrl-y)
+        --preview-window=border-none \
+        --expect=enter,ctrl-e,ctrl-f,ctrl-i,ctrl-x,ctrl-y)
 
     local query=$(echo "$out" | head -n 1)
     local   key=$(echo "$out" | sed  -n 2p)
@@ -177,6 +178,10 @@ c() {
         ;;
       ctrl-f)
         let "show_hidden = (show_hidden + 1) % 2"
+        ;;
+      ctrl-i)
+        print -z "$files"
+        return 0
         ;;
       ctrl-x)
         let "depth--"
