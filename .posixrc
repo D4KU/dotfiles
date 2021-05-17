@@ -17,7 +17,7 @@ export EDITOR="$VISUAL"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # disable scroll lock through ctrl-s
-stty -ixon
+# stty -ixon
 export DISPLAY=localhost:0.0
 
 # Show when running in a shell spawned by ranger
@@ -79,10 +79,25 @@ f() {
     local query=$(echo "$out" | head -n 1)
     local   key=$(echo "$out" | sed  -n 2p)
     local files=$(echo "$out" | tail -n+3)
+    # local lines=()
+    # while IFS= read -r line
+    # do
+    #   lines+=("$line")
+    # done <<< "$out"
+
+    # local query="${lines[1]}"
+    # local key="${lines[2]}"
+    # files="${lines[@]:2}"
+
+    local filelist=()
+    while IFS= read -r file
+    do
+      filelist+=("$file")
+    done <<< "$files"
 
     case "$key" in
       enter)
-        [[ -n "$files" ]] && ${EDITOR:-vim} $(echo "${files[@]}")
+        [[ -n "$files" ]] && ${EDITOR:-vim} "${filelist[@]}"
         return 0
         ;;
       ctrl-d)
