@@ -324,3 +324,19 @@ rename() {
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
 }
+
+cop() {
+    cb=()
+    for target; do
+        cb+=(${target:a})
+    done
+}
+pa() {
+    cp -R $cb ${1:-.}
+}
+mov() {
+    mv $cb ${1:-.}
+}
+pln() {
+    ln -s $cb ${1:-.}
+}
