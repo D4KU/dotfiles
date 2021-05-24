@@ -76,18 +76,9 @@ f() {
         --preview-window=border-none \
         --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-g,ctrl-x,ctrl-y)
 
-    local query=$(echo "$out" | head -n 1)
-    local   key=$(echo "$out" | sed  -n 2p)
-    local files=$(echo "$out" | tail -n+3)
-    # local lines=()
-    # while IFS= read -r line
-    # do
-    #   lines+=("$line")
-    # done <<< "$out"
-
-    # local query="${lines[1]}"
-    # local key="${lines[2]}"
-    # files="${lines[@]:2}"
+    local query=$(head -1 <<< "$out")
+    local   key=$(head -2 <<< "$out" | tail -1)
+    local files=$(tail +3 <<< "$out")
 
     local filelist=()
     while IFS= read -r file
@@ -179,9 +170,9 @@ c() {
         --preview-window=border-none \
         --expect=enter,ctrl-e,ctrl-f,ctrl-i,ctrl-x,ctrl-y)
 
-    local query=$(echo "$out" | head -n 1)
-    local   key=$(echo "$out" | sed  -n 2p)
-    local files=$(echo "$out" | tail -n+3)
+    local query=$(head -1 <<< "$out")
+    local   key=$(head -2 <<< "$out" | tail -1)
+    local files=$(tail +3 <<< "$out")
 
     case "$key" in
       enter)
@@ -327,9 +318,16 @@ rename() {
 
 cop() {
     cb=()
-    for target; do
-        cb+=(${target:a})
-    done
+    if [ $# -gt 0 ]; then
+      for target; do
+          cb+=(${target:a})
+      done
+    else
+      while IFS= read -r file
+      do
+        cb+=("$file")
+      done <<< "$(fzf ${fzf_ops[@]} --multi)"
+    fi
 }
 pa() {
     cp -R $cb ${1:-.}
