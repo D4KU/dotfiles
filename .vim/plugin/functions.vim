@@ -93,7 +93,7 @@ endfunction
 " Online documentation search
 function! Doc()
     if &filetype =~ "cs"
-        let s:urlTemplate = "https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%"
+        let s:urlTemplate = "'https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%'"
     else
         return
     endif
@@ -102,6 +102,7 @@ function! Doc()
     let s:url = substitute(s:urlTemplate, "%", s:wordUnderCursor, "g")
     let s:cmd = "silent !" . s:browser . " " . s:url . "&"
     execute s:cmd
+    execute "redraw!"
 endfunction
 
 " Print output in split instead of shell escape
