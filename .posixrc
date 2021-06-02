@@ -34,7 +34,7 @@ fzf_ops=(--preview "pygmentize {}" -0 -1)
 f() {
   local show_hidden=1
   local exact=0
-  local depth=${1:-2}
+  local depth=${1:-6}
   local query
   local header_tmpl=':exact: :sh: :depth:'
 
@@ -131,12 +131,13 @@ ff() {
 c() {
   local show_hidden=1
   local exact=0
-  local depth=${1:-2}
+  local depth=${1:-1}
   local query
   local header_tmpl=':exact: :sh: :depth:'
 
   while true; do
     local header=$header_tmpl
+    header+=" $(pwd)"
     header=${header/:depth:/$depth}
 
     if [ $exact = 1 ]; then
@@ -163,21 +164,30 @@ c() {
         -type d \
       2> /dev/null \
       | sed 's|^\./||' \
-      | fzf -0 -1 +m $ep \
+      | fzf +m $ep \
         --print-query \
         --query="$query" \
         --header="$header" \
         --preview-window=border-none \
-        --expect=enter,ctrl-e,ctrl-f,ctrl-i,ctrl-x,ctrl-y)
+        --expect=alt-h,alt-j,alt-k,alt-l,ctrl-e,ctrl-f,ctrl-i,enter,left,right)
 
     local query=$(head -1 <<< "$out")
     local   key=$(head -2 <<< "$out" | tail -1)
     local files=$(tail +3 <<< "$out")
 
     case "$key" in
-      enter)
+      alt-h | left)
+        cd ..
+        ;;
+      alt-j)
+        let "depth--"
+        ;;
+      alt-k)
+        let "depth++"
+        ;;
+      alt-l | right)
         cd "$files"
-        return 0
+        query=''
         ;;
       ctrl-e)
         let "exact = (exact + 1) % 2"
@@ -189,11 +199,9 @@ c() {
         print -z "$files"
         return 0
         ;;
-      ctrl-x)
-        let "depth--"
-        ;;
-      ctrl-y)
-        let "depth++"
+      enter)
+        cd "$files"
+        return 0
         ;;
       *)
         return 0
