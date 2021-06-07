@@ -127,6 +127,7 @@ zinit wait lucid for \
 zinit light kazhala/dotbare
 zinit light wfxr/forgit
 zinit light romkatv/powerlevel10k
+zinit light d4ku/f
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 [ -f ~/.posixrc ] && . ~/.posixrc

@@ -15,6 +15,9 @@ alias gnome-www-browser='firefox.exe'
 export VISUAL=vim
 export EDITOR="$VISUAL"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
+export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
+export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 
 # disable scroll lock through ctrl-s
 # stty -ixon
@@ -27,219 +30,15 @@ eval "$(fasd --init posix-hook)"
 eval "$(thefuck --alias)"
 
 # Common fzf options
-fzf_ops=(--preview "pygmentize {}" -0 -1)
+fzf_ops=(--preview "highlight -O ansi -l {}" -0 -1 --cycle)
 
 ######################## Opening files ########################
-# Open file or change to its dir
-f() {
-  local show_hidden=1
-  local exact=0
-  local depth=${1:-6}
-  local query
-  local header_tmpl=':exact: :sh: :depth:'
-
-  while true; do
-    local header=$header_tmpl
-    header=${header/:depth:/$depth}
-
-    if [ $exact = 1 ]; then
-      local ep='--exact'
-      header=${header/:exact:/exact}
-    else
-      local ep=''
-      header=${header/:exact:/fuzzy}
-    fi
-
-    if [ $show_hidden = 1 ]; then
-      local pat=''
-      header=${header/:sh:/all}
-    else
-      local pat='*/\.*'
-      header=${header/:sh:/normal}
-    fi
-
-    local out=$(find . \
-        -not \
-        -path "$pat" \
-        -mindepth 1 \
-        -maxdepth $depth \
-        -type f \
-      2> /dev/null \
-      | sed 's|^\./||' \
-      | fzf \
-        --preview "pygmentize {}" \
-        --multi \
-        $ep \
-        --print-query \
-        --query="$query" \
-        --header="$header" \
-        --preview-window=border-none \
-        --expect=enter,ctrl-d,ctrl-e,ctrl-f,ctrl-g,ctrl-x,ctrl-y)
-
-    local query=$(head -1 <<< "$out")
-    local   key=$(head -2 <<< "$out" | tail -1)
-    local files=$(tail +3 <<< "$out")
-
-    local filelist=()
-    while IFS= read -r file
-    do
-      filelist+=("$file")
-    done <<< "$files"
-
-    case "$key" in
-      enter)
-        [[ -n "$files" ]] && ${EDITOR:-vim} "${filelist[@]}"
-        return 0
-        ;;
-      ctrl-d)
-        files=($files)
-        cd "$(dirname "${files[1]}")"
-        return 0
-        ;;
-      ctrl-e)
-        let "exact = (exact + 1) % 2"
-        ;;
-      ctrl-f)
-        let "show_hidden = (show_hidden + 1) % 2"
-        ;;
-      ctrl-g)
-        print -z "$files"
-        return 0
-        ;;
-      ctrl-x)
-        let "depth--"
-        ;;
-      ctrl-y)
-        let "depth++"
-        ;;
-      *)
-        return 0
-        ;;
-    esac
-  done
-}
-
 # Show grep results
 ff() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   hi="highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
   file=$(rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi)
   [[ -n "$file" ]] && vim -c "call search('$1', 'c')" "$file"
-}
-
-######################## Changing directory ########################
-c() {
-  local show_hidden=1
-  local exact=0
-  local depth=${1:-1}
-  local query
-  local header_tmpl=':exact: :sh: :depth:'
-
-  while true; do
-    local header=$header_tmpl
-    header+=" $(pwd)"
-    header=${header/:depth:/$depth}
-
-    if [ $exact = 1 ]; then
-      local ep='--exact'
-      header=${header/:exact:/exact}
-    else
-      local ep=''
-      header=${header/:exact:/fuzzy}
-    fi
-
-    if [ $show_hidden = 1 ]; then
-      local pat=''
-      header=${header/:sh:/all}
-    else
-      local pat='*/\.*'
-      header=${header/:sh:/normal}
-    fi
-
-    local out=$(find . \
-        -not \
-        -path "$pat" \
-        -mindepth 1 \
-        -maxdepth $depth \
-        -type d \
-      2> /dev/null \
-      | sed 's|^\./||' \
-      | fzf +m $ep \
-        --print-query \
-        --query="$query" \
-        --header="$header" \
-        --preview-window=border-none \
-        --expect=alt-h,alt-j,alt-k,alt-l,ctrl-e,ctrl-f,ctrl-i,enter,left,right)
-
-    local query=$(head -1 <<< "$out")
-    local   key=$(head -2 <<< "$out" | tail -1)
-    local files=$(tail +3 <<< "$out")
-
-    case "$key" in
-      alt-h | left)
-        cd ..
-        ;;
-      alt-j)
-        let "depth--"
-        ;;
-      alt-k)
-        let "depth++"
-        ;;
-      alt-l | right)
-        cd "$files"
-        query=''
-        ;;
-      ctrl-e)
-        let "exact = (exact + 1) % 2"
-        ;;
-      ctrl-f)
-        let "show_hidden = (show_hidden + 1) % 2"
-        ;;
-      ctrl-i)
-        print -z "$files"
-        return 0
-        ;;
-      enter)
-        cd "$files"
-        return 0
-        ;;
-      *)
-        return 0
-        ;;
-    esac
-  done
-}
-
-# cd sideways to sibling directory
-cs() {
-  local dir=$(find .. -mindepth 1 -maxdepth 1 -type d -print 2> /dev/null | fzf +m)
-  cd "$dir"
-}
-
-# cd to selected parent directory
-# go up n dirs or go to dir in pwd
-u() {
-    case $1 in
-        *[!0-9]*)
-            cd $(pwd | sed -r "s|(.*/$1[^/]*/).*|\1|")
-            ;;
-        '')
-            local declare dirs=()
-            get_parent_dirs() {
-              if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
-              if [[ "${1}" == '/' ]]; then
-                for _dir in "${dirs[@]}"; do echo $_dir; done
-              else
-                get_parent_dirs $(dirname "$1")
-              fi
-            }
-            local dir="$(get_parent_dirs $(realpath "$PWD") | fzf --tac)"
-            cd "$dir"
-            ;;
-        *)
-            cd $(printf "%0.0s../" $(seq 1 $1));
-            ;;
-    esac
 }
 
 ######################## Tmux ########################
