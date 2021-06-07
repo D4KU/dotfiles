@@ -1,0 +1,24 @@
+snippet standalone "standalone document" b
+\documentclass{standalone}
+\usepackage{tikz-uml}
+\tikzumlset{fill class=white!0}
+\begin{document}
+	$0
+\end{document}
+endsnippet
+
+snippet umlclass "tikz-uml class diagram" b
+\begin{tikzpicture}
+	\umlclass [type=abstract] {A} {
+		A$0 \\
+	}{
+		A() \\
+	}
+	\umlclass [x=7] {B} {
+		B
+	}{
+		B() \\
+	}
+	\umlinherit {B} {A}
+\end{tikzpicture}
+endsnippet
