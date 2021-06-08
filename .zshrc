@@ -1,3 +1,4 @@
+# Immediately set beam cursor
 echo -ne '\e[5 q'
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -5,6 +6,11 @@ echo -ne '\e[5 q'
 # confirmations, etc.) must go above this block; everything else may go below.
 p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ -r "$p10kip" ]] && source "$p10kip"
+
+# Make autosuggestions work
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+[ "$HISTSIZE" -lt 50000 ] && HISTSIZE=50000
+[ "$SAVEHIST" -lt 10000 ] && SAVEHIST=10000
 
 . ~/.zinit/bin/zinit.zsh
 . ~/.fzf.zsh
@@ -37,6 +43,12 @@ zinit wait lucid for \
     $(omzs command-not-found) \
     $(omzs magic-enter) \
 
+function zle-line-init () {
+    # Set beam cursor e.g. after exiting from vim
+    echo -ne '\e[5 q'
+}
+
+# Change cursor for vi mode
 zle-keymap-select() {
    if [ $KEYMAP = vicmd ]; then
         # Set block cursor
