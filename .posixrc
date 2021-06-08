@@ -16,8 +16,10 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
+export MANPATH="/usr/local/man:$MANPATH"
 export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
+export KEYTIMEOUT=1
 
 # disable scroll lock through ctrl-s
 # stty -ixon
@@ -115,14 +117,6 @@ vz() {
   cd "$(dirname "$file")"
 }
 
-######################## Warp Directory ########################
-# rename original wd
-rename() {
-    local ORIG_FUNC=$(declare -f $1)
-    local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
-    eval "$NEWNAME_FUNC"
-}
-
 cop() {
     cb=()
     if [ $# -gt 0 ]; then
@@ -130,9 +124,9 @@ cop() {
           cb+=(${target:a})
       done
     else
-      while IFS= read -r file
+      while IFS= read -r target
       do
-        cb+=("$file")
+        cb+=("${target:a}")
       done <<< "$(fzf ${fzf_ops[@]} --multi)"
     fi
 }
