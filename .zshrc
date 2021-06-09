@@ -17,8 +17,6 @@ setopt pushdminus
 
 . ~/.zinit/bin/zinit.zsh
 . ~/.p10k.zsh
-# . ~/.posixrc
-# . ~/.oh-my-zsh/oh-my-zsh.sh
 
 mvcmd() {
     local orig=$(declare -f $1)
@@ -35,7 +33,7 @@ zinit snippet $(omzs vi-mode)
 zinit wait lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \
-    atload"!_zsh_autosuggest_start" \
+    atload"!_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
     zsh-users/zsh-autosuggestions \
     atload"mvcmd wd _wd; mvcmd fuzzywd wd" \
     mfaerevaag/wd \

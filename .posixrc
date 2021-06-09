@@ -20,7 +20,6 @@ export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
 
 KEYTIMEOUT=1
-HISTFILESIZE=2000
 HISTSIZE=50000
 SAVEHIST=10000
 
