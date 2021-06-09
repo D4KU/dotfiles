@@ -1,3 +1,4 @@
+let mapleader="\<Space>"
 let $desktop = "/mnt/c/Users/David/Desktop"
 
 if !has('win32')

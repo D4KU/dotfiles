@@ -56,9 +56,6 @@ nnoremap ]{ vaBo{bl
 " Substitute word under cursor
 nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
 
-" Join all non-empty lines
-nnoremap <Leader>j :%s/\(\S\s*\)\n\(\s*\S\)/\1 \2<CR>
-
 " Move between errors and automatically pick first fix
 nnoremap [S [s1z=
 nnoremap ]S ]s1z=
@@ -72,14 +69,10 @@ inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u
 noremap <Leader>l :<C-U>lopen<CR>
 noremap <Leader>L :<C-U>lclose<CR>
 
-" In- and decrease the window size by a factor of 1.5
-noremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-noremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-
 " Break strings at textwidth
 nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
 
-noremap <F3> :call ToggleLight()<CR>
+noremap <silent> <F3> :<C-U>call ToggleLight()<CR>
 noremap <silent> gK :call Doc()<CR>
 
 autocmd FileType cs,shaderlab,hlsl

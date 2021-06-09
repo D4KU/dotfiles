@@ -37,3 +37,6 @@ command! -nargs=? V call FasdV(<q-args>)
 
 " Slower but interactive version of fzf.vim's :Rg command
 command! -nargs=* -bang RG call RgFzf(<q-args>, <bang>0)
+
+" Join all non-empty lines
+command! Join %s/\(\S\s*\)\n\(\s*\S\)/\1 \2

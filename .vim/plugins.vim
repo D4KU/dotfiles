@@ -23,6 +23,7 @@ call plug#begin($plugDir)
         nnoremap <silent> ,            :<C-U>Buffers<CR>
         nnoremap <silent> :            :<C-U>History<CR>
         noremap  <silent> <Leader>.    :<C-U>Files<CR>
+        noremap  <silent> <Leader>-    :<C-U>Lines<CR>
         nnoremap <silent> <Leader>`    :<C-U>Marks<CR>
         nnoremap <silent> <Leader>/    :<C-U>History/<CR>
         nnoremap <silent> <Leader>;    :<C-U>History:<CR>
@@ -53,7 +54,7 @@ call plug#begin($plugDir)
         let g:lightline = { 'colorscheme': 'daku' }
         let g:lightline.active = {
             \ 'left': [['paste'], ['filename'], ['modified', 'readonly', 'filetype']],
-            \ 'right': [['position']],
+            \ 'right': [],
             \ }
         let g:lightline.inactive = {
             \ 'left': [['filename'], ['modified']],
@@ -116,7 +117,7 @@ call plug#begin($plugDir)
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
         let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyz"
-        map <Space> <Plug>(easymotion-overwin-f)
+        map <Bslash> <Plug>(easymotion-overwin-f)
 
     " Motions based on indent depths
     Plug 'jeetsukumaran/vim-indentwise'

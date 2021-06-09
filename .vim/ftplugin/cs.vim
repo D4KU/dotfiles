@@ -55,8 +55,8 @@ imap <silent> <buffer> <C-X>h <Plug>(omnisharp_signature_help)
 nmap <silent> <buffer> <LocalLeader>c <Plug>(omnisharp_global_code_check)
 
 " Navigate up and down by method/property/field
-nmap <silent> <buffer> gk <Plug>(omnisharp_navigate_up)
-nmap <silent> <buffer> gj <Plug>(omnisharp_navigate_down)
+nmap <silent> <buffer> <LocalLeader>k <Plug>(omnisharp_navigate_up)
+nmap <silent> <buffer> <LocalLeader>j <Plug>(omnisharp_navigate_down)
 
 " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
 nmap <silent> <buffer> <LocalLeader><Space> <Plug>(omnisharp_code_actions)
