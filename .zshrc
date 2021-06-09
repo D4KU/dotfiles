@@ -9,13 +9,16 @@ p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # Make autosuggestions work
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-[ "$HISTSIZE" -lt 50000 ] && HISTSIZE=50000
-[ "$SAVEHIST" -lt 10000 ] && SAVEHIST=10000
+
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
 
 . ~/.zinit/bin/zinit.zsh
-. ~/.fzf.zsh
 . ~/.p10k.zsh
-. ~/.posixrc
+# . ~/.posixrc
+# . ~/.oh-my-zsh/oh-my-zsh.sh
 
 mvcmd() {
     local orig=$(declare -f $1)
@@ -36,10 +39,10 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions \
     atload"mvcmd wd _wd; mvcmd fuzzywd wd" \
     mfaerevaag/wd \
+    atinit". ~/.posixrc; . ~/.fzf.zsh" \
     kazhala/dotbare \
     wfxr/forgit \
     d4ku/f \
-    $(omzs colored-man-pages) \
     $(omzs command-not-found) \
     $(omzs magic-enter) \
 

@@ -5,10 +5,8 @@ alias gs='git status'
 alias gc='git commit -m'
 alias db='dotbare'
 alias gn='geeknote'
+alias -g ...='../..'
 alias up='sudo apt-get update && sudo apt-get upgrade'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
 
@@ -19,11 +17,15 @@ export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
 export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
-export KEYTIMEOUT=1
+export DISPLAY=localhost:0.0
+
+KEYTIMEOUT=1
+HISTFILESIZE=2000
+HISTSIZE=50000
+SAVEHIST=10000
 
 # disable scroll lock through ctrl-s
 # stty -ixon
-export DISPLAY=localhost:0.0
 
 # Show when running in a shell spawned by ranger
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
@@ -117,6 +119,7 @@ vz() {
   cd "$(dirname "$file")"
 }
 
+####################### Copy Paste ###################
 cop() {
     cb=()
     if [ $# -gt 0 ]; then
@@ -138,4 +141,18 @@ mov() {
 }
 pln() {
     ln -s $cb ${1:-.}
+}
+
+##################### Dirs ###########################
+for i in {1..9}
+do
+  alias $i="cd -$i"
+done
+
+d() {
+  if [[ -n $1 ]]; then
+    dirs "$@"
+  else
+    dirs -v | head -10
+  fi
 }
