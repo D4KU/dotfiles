@@ -119,30 +119,6 @@ vz() {
   cd "$(dirname "$file")"
 }
 
-####################### Copy Paste ###################
-cop() {
-    cb=()
-    if [ $# -gt 0 ]; then
-      for target; do
-          cb+=(${target:a})
-      done
-    else
-      while IFS= read -r target
-      do
-        cb+=("${target:a}")
-      done <<< "$(fzf ${fzf_ops[@]} --multi)"
-    fi
-}
-pa() {
-    cp -R $cb ${1:-.}
-}
-mov() {
-    mv $cb ${1:-.}
-}
-pln() {
-    ln -s $cb ${1:-.}
-}
-
 ##################### Dirs ###########################
 for i in {1..9}
 do
