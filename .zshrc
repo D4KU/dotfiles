@@ -14,6 +14,10 @@ setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt share_history
 
 . ~/.zinit/bin/zinit.zsh
 . ~/.p10k.zsh

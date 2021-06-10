@@ -9,6 +9,7 @@ alias -g ...='../..'
 alias up='sudo apt-get update && sudo apt-get upgrade'
 alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
+alias untar='tar -zxvf'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -20,8 +21,8 @@ export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
 
 KEYTIMEOUT=1
-HISTSIZE=50000
-SAVEHIST=10000
+HISTSIZE=25000
+SAVEHIST=5000
 
 # disable scroll lock through ctrl-s
 # stty -ixon

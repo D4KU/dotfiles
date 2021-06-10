@@ -79,6 +79,15 @@ call plug#begin($plugDir)
     Plug 'ntpeters/vim-better-whitespace'
         nnoremap <silent> ]w :<C-U>NextTrailingWhitespace<CR>
         nnoremap <silent> [w :<C-U>PrevTrailingWhitespace<CR>
+        let g:better_whitespace_filetypes_blacklist = [
+            \ 'diff',
+            \ 'gitcommit',
+            \ 'unite',
+            \ 'qf',
+            \ 'help',
+            \ 'markdown',
+            \ 'minimap',
+            \ ]
 
     " Highlight words equal to the one under cursor
     Plug 'RRethy/vim-illuminate'
@@ -98,6 +107,13 @@ call plug#begin($plugDir)
     Plug 'wellle/context.vim'
         let g:context_border_char = ' '
         let g:context_highlight_tag = '<hide>'
+
+    " File overview as scrollbar
+    Plug 'wfxr/minimap.vim'
+        let g:minimap_base_highlight = 'Comment'
+        let g:minimap_git_colors = 1
+        let g:minimap_left = 1
+        noremap <Leader>` :<C-U>MinimapToggle<CR>
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine'

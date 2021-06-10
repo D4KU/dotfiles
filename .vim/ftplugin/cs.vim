@@ -21,11 +21,11 @@ let g:OmniSharp_highlighting = 0
 let g:OmniSharp_typeLookupInPreview = 1
 " let g:OmniSharp_want_snippet = 1
 
-augroup omnisharp_commands
-    autocmd!
-    " Show type information automatically when the cursor stops moving.
-    autocmd CursorHold *.cs OmniSharpTypeLookup
-augroup END
+" augroup omnisharp_commands
+"     autocmd!
+"     " Show type information automatically when the cursor stops moving.
+"     autocmd CursorHold *.cs OmniSharpTypeLookup
+" augroup END
 
 " Trigger completion when certain characters are inserted
 " <C-O> not working correctly, <Esc>...a does
@@ -34,39 +34,39 @@ imap <silent> <buffer> ( (<Esc><Plug>(omnisharp_signature_help)a
 inoremap <silent> <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
-nmap <silent> <buffer> <LocalLeader>d <Plug>(omnisharp_go_to_definition)
-nmap <silent> <buffer> <LocalLeader>D <Plug>(omnisharp_preview_definition)
-nmap <silent> <buffer> <LocalLeader>i <Plug>(omnisharp_find_implementation)
-nmap <silent> <buffer> <LocalLeader>I <Plug>(omnisharp_preview_implementation)
-nmap <silent> <buffer> <LocalLeader>g <Plug>(omnisharp_find_type)
-nmap <silent> <buffer> <LocalLeader>G <Plug>(omnisharp_find_symbol)
-nmap <silent> <buffer> <LocalLeader>u <Plug>(omnisharp_find_usages)
+nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
+nmap <silent> <buffer> <Leader>D <Plug>(omnisharp_preview_definition)
+nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementation)
+nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
+nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
+nmap <silent> <buffer> <Leader>G <Plug>(omnisharp_find_symbol)
+nmap <silent> <buffer> <Leader>u <Plug>(omnisharp_find_usages)
 
 " Finds members in the current buffer
-nmap <silent> <buffer> <LocalLeader>m <Plug>(omnisharp_find_members)
-nmap <silent> <buffer> <LocalLeader>x <Plug>(omnisharp_fix_usings)
-nmap <silent> <buffer> <LocalLeader>h <Plug>(omnisharp_type_lookup)
+nmap <silent> <buffer> <Leader>m <Plug>(omnisharp_find_members)
+nmap <silent> <buffer> <Leader>x <Plug>(omnisharp_fix_usings)
+nmap <silent> <buffer> <Leader>h <Plug>(omnisharp_type_lookup)
 nmap <silent> <buffer> <F1> <Plug>(omnisharp_documentation)
-nmap <silent> <buffer> <LocalLeader>s <Plug>(omnisharp_signature_help)
+nmap <silent> <buffer> <Leader>s <Plug>(omnisharp_signature_help)
 imap <silent> <buffer> <C-X>h <Plug>(omnisharp_signature_help)
 
 " Find all code errors/warnings for the current solution and populate
 " the quickfix window
-nmap <silent> <buffer> <LocalLeader>c <Plug>(omnisharp_global_code_check)
+nmap <silent> <buffer> <Leader>c <Plug>(omnisharp_global_code_check)
 
 " Navigate up and down by method/property/field
-nmap <silent> <buffer> <LocalLeader>k <Plug>(omnisharp_navigate_up)
-nmap <silent> <buffer> <LocalLeader>j <Plug>(omnisharp_navigate_down)
+nmap <silent> <buffer> <Leader>k <Plug>(omnisharp_navigate_up)
+nmap <silent> <buffer> <Leader>j <Plug>(omnisharp_navigate_down)
 
 " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
-nmap <silent> <buffer> <LocalLeader><Space> <Plug>(omnisharp_code_actions)
+nmap <silent> <buffer> <Leader><Space> <Plug>(omnisharp_code_actions)
 
 " Run code actions with text selected in visual mode to extract method
-xmap <silent> <buffer> <LocalLeader><Space> <Plug>(omnisharp_code_actions)
+xmap <silent> <buffer> <Leader><Space> <Plug>(omnisharp_code_actions)
 
 " Repeat the last code action performed (does not use a selector)
-xmap <silent> <buffer> <LocalLeader>> <Plug>(omnisharp_code_action_repeat)
-xmap <silent> <buffer> <LocalLeader>> <Plug>(omnisharp_code_action_repeat)
+xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
+xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
 
 " Rename with dialog
 nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
@@ -74,7 +74,7 @@ nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
 " Rename without dialog - with cursor on the symbol to rename
 command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 
-nmap <silent> <buffer> <LocalLeader>= <Plug>(omnisharp_code_format)
+nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
 
 let g:OmniSharp_highlight_groups = {
     \ 'FieldName': 'Normal',
