@@ -40,7 +40,8 @@ nnoremap cd i_<Esc>r
 nnoremap cD a_<Esc>r
 
 " Paste without newline
-nnoremap zp mzp^D"_ddg`zP
+nnoremap zp a<CR><Esc>PkgJgJ
+nnoremap zP i<CR><Esc>PkgJgJ
 
 " Map Alt-L and Alt-H to resize vertical splits
 nnoremap <Esc>l <C-W>5<
@@ -69,8 +70,10 @@ inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u
 noremap <Leader>l :<C-U>lopen<CR>
 noremap <Leader>L :<C-U>lclose<CR>
 
-" Break strings at textwidth
-nnoremap <Leader>n 72\|Bi"<CR>"<Esc>
+" Break & join lines at textwidth w/ and wo/ + at the end of the line
+nnoremap <Leader>n 76\|Bi"<CR>"<Esc>
+nnoremap <Leader>N 74\|Bi" +<CR>"<Esc>
+nnoremap <Leader>J JF"df"
 
 noremap <silent> <F3> :<C-U>call ToggleLight()<CR>
 noremap <silent> gK :call Doc()<CR>

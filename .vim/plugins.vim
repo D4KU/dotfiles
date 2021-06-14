@@ -20,16 +20,16 @@ call plug#begin($plugDir)
     Plug 'junegunn/fzf.vim'
         let g:fzf_layout = { 'window': 'enew' }
         " Due to clever-f plugin, : and , are free
-        nnoremap <silent> ,            :<C-U>Buffers<CR>
-        nnoremap <silent> :            :<C-U>History<CR>
-        noremap  <silent> <Leader>.    :<C-U>Files<CR>
-        noremap  <silent> <Leader>-    :<C-U>Lines<CR>
-        nnoremap <silent> <Leader>`    :<C-U>Marks<CR>
-        nnoremap <silent> <Leader>/    :<C-U>History/<CR>
-        nnoremap <silent> <Leader>;    :<C-U>History:<CR>
-        nnoremap <silent> <Leader>,    :<C-U>Helptags<CR>
-        nnoremap <silent> <Leader><CR> :<C-U>Commands<CR>
-        nnoremap <silent> <Leader>$    :<C-U>Snippets<CR>
+        nnoremap <silent> ,               :<C-U>Buffers<CR>
+        nnoremap <silent> :               :<C-U>History<CR>
+        noremap  <silent> <Leader><Space> :<C-U>Files<CR>
+        noremap  <silent> <Leader>-       :<C-U>Lines<CR>
+        nnoremap <silent> <Leader>`       :<C-U>Marks<CR>
+        nnoremap <silent> <Leader>/       :<C-U>History/<CR>
+        nnoremap <silent> <Leader>;       :<C-U>History:<CR>
+        nnoremap <silent> <Leader>?       :<C-U>Helptags<CR>
+        nnoremap <silent> <Leader><CR>    :<C-U>Commands<CR>
+        nnoremap <silent> <Leader>,       :<C-U>Snippets<CR>
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
         xmap <Leader><Tab> <Plug>(fzf-maps-x)
@@ -53,8 +53,12 @@ call plug#begin($plugDir)
     Plug 'itchyny/lightline.vim'
         let g:lightline = { 'colorscheme': 'daku' }
         let g:lightline.active = {
-            \ 'left': [['paste'], ['filename'], ['modified', 'readonly', 'filetype']],
-            \ 'right': [],
+            \ 'left': [
+                \ ['paste'],
+                \ ['filename'],
+                \ ['modified', 'readonly', 'filetype'],
+                \ ],
+            \ 'right': [['position']],
             \ }
         let g:lightline.inactive = {
             \ 'left': [['filename'], ['modified']],
@@ -340,6 +344,7 @@ call plug#begin($plugDir)
 
     " Autocompletion
     Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
+        let g:jedi#usages_command = "<Leader>u"
 
     " Linting and completion
     " let g:ale_completion_enabled = 1
@@ -351,7 +356,6 @@ call plug#begin($plugDir)
         nmap [K <Plug>(ale_first)
         nmap ]K <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
-        let g:ale_python_pylint_executable = 'pylint3'
         let g:ale_lint_on_text_changed = 'never'
         let g:ale_sign_error = '.'
         let g:ale_sign_warning = '.'
@@ -365,7 +369,8 @@ call plug#begin($plugDir)
             \ }
         let g:ale_fixers = {
             \ '*': [ 'remove_trailing_lines', 'trim_whitespace' ],
-            \ 'python': [ 'autopep8', 'isort' ]
+            \ 'python': [ 'autopep8', 'isort' ],
+            \ 'cs': [ 'uncrustify' ],
             \ }
 
     " Wrap and unwrap function arguments

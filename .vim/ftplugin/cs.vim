@@ -59,13 +59,13 @@ nmap <silent> <buffer> <Leader>k <Plug>(omnisharp_navigate_up)
 nmap <silent> <buffer> <Leader>j <Plug>(omnisharp_navigate_down)
 
 " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
-nmap <silent> <buffer> <Leader><Space> <Plug>(omnisharp_code_actions)
+nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
 
 " Run code actions with text selected in visual mode to extract method
 xmap <silent> <buffer> <Leader><Space> <Plug>(omnisharp_code_actions)
 
 " Repeat the last code action performed (does not use a selector)
-xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
+nmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
 xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
 
 " Rename with dialog
