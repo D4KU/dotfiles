@@ -88,3 +88,8 @@ hi ALEWarningSign ctermfg=220
 
 " Illuminate Plugin
 hi IlluminatedWord ctermbg=235
+
+" GitGutter Plugin
+hi link GitGutterAdd    Comment
+hi link GitGutterChange Comment
+hi link GitGutterDelete Comment

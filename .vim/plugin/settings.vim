@@ -34,6 +34,7 @@ set belloff=all           " Play no sounds
 set cursorline            " Highlight current line
 set nomodeline            " Don't execute modelines
 set backspace=indent,eol,start " Allow backspacing over start position of insert mode
+set showbreak=↪\          " Show indicator in front of wrapped lines
 "set scrolloff=1          " Keep some lines above and below cursor during scrolling
 "set timeoutlen=500       " Don't wait for character after pressing Escape
 "set autoindent           " Copy indent from current line when starting a new one

@@ -3,7 +3,6 @@ let g:OmniSharp_server_stdio = 1
 
 " If you have the .NET Framework installed in Windows, you may have better
 " results using the Windows binaries.
-let g:OmniSharp_server_path = '/mnt/c/omnisharp/OmniSharp.exe'
 let g:OmniSharp_translate_cygwin_wsl = 1
 
 " Don't autoselect first omnicomplete option, show options even if there is only
@@ -19,6 +18,7 @@ let g:OmniSharp_selector_findusages = 'fzf'
 let g:OmniSharp_completion_without_overloads = 1
 let g:OmniSharp_highlighting = 0
 let g:OmniSharp_typeLookupInPreview = 1
+let g:OmniSharp_diagnostic_showid = 1
 " let g:OmniSharp_want_snippet = 1
 
 " augroup omnisharp_commands
@@ -59,7 +59,7 @@ nmap <silent> <buffer> <Leader>k <Plug>(omnisharp_navigate_up)
 nmap <silent> <buffer> <Leader>j <Plug>(omnisharp_navigate_down)
 
 " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
-nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
+nmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 
 " Run code actions with text selected in visual mode to extract method
 xmap <silent> <buffer> <Leader><Space> <Plug>(omnisharp_code_actions)

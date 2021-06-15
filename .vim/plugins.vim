@@ -20,16 +20,16 @@ call plug#begin($plugDir)
     Plug 'junegunn/fzf.vim'
         let g:fzf_layout = { 'window': 'enew' }
         " Due to clever-f plugin, : and , are free
-        nnoremap <silent> ,               :<C-U>Buffers<CR>
-        nnoremap <silent> :               :<C-U>History<CR>
-        noremap  <silent> <Leader><Space> :<C-U>Files<CR>
-        noremap  <silent> <Leader>-       :<C-U>Lines<CR>
-        nnoremap <silent> <Leader>`       :<C-U>Marks<CR>
-        nnoremap <silent> <Leader>/       :<C-U>History/<CR>
-        nnoremap <silent> <Leader>;       :<C-U>History:<CR>
-        nnoremap <silent> <Leader>?       :<C-U>Helptags<CR>
-        nnoremap <silent> <Leader><CR>    :<C-U>Commands<CR>
-        nnoremap <silent> <Leader>,       :<C-U>Snippets<CR>
+        nnoremap <silent> ,         :<C-U>Buffers<CR>
+        nnoremap <silent> :         :<C-U>History<CR>
+        noremap  <silent> <Leader>, :<C-U>Files<CR>
+        noremap  <silent> <Leader>- :<C-U>Lines<CR>
+        nnoremap <silent> <Leader>` :<C-U>Marks<CR>
+        nnoremap <silent> <Leader>/ :<C-U>History/<CR>
+        nnoremap <silent> <Leader>: :<C-U>History:<CR>
+        nnoremap <silent> <Leader>? :<C-U>Helptags<CR>
+        nnoremap <silent> <Leader>; :<C-U>Commands<CR>
+        nnoremap <silent> <Leader>. :<C-U>Snippets<CR>
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
         xmap <Leader><Tab> <Plug>(fzf-maps-x)
@@ -54,7 +54,7 @@ call plug#begin($plugDir)
         let g:lightline = { 'colorscheme': 'daku' }
         let g:lightline.active = {
             \ 'left': [
-                \ ['paste'],
+                \ ['select', 'paste'],
                 \ ['filename'],
                 \ ['modified', 'readonly', 'filetype'],
                 \ ],
@@ -65,7 +65,8 @@ call plug#begin($plugDir)
             \ 'right': [],
             \ }
         let g:lightline.component = {
-            \ 'position': '%c %l/%L'
+            \ 'position': '%c %l/%L',
+            \ 'select': '%{lightline#mode()==?"select"?"SELECT":""}',
             \ }
 		let g:lightline.enable = { 'statusline': 1 }
 
@@ -107,7 +108,7 @@ call plug#begin($plugDir)
     " Shader file highlighting
     Plug 'vim-scripts/ShaderHighLight'
 
-    " Keep showing outer blocks around cursor
+    " Keep showing outer blocks on buffer top
     Plug 'wellle/context.vim'
         let g:context_border_char = ' '
         let g:context_highlight_tag = '<hide>'
@@ -117,7 +118,7 @@ call plug#begin($plugDir)
         let g:minimap_base_highlight = 'Comment'
         let g:minimap_git_colors = 1
         let g:minimap_left = 1
-        noremap <Leader>` :<C-U>MinimapToggle<CR>
+        noremap <Leader>~ :<C-U>MinimapToggle<CR>
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine'
@@ -245,10 +246,17 @@ call plug#begin($plugDir)
     Plug 'junegunn/vim-after-object'
         autocmd VimEnter * call after_object#enable(
             \ ['P', 'p'],
-            \ '=', ':', '-', '#', ' ', '_', '/')
+            \ '=', ':', '-', '#', ' ', '_', '/', ',', ';', '.')
 
     " Sub-clause / function argument text object
-    Plug 'peterrincker/vim-argumentative'
+    Plug 'baabelfish/vim-argumentative'
+        let g:argumentative_no_mappings = 1
+        nmap [, <Plug>Argumentative_Prev
+        nmap ], <Plug>Argumentative_Next
+        xmap [, <Plug>Argumentative_XPrev
+        xmap ], <Plug>Argumentative_XNext
+        nmap <, <Plug>Argumentative_MoveLeft
+        nmap >, <Plug>Argumentative_MoveRight
 
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
@@ -256,13 +264,22 @@ call plug#begin($plugDir)
     " I and A to prepend/append to visual selection
     Plug 'kana/vim-niceblock'
 
-    " Easily define new text objects
+    " Define mappings for simultaneously pressed keys
+    " Plug 'kana/vim-arpeggio'
+        " Arpeggio inoremap jk <Esc>
+        " Arpeggio nmap jk <Plug>(easymotion-overwin-f)
+
+    " Text object for last searched pattern entire buffer
     Plug 'kana/vim-textobj-user'
-
-    " Text object for last searched pattern
     Plug 'kana/vim-textobj-lastpat'
+    Plug 'kana/vim-textobj-entire'
+        let g:textobj_entire_no_default_key_mappings = 0
+        xmap at	<Plug>(textobj-entire-a)
+        xmap it	<Plug>(textobj-entire-i)
+        omap at	<Plug>(textobj-entire-a)
+        omap it	<Plug>(textobj-entire-i)
 
-    " Indent text object
+    " Text object for indent level
     Plug 'michaeljsmith/vim-indent-object'
 
     " Automatically adjust shiftwidth to current document
@@ -284,7 +301,7 @@ call plug#begin($plugDir)
 
     " Many more text objects
     Plug 'wellle/targets.vim'
-        let g:targets_nl = 'nN'
+        let g:targets_nl = [ 'n', 'N' ]
 
     " Line text object
     Plug 'wellle/line-targets.vim'

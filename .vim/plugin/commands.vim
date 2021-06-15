@@ -21,6 +21,12 @@ autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
 " set
 autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=sh | endif
 
+" Open help in vertical split
+augroup vimrc_help
+  autocmd!
+  autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+augroup END
+
 " Dir of current file
 cabbrev <expr> %% expand('%:p:h')
 
