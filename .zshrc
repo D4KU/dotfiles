@@ -37,7 +37,7 @@ zinit snippet $(omzs vi-mode)
 zinit wait lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \
-    atload"!_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
+    atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
     zsh-users/zsh-autosuggestions \
     atload"mvcmd wd _wd; mvcmd fuzzywd wd" \
     mfaerevaag/wd \

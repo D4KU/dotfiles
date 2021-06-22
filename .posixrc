@@ -1,4 +1,3 @@
-alias ra='ranger --choosedir=$HOME/.local/share/ranger/dir; LASTDIR=`cat $HOME/.local/share/ranger/dir`; cd "$LASTDIR"'
 alias gp='git pull --recurse-submodules'
 alias gP='git push --recurse-submodules=check'
 alias gs='git status'
@@ -31,17 +30,30 @@ SAVEHIST=5000
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 eval "$(fasd --init posix-hook)"
-eval "$(thefuck --alias)"
 
 # Common fzf options
-fzf_ops=(--preview "highlight -O ansi -l {}" -0 -1 --cycle)
+preview="highlight -O ansi -l {}"
+fzf_ops=(--preview "$preview" -0 -1 --cycle)
 
-######################## Opening files ########################
+# Make dir and change to it
+mcd() {
+  mkdir -p "$1" && cd -P "$1"
+}
+
+# Move to dir where ranger exited
+ra() {
+  ranger --choosedir=$HOME/.local/share/ranger/dir
+  cd "$(cat $HOME/.local/share/ranger/dir)"
+}
+
 # Show grep results
 ff() {
-  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-  hi="highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
-  file=$(rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi)
+  if [ ! "$#" -gt 0 ]; then
+    echo "Need a string to search for"
+    return 1
+  fi
+  hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+  file=$(rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi --cycle)
   [[ -n "$file" ]] && vim -c "call search('$1', 'c')" "$file"
 }
 
@@ -52,9 +64,10 @@ ff() {
 tm() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1")
+    return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || echo "No sessions found"
 }
 
 # fs [FUZZY PATTERN] - Select selected tmux session
@@ -91,9 +104,29 @@ ftpane() {
 # open best matched file using `fasd` if given argument,
 # filter output of `fasd` using `fzf` else
 v() {
-  [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return $?
-  local file
-  file="$(fasd -Rfl "$1" | fzf ${fzf_ops[@]} --no-sort +m)" && vi "${file}"
+  if [ $# -gt 0 ]; then
+    fasd -f -e ${EDITOR:-vim} "$*"
+    return $?
+  fi
+
+  local out="$(fasd -Rfl | fzf $fzf_ops --no-sort --multi --expect=alt-d,enter)"
+  local key=$(head -1 <<< "$out")
+  local selection=$(tail +2 <<< "$out")
+  local files=()
+
+  while IFS= read -r file
+  do
+    files+=("$file")
+  done <<< "$selection"
+
+  case "$key" in
+    alt-d)
+      cd "$(dirname "${files[-1]}")"
+      ;;
+    enter)
+      ${EDITOR:-vim} "${files[@]}"
+      ;;
+  esac
 }
 
 # open best matched dir using `fasd` if given argument,
