@@ -17,12 +17,6 @@ nnoremap Y y$
 " qq to record, Q to replay
 noremap Q @q
 
-" Select lastly pasted text
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-" Alt-Backspace to forward to jump list, backspace to rewind
-noremap <BS> <C-O>
-
 " Use original mapping to switch window and maximize it
 noremap <C-W>j <C-W>j<C-W>_
 noremap <C-W>k <C-W>k<C-W>_
@@ -50,9 +44,6 @@ nnoremap <Esc>h <C-W>5>
 " Remove blank lines before and after paragraph
 nnoremap <Leader>{ {dd<C-O>
 nnoremap <Leader>} }dd<C-O>
-
-" Select a C-style function from inside definition block
-nnoremap ]{ vaBo{bl
 
 " Substitute word under cursor
 nnoremap <Leader>S :%s/\<<C-R><C-W>\>/

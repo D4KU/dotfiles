@@ -271,7 +271,7 @@ call plug#begin($plugDir)
 
     " Text object for last searched pattern entire buffer
     Plug 'kana/vim-textobj-user'
-    Plug 'kana/vim-textobj-lastpat'
+    " Plug 'kana/vim-textobj-lastpat'
     Plug 'kana/vim-textobj-entire'
         let g:textobj_entire_no_default_key_mappings = 0
         xmap at	<Plug>(textobj-entire-a)
@@ -289,6 +289,10 @@ call plug#begin($plugDir)
         augroup END
     " might be better in the future:
     " Plug 'tpope/vim-sleuth'
+
+    " Lastly pasted text object
+    Plug 'saaguero/vim-textobj-pastedtext'
+        let g:pastedtext_select_key = 'v'
 
     " Make plugin commands repeatable
     Plug 'tpope/vim-repeat'

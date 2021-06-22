@@ -1,13 +1,62 @@
+snippet [s "Serializable" b
+[Serializable
+endsnippet
+
+snippet <pr
+<paramref name="$0"/>
+endsnippet
+
+snippet <t
+<typeparam name="${1}">${2:$1}</typeparam>
+endsnippet
+
+snippet <tr
+<typeparamref name="$0"/>
+endsnippet
+
+snippet <l
+<list type="${3:number}">
+    <listheader>
+        <term>$1</term>
+        <description>$2</description>
+    </listheader>
+    $0
+</list>
+endsnippet
+
+snippet <i
+<item>
+    <term>$1</term>
+    <description>$2</description>
+</item>
+endsnippet
+
+snippet <a
+<author>$0</author>
+endsnippet
+
+snippet | "String divider"
+" + " | " + "
+endsnippet
+
+# Unity ----------------------------------------------------------------------
 snippet mono "Unity MonoBehaviour" b
 using UnityEngine;
 
-public class $1 : MonoBehaviour
+public class `!p snip.rv = snip.basename` : MonoBehaviour
 {
     $0
 }
 endsnippet
 
-snippet onva "OnValidate()" b
+snippet awake "Awake()" b
+private void Awake()
+{
+    $0
+}
+endsnippet
+
+snippet onval "OnValidate()" b
 private void OnValidate()
 {
     $0
@@ -21,15 +70,25 @@ private void Start()
 }
 endsnippet
 
-snippet upda "Update()" b
+snippet update "Update()" b
 private void Update()
 {
     $0
 }
 endsnippet
 
+snippet ongui "OnGUI()" b
+private void OnGUI()
+{
+    if (GUILayout.Button("$1"))
+    {
+        $0
+    }
+}
+endsnippet
+
 snippet [r "Require Component" b
-[RequireComponent(typeof($1))
+[RequireComponent(typeof($0))
 endsnippet
 
 snippet [e "Execute Always" b
@@ -44,39 +103,22 @@ snippet [h "Header" b
 [Header("$0")
 endsnippet
 
-snippet [s "Serializable" b
-[Serializable
-endsnippet
+snippet editor "Custom Editor" b
+using UnityEngine;
+using UnityEditor;
 
-snippet <pr
-  <paramref name="${1}"/>
-endsnippet
+[CustomEditor(typeof($1))]
+public class $1Editor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        var trg = ($1)target;
 
-snippet <t
-  <typeparam name="${1}">${2:$1}</typeparam>
-endsnippet
-
-snippet <tr
-  <typeparamref name="${1}"/>
-endsnippet
-
-snippet <l
-  <list type="${1:number}">
-    <listheader>
-      <term>$2</term>
-      <description>$3</description>
-    </listheader>
-		$0
-  </list>
-endsnippet
-
-snippet <i
-  <item>
-    <term>$1</term>
-    <description>$2</description>
-  </item>
-endsnippet
-
-snippet | "String divider"
-" + " | " + "
+        var r = EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Button"))
+            trg.$0
+        EditorGUILayout.EndHorizontal();
+    }
+}
 endsnippet
