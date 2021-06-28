@@ -155,7 +155,7 @@ call plug#begin($plugDir)
     Plug 'AndrewRadev/switch.vim'
         let g:switch_custom_definitions =
             \ [
-            \   ['&&', '||'],
+            \   ['==', '>=', '<='],
             \   ['and', 'or'],
             \   ['int', 'float', 'bool'],
             \   ['public', 'protected', 'private'],
@@ -257,6 +257,9 @@ call plug#begin($plugDir)
         xmap ], <Plug>Argumentative_XNext
         nmap <, <Plug>Argumentative_MoveLeft
         nmap >, <Plug>Argumentative_MoveRight
+
+    " Text object for chained member access
+    Plug 'D4KU/vim-textobj-chainmember'
 
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'

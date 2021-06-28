@@ -74,17 +74,3 @@ autocmd FileType cs,shaderlab,hlsl
 
 " Esc during completion confirms and exits insert mode
 " inoremap <expr> <Esc> pumvisible() ? '<C-Y><Esc>' : '<Esc>'
-
-" new text object
-call textobj#user#plugin('memberaccess', {
-\   'amember': {
-\     'pattern': '\..\{-}\_[.[:blank:]]\@=',
-\     'scan': 'cursor',
-\     'select': 'am',
-\   },
-\   'innermember': {
-\     'pattern': '\.\@<=.\{-}\_[.[:blank:]]\@=',
-\     'scan': 'cursor',
-\     'select': 'im',
-\   },
-\ })
