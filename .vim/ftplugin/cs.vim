@@ -14,7 +14,6 @@ setlocal commentstring=//%s
 " By default, only Type/Method signatures are fetched. Full documentation can
 " still be fetched when you need it with the :OmniSharpDocumentation command.
 let g:omnicomplete_fetch_full_documentation = 0
-let g:OmniSharp_selector_findusages = 'fzf'
 let g:OmniSharp_completion_without_overloads = 1
 let g:OmniSharp_highlighting = 0
 let g:OmniSharp_typeLookupInPreview = 1

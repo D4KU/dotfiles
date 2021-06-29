@@ -277,10 +277,10 @@ call plug#begin($plugDir)
     " Plug 'kana/vim-textobj-lastpat'
     Plug 'kana/vim-textobj-entire'
         let g:textobj_entire_no_default_key_mappings = 0
-        xmap at	<Plug>(textobj-entire-a)
-        xmap it	<Plug>(textobj-entire-i)
-        omap at	<Plug>(textobj-entire-a)
-        omap it	<Plug>(textobj-entire-i)
+        xmap ao	<Plug>(textobj-entire-a)
+        xmap io	<Plug>(textobj-entire-i)
+        omap ao	<Plug>(textobj-entire-a)
+        omap io	<Plug>(textobj-entire-i)
 
     " Text object for indent level
     Plug 'michaeljsmith/vim-indent-object'
@@ -304,7 +304,7 @@ call plug#begin($plugDir)
     Plug 'tmsvg/pear-tree'
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
-        let g:pear_tree_smart_backspace = 1
+        let g:pear_tree_smart_backspace = 0
 
     " Many more text objects
     Plug 'wellle/targets.vim'
