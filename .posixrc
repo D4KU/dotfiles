@@ -9,6 +9,7 @@ alias up='sudo apt-get update && sudo apt-get upgrade'
 alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
 alias untar='tar -zxvf'
+alias exp='explorer.exe "$(wslpath -w "$PWD")"'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -38,6 +39,11 @@ fzf_ops=(--preview "$preview" -0 -1 --cycle)
 # Make dir and change to it
 mcd() {
   mkdir -p "$1" && cd -P "$1"
+}
+
+# Cd via windows path
+wcd() {
+  cd "$(wslpath $1)"
 }
 
 # Move to dir where ranger exited

@@ -9,12 +9,13 @@ p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # Make autosuggestions work
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
-setopt hist_expire_dups_first
+# setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt share_history
