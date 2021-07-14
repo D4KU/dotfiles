@@ -138,7 +138,7 @@ call plug#begin($plugDir)
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
         let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyz"
-        map <Bslash> <Plug>(easymotion-overwin-f)
+        map <Leader><Leader><Leader> <Plug>(easymotion-overwin-f)
 
     " Motions based on indent depths
     Plug 'jeetsukumaran/vim-indentwise'
@@ -426,11 +426,11 @@ call plug#begin($plugDir)
     " Plug 'puremourning/vimspector', { 'for': [ 'cs' ] }
     "     let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
-    " " Adjust indentation of pasted text
-    " Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
-    "     let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
-    "     let g:pasta_paste_before_mapping = '[P'
-    "     let g:pasta_paste_after_mapping = ']P'
+    " Adjust indentation of pasted text
+    Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
+        let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
+        let g:pasta_paste_before_mapping = '[P'
+        let g:pasta_paste_after_mapping = ']P'
 
     " Snippet engine
     if has('python3')

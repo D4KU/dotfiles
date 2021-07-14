@@ -34,7 +34,7 @@ nnoremap cd i_<Esc>r
 nnoremap cD a_<Esc>r
 
 " Paste without newline
-nnoremap zp a<CR><Esc>PkgJgJ
+nnoremap zp i<CR><Esc>P"_d0kgJgJ
 nnoremap zP i<CR><Esc>PkgJgJ
 
 " Map Alt-L and Alt-H to resize vertical splits
@@ -67,7 +67,6 @@ nnoremap <Leader>N 74\|Bi" +<CR>"<Esc>
 nnoremap <Leader>J JF"df"
 
 noremap <silent> <F3> :<C-U>call ToggleLight()<CR>
-noremap <silent> gK :call Doc()<CR>
 
 autocmd FileType cs,shaderlab,hlsl
     \ inoremap <silent> <buffer> ; <C-R>=SmartSemicolon()<CR>

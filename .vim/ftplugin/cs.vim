@@ -27,9 +27,8 @@ let g:OmniSharp_diagnostic_showid = 1
 " augroup END
 
 " Trigger completion when certain characters are inserted
-" <C-O> not working correctly, <Esc>...a does
 imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
-imap <silent> <buffer> ( (<Esc><Plug>(omnisharp_signature_help)a
+imap <silent> <buffer> ( <Plug>(PearTreeOpener_()<Esc><Plug>(omnisharp_signature_help)a
 inoremap <silent> <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
@@ -44,8 +43,7 @@ nmap <silent> <buffer> <Leader>u <Plug>(omnisharp_find_usages)
 " Finds members in the current buffer
 nmap <silent> <buffer> <Leader>m <Plug>(omnisharp_find_members)
 nmap <silent> <buffer> <Leader>x <Plug>(omnisharp_fix_usings)
-nmap <silent> <buffer> <Leader>h <Plug>(omnisharp_type_lookup)
-nmap <silent> <buffer> <F1> <Plug>(omnisharp_documentation)
+nmap <silent> <buffer> <Leader>h <Plug>(omnisharp_documentation)
 nmap <silent> <buffer> <Leader>s <Plug>(omnisharp_signature_help)
 imap <silent> <buffer> <C-X>h <Plug>(omnisharp_signature_help)
 
@@ -57,11 +55,9 @@ nmap <silent> <buffer> <Leader>c <Plug>(omnisharp_global_code_check)
 nmap <silent> <buffer> <Leader>k <Plug>(omnisharp_navigate_up)
 nmap <silent> <buffer> <Leader>j <Plug>(omnisharp_navigate_down)
 
-" Contextual code actions (uses fzf, CtrlP or unite.vim when available)
+" Contextual code actions
 nmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
-
-" Run code actions with text selected in visual mode to extract method
-xmap <silent> <buffer> <Leader><Space> <Plug>(omnisharp_code_actions)
+xmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 
 " Repeat the last code action performed (does not use a selector)
 nmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
@@ -85,3 +81,12 @@ let g:OmniSharp_highlight_groups = {
     \ 'StructName': 'Special',
     \ 'EnumName': 'Special'
     \}
+let g:OmniSharp_popup_options = {
+    \ 'padding': [1, 2, 1, 2],
+    \ 'scrollbar': 0,
+    \}
+
+let dotNetUrl="'https://docs.microsoft.com/en-us/search/?terms=%&category=Reference&scope=.NET'"
+let unityUrl="'https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%'"
+noremap <silent> <Leader>K :call Doc(dotNetUrl)<CR>
+noremap <silent> <Leader>U :call Doc(unityUrl)<CR>
