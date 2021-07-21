@@ -21,6 +21,13 @@ autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
 " set
 autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=sh | endif
 
+" Overwrite windows terminal's cursor overwrite
+augroup cursorfix
+  autocmd!
+  autocmd VimEnter,InsertLeave * try | call matchadd('Cursor', '\%#', 900, 88) | catch | | endtry
+  autocmd InsertEnter * try | call matchdelete(88) | catch | | endtry
+augroup END
+
 " Open help in vertical split
 augroup vimrc_help
   autocmd!
