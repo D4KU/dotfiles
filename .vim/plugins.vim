@@ -261,6 +261,9 @@ call plug#begin($plugDir)
     " Text object for chained member access
     Plug 'D4KU/vim-textobj-chainmember'
 
+    " Text object for C-like if, while, function, class, ...
+    Plug 'D4KU/vim-textobj-headedblock'
+
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
 
@@ -276,11 +279,9 @@ call plug#begin($plugDir)
     Plug 'kana/vim-textobj-user'
     " Plug 'kana/vim-textobj-lastpat'
     Plug 'kana/vim-textobj-entire'
-        let g:textobj_entire_no_default_key_mappings = 0
-        xmap ao	<Plug>(textobj-entire-a)
-        xmap io	<Plug>(textobj-entire-i)
-        omap ao	<Plug>(textobj-entire-a)
-        omap io	<Plug>(textobj-entire-i)
+        let g:textobj_entire_no_default_key_mappings = 1
+        xmap o <Plug>(textobj-entire-i)
+        omap o <Plug>(textobj-entire-i)
 
     " Text object for indent level
     Plug 'michaeljsmith/vim-indent-object'
@@ -302,9 +303,10 @@ call plug#begin($plugDir)
 
     " Automatically close pairs
     Plug 'tmsvg/pear-tree'
+        let g:pear_tree_map_special_keys = 1
+        let g:pear_tree_smart_backspace = 1
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
-        let g:pear_tree_smart_backspace = 0
 
     " Many more text objects
     Plug 'wellle/targets.vim'
@@ -426,11 +428,11 @@ call plug#begin($plugDir)
     " Plug 'puremourning/vimspector', { 'for': [ 'cs' ] }
     "     let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
-    " Adjust indentation of pasted text
-    Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
-        let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
-        let g:pasta_paste_before_mapping = '[P'
-        let g:pasta_paste_after_mapping = ']P'
+    " " Adjust indentation of pasted text
+    " Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
+    "     let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
+    "     let g:pasta_paste_before_mapping = '[P'
+    "     let g:pasta_paste_after_mapping = ']P'
 
     " Snippet engine
     if has('python3')
