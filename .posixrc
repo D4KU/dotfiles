@@ -5,7 +5,6 @@ alias gc='git commit -m'
 alias db='dotbare'
 alias gn='geeknote'
 alias -g ...='../..'
-alias up='sudo apt-get update && sudo apt-get upgrade'
 alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
 alias untar='tar -zxvf'
@@ -19,6 +18,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
+export FZF_DEFAULT_OPTS="--cycle --preview-window=border-none"
 
 KEYTIMEOUT=1
 HISTSIZE=25000
@@ -33,8 +33,14 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 eval "$(fasd --init posix-hook)"
 
 # Common fzf options
-preview="highlight -O ansi -l {}"
-fzf_ops=(--preview "$preview" -0 -1 --cycle)
+
+up() {
+  sudo apt-get update
+  sudo apt-get upgrade
+  sudo apt autoremove
+  zinit update --all
+  vim -c "PlugUpdate | qa\!"
+}
 
 # Make dir and change to it
 mcd() {
@@ -59,7 +65,7 @@ ff() {
     return 1
   fi
   hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
-  file=$(rg --files-with-matches --no-messages "$1" | fzf -0 -1 --preview $hi --cycle)
+  file=$(rg --files-with-matches --no-messages "$1" | fzf --select-1 --preview $hi)
   [[ -n "$file" ]] && vim -c "call search('$1', 'c')" "$file"
 }
 
@@ -115,7 +121,7 @@ v() {
     return $?
   fi
 
-  local out="$(fasd -Rfl | fzf $fzf_ops --no-sort --multi --expect=alt-d,enter)"
+  local out="$(fasd -Rfl | fzf --preview $preview --no-sort --multi --expect=alt-d,enter)"
   local key=$(head -1 <<< "$out")
   local selection=$(tail +2 <<< "$out")
   local files=()
@@ -142,7 +148,7 @@ z() {
   if [ $# -gt 0 ]; then
     dir=$(fasd -de 'printf %s' $*)
   else
-    dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort)"
+    dir="$(fasd -Rdl "$1" | fzf --no-sort)"
   fi
   cd "${dir}"
 }
@@ -153,7 +159,7 @@ vz() {
   if [ $# -gt 0 ]; then
     file=$(fasd -f "$*")
   else
-    file="$(fasd -Rfl "$1" | fzf -1 -0 --no-sort)"
+    file="$(fasd -Rfl "$1" | fzf --no-sort)"
   fi
   cd "$(dirname "$file")"
 }
