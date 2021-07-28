@@ -34,8 +34,9 @@ nnoremap cd i_<Esc>r
 nnoremap cD a_<Esc>r
 
 " Paste without newline
-nnoremap zp i<CR><Esc>P"_d0kgJgJ
 nnoremap zP i<CR><Esc>PkgJgJ
+" Paste without newline, remove indent whitespace
+nnoremap zp i<CR><Esc>l"_d0P"_d0kgJgJ
 
 " Map Alt-L and Alt-H to resize vertical splits
 nnoremap <Esc>l <C-W>5<
