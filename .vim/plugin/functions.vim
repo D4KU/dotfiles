@@ -151,3 +151,15 @@ function! RgFzf(query, fullscreen)
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
+
+function! s:Wd(pt)
+  let l:cmd = "$ZPFX/../plugins/mfaerevaag---wd/wd.sh path " . a:pt
+  let l:path = trim(system(l:cmd))
+  if isdirectory(l:path)
+    silent execute 'cd ' . l:path
+    echo l:path
+  else
+    echo "Not a warp point"
+  endif
+endfunction
+command! -nargs=1 Wd call s:Wd(<f-args>)

@@ -9,8 +9,8 @@ call plug#begin($plugDir)
     " Ranger integration
     Plug 'francoiscabrol/ranger.vim'
         let g:ranger_map_keys = 0
-        nnoremap <silent> <Leader>f :<C-U>Ranger<CR>
-        nnoremap <silent> <Leader>F :<C-U>RangerWorkingDirectory<CR>
+        nnoremap <silent> <Leader>f <Cmd>Ranger<CR>
+        nnoremap <silent> <Leader>F <Cmd>RangerWorkingDirectory<CR>
         " Redirect the dependency on the BClose plugin to Bbye
         " command -bang Bclose :Bwipeout
         " let g:ranger_replace_netrw = 1
@@ -19,22 +19,26 @@ call plug#begin($plugDir)
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
         let g:fzf_layout = { 'window': 'enew' }
-        " Due to clever-f plugin, : and , are free
-        nnoremap <silent> ,         :<C-U>Buffers<CR>
-        nnoremap <silent> :         :<C-U>History<CR>
-        noremap  <silent> <Leader>, :<C-U>Files<CR>
-        noremap  <silent> <Leader>- :<C-U>Lines<CR>
-        nnoremap <silent> <Leader>` :<C-U>Marks<CR>
-        nnoremap <silent> <Leader>/ :<C-U>History/<CR>
-        nnoremap <silent> <Leader>: :<C-U>History:<CR>
-        nnoremap <silent> <Leader>? :<C-U>Helptags<CR>
-        nnoremap <silent> <Leader>; :<C-U>Commands<CR>
-        nnoremap <silent> <Leader>. :<C-U>Snippets<CR>
+
+        " Thanks to clever-f plugin, : and , are free
+        nnoremap <silent> ,         <Cmd>Buffers<CR>
+        nnoremap <silent> :         <Cmd>History<CR>
+        nnoremap <silent> <Leader>, <Cmd>exec 'Files ' . expand('%:p:h')<CR>
+        nnoremap <silent> <Leader>. <Cmd>Files<CR>
+        nnoremap <silent> <Leader>- <Cmd>Lines<CR>
+        nnoremap <silent> <Leader>` <Cmd>Marks<CR>
+        nnoremap <silent> <Leader>/ <Cmd>History/<CR>
+        nnoremap <silent> <Leader>: <Cmd>History:<CR>
+        nnoremap <silent> <Leader>? <Cmd>Helptags<CR>
+        nnoremap <silent> <Leader>; <Cmd>Commands<CR>
+        nnoremap <silent> <Leader>' <Cmd>Snippets<CR>
+
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
         xmap <Leader><Tab> <Plug>(fzf-maps-x)
         omap <Leader><Tab> <Plug>(fzf-maps-o)
         imap <C-X>m        <Plug>(fzf-maps-i)
+
         " Insert mode completion
         imap <C-X>k <Plug>(fzf-complete-word)
         imap <C-X>f <Plug>(fzf-complete-path)
@@ -82,8 +86,8 @@ call plug#begin($plugDir)
 
     " Highlight trailing whitespace
     Plug 'ntpeters/vim-better-whitespace'
-        nnoremap <silent> ]w :<C-U>NextTrailingWhitespace<CR>
-        nnoremap <silent> [w :<C-U>PrevTrailingWhitespace<CR>
+        nnoremap <silent> ]w <Cmd>NextTrailingWhitespace<CR>
+        nnoremap <silent> [w <Cmd>PrevTrailingWhitespace<CR>
         let g:better_whitespace_filetypes_blacklist = [
             \ 'diff',
             \ 'gitcommit',
@@ -118,7 +122,7 @@ call plug#begin($plugDir)
         let g:minimap_base_highlight = 'Comment'
         let g:minimap_git_colors = 1
         let g:minimap_left = 1
-        noremap <Leader>~ :<C-U>MinimapToggle<CR>
+        noremap <Leader>~ <Cmd>MinimapToggle<CR>
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine'
@@ -126,7 +130,7 @@ call plug#begin($plugDir)
         let g:indentLine_char_list = ['¦']
         let g:indentLine_concealcursor = ''
         let g:indentLine_faster = 1
-        noremap <silent> <Leader><Bar> :<C-U>IndentLinesToggle<CR>
+        noremap <silent> <Leader><Bar> <Cmd>IndentLinesToggle<CR>
 
     " ============================== New motions =============================
     " Camel case word motion
@@ -189,6 +193,8 @@ call plug#begin($plugDir)
 
     " More mappings
     Plug 'tpope/vim-unimpaired'
+
+    Plug 'hauleth/asyncdo.vim'
 
     " Surround anything with anything
     Plug 'tpope/vim-surround'
@@ -277,7 +283,7 @@ call plug#begin($plugDir)
 
     " Text object for last searched pattern entire buffer
     Plug 'kana/vim-textobj-user'
-    " Plug 'kana/vim-textobj-lastpat'
+    Plug 'kana/vim-textobj-lastpat'
     Plug 'kana/vim-textobj-entire'
         let g:textobj_entire_no_default_key_mappings = 1
         xmap o <Plug>(textobj-entire-i)
@@ -341,7 +347,7 @@ call plug#begin($plugDir)
                 echo "New target lang: en"
             endif
         endfunc
-        noremap <silent> <Leader>z :<C-U>call ToggleTargetLang()<CR>
+        noremap <silent> <Leader>z <Cmd>call ToggleTargetLang()<CR>
 
     " ======================= Command line improvements ======================
     " Search for multiple variants of a word
@@ -368,9 +374,15 @@ call plug#begin($plugDir)
     " Plug 'andrewradev/splitjoin.vim', { 'for': [ 'python', 'cs' ] }
     "     let g:splitjoin_trailing_comma = 1
 
-    " Autocompletion
-    Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
-        let g:jedi#usages_command = "<Leader>u"
+    " AI-assisted completion
+    " Plug 'codota/tabnine-vim'
+    " Plug 'kiteco/vim-plugin'
+    "     let g:kite_supported_languages = ['*']
+    "     let g:kite_log = 1
+
+    " " Autocompletion
+    " Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
+    "     let g:jedi#usages_command = "<Leader>u"
 
     " Linting and completion
     " let g:ale_completion_enabled = 1
@@ -388,7 +400,7 @@ call plug#begin($plugDir)
         let g:ale_lint_on_insert_leave = 1
         let g:ale_lint_on_save = 1
         " let g:ale_lint_on_enter = 1
-        " let g:ale_set_quickfix = 1
+        let g:ale_set_quickfix = 1
         let g:ale_echo_msg_format = '[%linter%] %s'
         let g:ale_linters = {
             \ 'cs': [ 'OmniSharp' ]
@@ -460,11 +472,11 @@ call plug#begin($plugDir)
 
     " Show only small text area
     Plug 'junegunn/goyo.vim'
-        nnoremap <silent> <F4> :<C-U>Goyo<CR>
+        nnoremap <silent> <F4> <Cmd>Goyo<CR>
 
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'
-        nnoremap <silent> <Leader><F4> :<C-U>Limelight!!<CR>
+        nnoremap <silent> <Leader><F4> <Cmd>Limelight!!<CR>
 
     " Highlight bad word choices
     " Plug 'reedes/vim-wordy', { 'for': [ 'text', 'markdown' ] }

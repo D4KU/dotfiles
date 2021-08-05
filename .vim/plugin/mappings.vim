@@ -42,6 +42,13 @@ nnoremap zp i<CR><Esc>l"_d0P"_d0kgJgJ
 nnoremap <Esc>l <C-W>5<
 nnoremap <Esc>h <C-W>5>
 
+nnoremap <silent> <Plug>moveRight dd<C-W>lp<C-W>h
+    \:call repeat#set("\<Plug>moveRight", v:count)<CR>
+nnoremap <silent> <Plug>moveLeft dd<C-W>hp<C-W>l
+    \:call repeat#set("\<Plug>moveLeft", v:count)<CR>
+nmap <Leader>> <Plug>moveRight
+nmap <Leader>< <Plug>moveLeft
+
 " Remove blank lines before and after paragraph
 nnoremap <Leader>{ {dd<C-O>
 nnoremap <Leader>} }dd<C-O>

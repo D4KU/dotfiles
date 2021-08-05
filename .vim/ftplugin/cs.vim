@@ -5,9 +5,7 @@ let g:OmniSharp_server_stdio = 1
 " results using the Windows binaries.
 let g:OmniSharp_translate_cygwin_wsl = 1
 
-" Don't autoselect first omnicomplete option, show options even if there is only
-" one (so the preview documentation is accessible).
-setlocal completeopt=longest,menuone,preview,popuphidden
+setlocal completeopt=menuone,noselect,preview
 setlocal commentstring=//%s
 
 " Fetch full documentation during omnicomplete requests.
@@ -60,8 +58,8 @@ nmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 xmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 
 " Repeat the last code action performed (does not use a selector)
-nmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
-xmap <silent> <buffer> <Leader>> <Plug>(omnisharp_code_action_repeat)
+nmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
+xmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
 
 " Rename with dialog
 nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
