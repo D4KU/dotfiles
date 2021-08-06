@@ -43,7 +43,8 @@ hi SpellLocal cterm=bold
 hi SpellCap cterm=underline
 
 " Fold
-" hi Folded ctermbg=None ctermfg=1
+hi Folded ctermfg=237
+hi FoldColumn ctermfg=235
 
 " Matching Bracket
 hi clear Matchparen
@@ -70,7 +71,6 @@ hi clear DiffAdd
 hi clear DiffChange
 hi clear DiffDelete
 hi clear DiffText
-hi clear FoldColumn
 hi DiffAdd ctermbg=234
 "hi DiffChange ctermbg=16
 hi DiffDelete ctermfg=236
@@ -90,6 +90,6 @@ hi ALEWarningSign ctermfg=220
 hi IlluminatedWord ctermbg=235
 
 " GitGutter Plugin
-hi GitGutterAdd ctermfg=235
+hi GitGutterAdd ctermfg=237
 hi link GitGutterChange GitGutterAdd
 hi link GitGutterDelete GitGutterAdd

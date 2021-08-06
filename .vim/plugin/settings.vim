@@ -25,8 +25,6 @@ set noshowmode            " Don't show which mode is active
 set wildmenu              " Improved tab completion menu
 set wildmode=list:longest " List matches and complete till longest common string
 set textwidth=78          " Max line length
-set foldcolumn:0          " Don't show column indicating folds
-set fillchars+=vert:\     " Set characters in vertical split bar to spaces
 set formatoptions+=j      " Try to remove a comment leader when joining lines
 set formatoptions-=l      " Break too long lines in insert mode
 set formatoptions-=o      " Don't automatically insert comment leader on 'o'
@@ -35,9 +33,20 @@ set cursorline            " Highlight current line
 set nomodeline            " Don't execute modelines
 set backspace=indent,eol,start " Allow backspacing over start position of insert mode
 set showbreak=↪\          " Show indicator in front of wrapped lines
+set foldcolumn=0          " Show one depth of folds in sign column
+set foldtext=MyFoldText() " Custom function supplying text for closed folds
+"set laststatus=2         " Always show statusbar
 "set scrolloff=1          " Keep some lines above and below cursor during scrolling
 "set timeoutlen=500       " Don't wait for character after pressing Escape
 "set autoindent           " Copy indent from current line when starting a new one
 "set ls=2                 " Always show status bar
 "set autochdir            " Pwd is always the one the current file is in
 let &colorcolumn="+".join(range(1,270),",+")
+
+set fillchars=
+  \vert:\ ,
+  \eob:\ ,
+  \fold:·,
+  \foldopen:┍,
+  \foldsep:│,
+  \foldclose:─

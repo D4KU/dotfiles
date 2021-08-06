@@ -1,19 +1,19 @@
 " Switch between light and dark color schemes
 func! ToggleLight()
-  if g:lightactive
-    try
-      colorscheme despacio
-      hi Number ctermfg=9
-    catch
-      colorscheme delek
-    endtry
-    colorscheme daku_dark
-    let g:lightactive = 0
-  else
-    colorscheme morning
-    colorscheme daku_light
-    let g:lightactive = 1
-  endif
+    if g:lightactive
+        try
+            colorscheme despacio
+            hi Number ctermfg=9
+        catch
+            colorscheme delek
+        endtry
+        colorscheme daku_dark
+        let g:lightactive = 0
+    else
+        colorscheme morning
+        colorscheme daku_light
+        let g:lightactive = 1
+    endif
 endfunc
 let g:lightactive = 1
 call ToggleLight()
@@ -37,11 +37,11 @@ function! SmartSemicolon()
     let nextLineEmpty = nextLine =~ '^\s*$'
 
     if !CursorInComment()
-            \ && pos[2] < col('$')
-            \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
-            \ && nextLine !~ '{$'
-            \ && (curLineInd >= nextLineInd || nextLineEmpty)
-            \ && curLine !~ '^\s*for\s\?('
+                \ && pos[2] < col('$')
+                \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
+                \ && nextLine !~ '{$'
+                \ && (curLineInd >= nextLineInd || nextLineEmpty)
+                \ && curLine !~ '^\s*for\s\?('
         try
             " Insert semicolon at the lines' end
             exec("normal! A;")
@@ -59,35 +59,35 @@ endfunction
 
 " Get syntax group under cursor
 function! SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
 " Undo all changes on current line
 function! Undoline()
-  let pos = getpos(".")
-  let current = getline(pos[1])
-  let chg = changenr()
-  while changenr() > 0 && current ==# getline(pos[1])
-    silent exec 'u'
-  endwhile
-  let old = getline(pos[1])
+    let pos = getpos(".")
+    let current = getline(pos[1])
+    let chg = changenr()
+    while changenr() > 0 && current ==# getline(pos[1])
+        silent exec 'u'
+    endwhile
+    let old = getline(pos[1])
 
-  while changenr() < chg
-    silent exec 'redo'
-  endwhile
-  " undo if we jumped over a gap
-  if changenr() > chg
-    silent exec 'u'
-  endif
-  call setpos('.', pos)
-  if old ==# current
-    echo 'no change found'
-  else
-    call setline(pos[1], old)
-  endif
+    while changenr() < chg
+        silent exec 'redo'
+    endwhile
+    " undo if we jumped over a gap
+    if changenr() > chg
+        silent exec 'u'
+    endif
+    call setpos('.', pos)
+    if old ==# current
+        echo 'no change found'
+    else
+        call setline(pos[1], old)
+    endif
 endfunction
 
 " Online documentation search
@@ -101,17 +101,17 @@ endfunction
 
 " Print output in split instead of shell escape
 function! s:ExecuteInShell(command)
-  let command = join(map(split(a:command), 'expand(v:val)'))
-  let winnr = bufwinnr('^' . command . '$')
-  silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
-  setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
-  echo 'Execute ' . command . '...'
-  silent! execute 'silent %!'. command
-  " silent! execute 'resize ' . line('$')
-  silent! redraw
-  silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-  silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
-  echo 'Shell command ' . command . ' executed.'
+    let command = join(map(split(a:command), 'expand(v:val)'))
+    let winnr = bufwinnr('^' . command . '$')
+    silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
+    setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+    echo 'Execute ' . command . '...'
+    silent! execute 'silent %!'. command
+    " silent! execute 'resize ' . line('$')
+    silent! redraw
+    silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+    silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
+    echo 'Shell command ' . command . ' executed.'
 endfunction
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 
@@ -145,21 +145,40 @@ endfunction
 
 " Slower but interactive version of fzf.vim's :Rg command
 function! RgFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+    let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+    let initial_command = printf(command_fmt, shellescape(a:query))
+    let reload_command = printf(command_fmt, '{q}')
+    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
+" Warp directory integration
 function! s:Wd(pt)
-  let l:cmd = "$ZPFX/../plugins/mfaerevaag---wd/wd.sh path " . a:pt
-  let l:path = trim(system(l:cmd))
-  if isdirectory(l:path)
-    silent execute 'cd ' . l:path
-    echo l:path
-  else
-    echo "Not a warp point"
-  endif
+    let l:cmd = "$ZPFX/../plugins/mfaerevaag---wd/wd.sh path " . a:pt
+    let l:path = trim(system(l:cmd))
+    if isdirectory(l:path)
+        silent execute 'cd ' . l:path
+        echo l:path
+    else
+        echo "Not a warp point"
+    endif
 endfunction
 command! -nargs=1 Wd call s:Wd(<f-args>)
+
+" Custom function linked to &foldtext
+function! MyFoldText()
+    " let num = v:foldend - v:foldstart + 1
+    " let txt = substitute(getline(v:foldstart),"^ *","",1)
+    " let char = matchstr(&fillchars, 'fold:\zs.')
+    return getline(v:foldstart) . ' '
+endfunction
+
+" Create mapping that is repeatable
+function! RepeatableMap(name, lhs, rhs, mode)
+    " make <Plug>name map to rhs
+    execute a:mode . 'noremap <silent> <Plug>' . a:name . ' ' . a:rhs . ' ' .
+        \ ':call repeat#set("\<Plug>' . a:name . '", v:count)<CR>'
+
+    " make lhs map to <Plug>name
+    execute a:mode . 'map ' . a:lhs . ' <Plug>' . a:name
+endfunction

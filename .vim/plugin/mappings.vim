@@ -2,11 +2,11 @@
 noremap ; :
 
 " Redo more intuitive
-nnoremap U <C-R>
-nnoremap <C-R> U
+noremap U <C-R>
+noremap <C-R> U
 
 " Match y behavior to d and c
-nnoremap Y y$
+noremap Y y$
 
 " " Wrapped lines goes down/up to next row, rather than next line in file.
 " noremap j gj
@@ -18,16 +18,27 @@ nnoremap Y y$
 noremap Q @q
 
 " Use original mapping to switch window and maximize it
-noremap <C-W>j <C-W>j<C-W>_
-noremap <C-W>k <C-W>k<C-W>_
-noremap <Leader>v :<C-U>vsplit<CR>
-noremap <Leader>V :<C-U>vsplit<CR><C-W>H
+noremap <Leader>v <Cmd>vsplit<CR>
+noremap <Leader>V <Cmd>vsplit<CR><C-W>H
+
+" Open and close stuff
+noremap <Leader>l <Cmd>lopen<CR>
+noremap <Leader>L <Cmd>lclose<CR>
 
 " Map Alt-J and Alt-K to move view up and down
-nnoremap <Esc>j 2<C-Y>
-nnoremap <Esc>k 2<C-E>
-nnoremap <Esc>J 10<C-Y>
-nnoremap <Esc>K 10<C-E>
+noremap <Esc>j 2<C-Y>
+noremap <Esc>k 2<C-E>
+noremap <Esc>J 10<C-Y>
+noremap <Esc>K 10<C-E>
+
+" Map Alt-L and Alt-H to resize vertical splits
+noremap <Esc>l <C-W>5<
+noremap <Esc>h <C-W>5>
+
+" Add fold column when first fold is created, remove it when all are
+" deleted
+noremap zf <Cmd>setlocal foldcolumn=2<CR>zf
+noremap zE <Cmd>setlocal foldcolumn=0<CR>zE
 
 " Insert a single character in front or behind cursor
 nnoremap cd i_<Esc>r
@@ -38,43 +49,27 @@ nnoremap zP i<CR><Esc>PkgJgJ
 " Paste without newline, remove indent whitespace
 nnoremap zp i<CR><Esc>l"_d0P"_d0kgJgJ
 
-" Map Alt-L and Alt-H to resize vertical splits
-nnoremap <Esc>l <C-W>5<
-nnoremap <Esc>h <C-W>5>
-
-nnoremap <silent> <Plug>moveRight dd<C-W>lp<C-W>h
-    \:call repeat#set("\<Plug>moveRight", v:count)<CR>
-nnoremap <silent> <Plug>moveLeft dd<C-W>hp<C-W>l
-    \:call repeat#set("\<Plug>moveLeft", v:count)<CR>
-nmap <Leader>> <Plug>moveRight
-nmap <Leader>< <Plug>moveLeft
+" Move lines between splits
+call RepeatableMap('moveRight', '<Leader>>', 'dd<C-W>lp<C-W>h', 'n')
+call RepeatableMap('moveLeft' , '<Leader><', 'dd<C-W>hp<C-W>l', 'n')
 
 " Remove blank lines before and after paragraph
-nnoremap <Leader>{ {dd<C-O>
-nnoremap <Leader>} }dd<C-O>
+call RepeatableMap('deleteBeforeParagraph', '<Leader>{', '{"_dd<C-O>', 'n')
+call RepeatableMap('deleteAfterParagraph' , '<Leader>}', '}"_dd<C-O>', 'n')
 
-" Substitute word under cursor
-nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
-
-" Move between errors and automatically pick first fix
-nnoremap [S [s1z=
-nnoremap ]S ]s1z=
+" " Move between errors and automatically pick first fix
+call RepeatableMap('fixLastSpelling', '<Leader>[', '[s1z=', 'n')
+call RepeatableMap('fixNextSpelling', '<Leader>]', ']s1z=', 'n')
 
 " Fix last spell error without leaving insert mode (with undo breaks)
 inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u
-
-" Open and close stuff
-" noremap <Leader>n :<C-U>tabnew<CR>
-" noremap <Leader>N :<C-U>tabclose<CR>
-noremap <Leader>l :<C-U>lopen<CR>
-noremap <Leader>L :<C-U>lclose<CR>
 
 " Break & join lines at textwidth w/ and wo/ + at the end of the line
 nnoremap <Leader>n 76\|Bi"<CR>"<Esc>
 nnoremap <Leader>N 74\|Bi" +<CR>"<Esc>
 nnoremap <Leader>J JF"df"
 
-noremap <silent> <F3> :<C-U>call ToggleLight()<CR>
+nnoremap <silent> <F3> <Cmd>call ToggleLight()<CR>
 
 autocmd FileType cs,shaderlab,hlsl
     \ inoremap <silent> <buffer> ; <C-R>=SmartSemicolon()<CR>
