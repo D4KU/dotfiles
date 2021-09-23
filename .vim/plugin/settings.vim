@@ -6,8 +6,8 @@ set encoding=utf-8        " UTF-8 character encoding
 set hlsearch              " Highlight search results
 set smartcase             " Override 'ignore case' if search contains capitals
 set incsearch             " Show matches as search pattern is typed
-set noshowcmd		          " Show (partial) command in status line.
-set showmatch		          " Show matching brackets.
+set showcmd		            " Show command in status line
+set showmatch		          " Show matching brackets
 set ignorecase		        " Do case insensitive matching
 set autowrite		          " Automatically save before commands like :next and :make
 set hidden		            " Hide buffers when they are abandoned
@@ -49,4 +49,4 @@ set fillchars=
   \fold:·,
   \foldopen:┍,
   \foldsep:│,
-  \foldclose:─
+  \foldclose:━

@@ -17,6 +17,11 @@ noremap Y y$
 " qq to record, Q to replay
 noremap Q @q
 
+" Add fold column when first fold is created, remove it when all are
+" deleted
+noremap zf <Cmd>setlocal foldcolumn=2<CR>zf
+noremap zE <Cmd>setlocal foldcolumn=0<CR>zE
+
 " Use original mapping to switch window and maximize it
 noremap <Leader>v <Cmd>vsplit<CR>
 noremap <Leader>V <Cmd>vsplit<CR><C-W>H
@@ -26,19 +31,14 @@ noremap <Leader>l <Cmd>lopen<CR>
 noremap <Leader>L <Cmd>lclose<CR>
 
 " Map Alt-J and Alt-K to move view up and down
-noremap <Esc>j 2<C-Y>
-noremap <Esc>k 2<C-E>
-noremap <Esc>J 10<C-Y>
-noremap <Esc>K 10<C-E>
+nnoremap <Esc>j 2<C-Y>
+nnoremap <Esc>k 2<C-E>
+nnoremap <Esc>J 10<C-Y>
+nnoremap <Esc>K 10<C-E>
 
 " Map Alt-L and Alt-H to resize vertical splits
-noremap <Esc>l <C-W>5<
-noremap <Esc>h <C-W>5>
-
-" Add fold column when first fold is created, remove it when all are
-" deleted
-noremap zf <Cmd>setlocal foldcolumn=2<CR>zf
-noremap zE <Cmd>setlocal foldcolumn=0<CR>zE
+nnoremap <Esc>l <C-W>5<
+nnoremap <Esc>h <C-W>5>
 
 " Insert a single character in front or behind cursor
 nnoremap cd i_<Esc>r
@@ -57,7 +57,7 @@ call RepeatableMap('moveLeft' , '<Leader><', 'dd<C-W>hp<C-W>l', 'n')
 call RepeatableMap('deleteBeforeParagraph', '<Leader>{', '{"_dd<C-O>', 'n')
 call RepeatableMap('deleteAfterParagraph' , '<Leader>}', '}"_dd<C-O>', 'n')
 
-" " Move between errors and automatically pick first fix
+" Move between errors and automatically pick first fix
 call RepeatableMap('fixLastSpelling', '<Leader>[', '[s1z=', 'n')
 call RepeatableMap('fixNextSpelling', '<Leader>]', ']s1z=', 'n')
 

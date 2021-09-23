@@ -37,6 +37,9 @@ augroup END
 " Dir of current file
 cabbrev <expr> %% expand('%:p:h')
 
+" Two dirs up
+cabbrev <expr> ... ../..
+
 " Save as sudo
 cabbrev w!! w !sudo tee "%"
 

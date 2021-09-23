@@ -23,8 +23,8 @@ call plug#begin($plugDir)
         " Thanks to clever-f plugin, : and , are free
         nnoremap <silent> ,         <Cmd>Buffers<CR>
         nnoremap <silent> :         <Cmd>History<CR>
-        nnoremap <silent> <Leader>, <Cmd>exec 'Files ' . expand('%:p:h')<CR>
-        nnoremap <silent> <Leader>. <Cmd>Files<CR>
+        nnoremap <silent> <Leader>, <Cmd>Files<CR>
+        nnoremap <silent> <Leader>. <Cmd>exec 'Files ' . expand('%:p:h')<CR>
         nnoremap <silent> <Leader>- <Cmd>Lines<CR>
         nnoremap <silent> <Leader>` <Cmd>Marks<CR>
         nnoremap <silent> <Leader>/ <Cmd>History/<CR>
@@ -104,6 +104,7 @@ call plug#begin($plugDir)
 
     " Syntax highlighting for many languages
     Plug 'sheerun/vim-polyglot'
+        let g:polyglot_disabled = ['autoindent', 'csv.plugin']
         let g:python_highlight_all = 1
 
     " Improved feedback on search
@@ -356,10 +357,17 @@ call plug#begin($plugDir)
     " Rename currently edited file
     Plug 'vim-scripts/Rename2'
 
+    Plug 'chrisbra/unicode.vim'
+
     " ============================== Coding ==================================
     " Show and edit git hunks
     Plug 'airblade/vim-gitgutter'
         let g:gitgutter_map_keys = 0
+        " ◦▵
+        let g:gitgutter_sign_modified = '·'
+        let g:gitgutter_sign_modified_removed = '⨯'
+        let g:gitgutter_sign_removed = '-'
+        let g:gitgutter_sign_removed_above_and_below = '='
         nmap ]h  <Plug>(GitGutterNextHunk)
         nmap [h  <Plug>(GitGutterPrevHunk)
         nmap ghs <Plug>(GitGutterStageHunk)
@@ -381,8 +389,8 @@ call plug#begin($plugDir)
     "     let g:kite_log = 1
 
     " " Autocompletion
-    " Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
-    "     let g:jedi#usages_command = "<Leader>u"
+    Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
+        let g:jedi#usages_command = "<Leader>u"
 
     " Linting and completion
     " let g:ale_completion_enabled = 1
@@ -395,8 +403,8 @@ call plug#begin($plugDir)
         nmap ]K <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_lint_on_text_changed = 'never'
-        let g:ale_sign_error = '.'
-        let g:ale_sign_warning = '.'
+        let g:ale_sign_error = '·'
+        let g:ale_sign_warning = '·'
         let g:ale_lint_on_insert_leave = 1
         let g:ale_lint_on_save = 1
         " let g:ale_lint_on_enter = 1

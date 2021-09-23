@@ -90,6 +90,6 @@ hi ALEWarningSign ctermfg=220
 hi IlluminatedWord ctermbg=235
 
 " GitGutter Plugin
-hi GitGutterAdd ctermfg=237
+hi GitGutterAdd ctermfg=235
 hi link GitGutterChange GitGutterAdd
 hi link GitGutterDelete GitGutterAdd
