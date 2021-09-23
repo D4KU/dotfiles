@@ -12,7 +12,29 @@ from ranger.api.commands import *
 
 # You can import any python module as needed.
 import os
+import subprocess
 from ranger.core.loader import CommandLoader
+
+
+class wd(Command):
+    wdpath = "~/.zinit/plugins/mfaerevaag---wd/wd.sh"
+
+    def execute(self):
+        command = self.wdpath + " show " + self.arg(1) + \
+            " | grep -oP '(?<=->\s).*'"
+        subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
+        stdout, _ = subpro.communicate()
+        if subpro.returncode == 0:
+            direc = os.path.abspath(stdout.decode('utf-8').rstrip('\n'))
+            self.fm.cd(direc)
+
+    def tab(self):
+        command = self.wdpath + " list | grep -oP '(?<=->\s\s).*'"
+        subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
+        stdout, _ = subpro.communicate()
+        if subpro.returncode == 0:
+            return stdout.splitlines()
+        return []
 
 
 # Any class that is a subclass of "Command" will be integrated into ranger as a
@@ -71,7 +93,6 @@ class fzf_select(Command):
     See: https://github.com/junegunn/fzf
     """
     def execute(self):
-        import subprocess
         if self.quantifier:
             # match only directories
             command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
