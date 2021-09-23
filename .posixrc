@@ -9,6 +9,7 @@ alias x-www-browser='firefox.exe'
 alias gnome-www-browser='firefox.exe'
 alias untar='tar -zxvf'
 alias exp='explorer.exe "$(wslpath -w "$PWD")"'
+alias groot='git rev-parse --show-toplevel'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -36,7 +37,7 @@ eval "$(fasd --init posix-hook)"
 
 up() {
   sudo apt-get update
-  sudo apt-get upgrade
+  sudo apt-get upgrade -y
   sudo apt autoremove
   zinit update --all
   vim -c "PlugUpdate | qa\!"
@@ -110,6 +111,12 @@ ftpane() {
     tmux select-pane -t ${target_window}.${target_pane} &&
     tmux select-window -t $target_window
   fi
+}
+
+# add file to gitignore
+agi() {
+  echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi)" \
+  >> "$(git rev-parse --show-toplevel)/.gitignore"
 }
 
 ######################## Fasd ########################
