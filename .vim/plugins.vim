@@ -218,6 +218,11 @@ call plug#begin($plugDir)
     " Jump between pairs
     Plug 'andymass/vim-matchup'
 
+    Plug 'vim-autoformat/vim-autoformat'
+        let g:formatdef_cs = 'clang-format -style=file'
+        let g:formatters_cs = ['clangformat']
+        let g:autoformat_verbosemode=1
+
     " Search for selection
     Plug 'bronson/vim-visual-star-search'
 
