@@ -88,6 +88,7 @@ call plug#begin($plugDir)
     Plug 'ntpeters/vim-better-whitespace'
         nnoremap <silent> ]w <Cmd>NextTrailingWhitespace<CR>
         nnoremap <silent> [w <Cmd>PrevTrailingWhitespace<CR>
+        let g:better_whitespace_ctermcolor = 52
         let g:better_whitespace_filetypes_blacklist = [
             \ 'diff',
             \ 'gitcommit',
@@ -218,11 +219,6 @@ call plug#begin($plugDir)
     " Jump between pairs
     Plug 'andymass/vim-matchup'
 
-    Plug 'vim-autoformat/vim-autoformat'
-        let g:formatdef_cs = 'clang-format -style=file'
-        let g:formatters_cs = ['clangformat']
-        let g:autoformat_verbosemode=1
-
     " Search for selection
     Plug 'bronson/vim-visual-star-search'
 
@@ -320,6 +316,14 @@ call plug#begin($plugDir)
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
 
+    Plug 'vim-autoformat/vim-autoformat'
+        let g:formatdef_cs = 'clang-format -style=file'
+        let g:formatters_cs = ['clangformat']
+        let g:autoformat_verbosemode=1
+        inoremap <Esc>a <Esc>:<C-U>AutoformatLine<CR>
+        nnoremap gL :<C-U>AutoformatLine<CR>
+        vnoremap gL :<C-U>'<,'>AutoformatLine<CR>
+
     " Many more text objects
     Plug 'wellle/targets.vim'
         let g:targets_nl = [ 'n', 'N' ]
@@ -401,7 +405,6 @@ call plug#begin($plugDir)
     " let g:ale_completion_enabled = 1
     Plug 'dense-analysis/ale', { 'for': [ 'python', 'cs' ] }
         nmap gl <Plug>(ale_lint)
-        nmap gL <Plug>(ale_fix)
         nmap [k <Plug>(ale_previous_wrap)
         nmap ]k <Plug>(ale_next_wrap)
         nmap [K <Plug>(ale_first)
@@ -414,6 +417,7 @@ call plug#begin($plugDir)
         let g:ale_lint_on_save = 1
         " let g:ale_lint_on_enter = 1
         let g:ale_set_quickfix = 1
+        let g:ale_warn_about_trailing_whitespace = 1
         let g:ale_echo_msg_format = '[%linter%] %s'
         let g:ale_linters = {
             \ 'cs': [ 'OmniSharp' ]
@@ -421,7 +425,7 @@ call plug#begin($plugDir)
         let g:ale_fixers = {
             \ '*': [ 'remove_trailing_lines', 'trim_whitespace' ],
             \ 'python': [ 'autopep8', 'isort' ],
-            \ 'cs': [ 'uncrustify' ],
+            \ 'cs': [ 'clang-format' ],
             \ }
 
     " Wrap and unwrap function arguments

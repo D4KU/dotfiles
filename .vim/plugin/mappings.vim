@@ -61,6 +61,9 @@ call RepeatableMap('deleteAfterParagraph' , '<Leader>}', '}"_dd<C-O>', 'n')
 call RepeatableMap('fixLastSpelling', '<Leader>[', '[s1z=', 'n')
 call RepeatableMap('fixNextSpelling', '<Leader>]', ']s1z=', 'n')
 
+" Substitute word under cursor
+nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
+
 " Fix last spell error without leaving insert mode (with undo breaks)
 inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u
 

@@ -21,12 +21,17 @@ autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
 " set
 autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=sh | endif
 
-" Overwrite windows terminal's cursor overwrite
+" Overwrite windows terminal's cursor style
 augroup cursorfix
   autocmd!
-  autocmd VimEnter,InsertLeave * try | call matchadd('Cursor', '\%#', 900, 88) | catch | | endtry
-  autocmd InsertEnter * try | call matchdelete(88) | catch | | endtry
+  autocmd BufEnter,InsertLeave * silent! call matchadd('Cursor', '\%#', 900, 88)
+  autocmd InsertEnter * silent! call matchdelete(88)
 augroup END
+
+" augroup autoformat
+"   autocmd!
+"   autocmd InsertLeave *.cs AutoformatLine
+" augroup END
 
 " Open help in vertical split
 augroup vimrc_help
