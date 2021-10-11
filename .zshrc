@@ -10,6 +10,7 @@ p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # Make autosuggestions work
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+export FORGIT_COPY_CMD='clip.exe'
 
 setopt auto_cd
 setopt auto_pushd
@@ -49,7 +50,7 @@ zinit wait lucid for \
     $(omzs command-not-found) \
     $(omzs magic-enter) \
 
-function zle-line-init () {
+zle-line-init () {
     # Set beam cursor e.g. after exiting from vim
     echo -ne '\e[5 q'
 }
@@ -65,7 +66,7 @@ zle-keymap-select() {
     fi
 }
 
-# fuzzy select dir when no parameter is passed
+# fuzzy select warp point when no parameter is passed
 fuzzywd() {
   if [ $# -gt 0 ]; then
     _wd $*

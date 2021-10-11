@@ -19,7 +19,12 @@ export MANPATH="/usr/local/man:$MANPATH"
 export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
-export FZF_DEFAULT_OPTS="--cycle --preview-window=border-none"
+export FZF_DEFAULT_OPTS="
+--cycle
+--preview='highlight --force -O ansi {}'
+--preview-window=border-none
+--bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
+--bind='alt-n:jump,alt-v:execute(less -f {})'"
 
 KEYTIMEOUT=1
 HISTSIZE=25000
@@ -33,14 +38,12 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 eval "$(fasd --init posix-hook)"
 
-# Common fzf options
-
 up() {
   sudo apt-get update
   sudo apt-get upgrade -y
   sudo apt autoremove
   zinit update --all
-  vim -c "PlugUpdate | qa\!"
+  vim -c "PlugUpdate | qa!"
 }
 
 # Make dir and change to it
