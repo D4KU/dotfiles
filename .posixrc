@@ -21,14 +21,14 @@ export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
 export FZF_DEFAULT_OPTS="
 --cycle
---preview='highlight --force -O ansi {}'
 --preview-window=border-none
 --bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
---bind='alt-n:jump,alt-v:execute(less -f {})'"
+--bind='alt-t:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'"
 
 KEYTIMEOUT=1
 HISTSIZE=25000
 SAVEHIST=5000
+preview='highlight --force -O ansi {}'
 
 # disable scroll lock through ctrl-s
 # stty -ixon
@@ -69,8 +69,8 @@ ff() {
     return 1
   fi
   hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
-  file=$(rg --files-with-matches --no-messages "$1" | fzf --select-1 --preview $hi)
-  [[ -n "$file" ]] && vim -c "call search('$1', 'c')" "$file"
+  file=$(rg --files-with-matches --no-messages "$1" | fzf --select-1 --preview=$hi --preview-window=$(fzf_smart_preview_pos))
+  [[ -n "$file" ]] && vim -c "call search('\v$1', 'c')" "$file"
 }
 
 ######################## Tmux ########################
@@ -131,7 +131,8 @@ v() {
     return $?
   fi
 
-  local out="$(fasd -Rfl | fzf --preview $preview --no-sort --multi --expect=alt-d,enter)"
+  local out="$(fasd -Rfl | fzf --preview $preview --no-sort --multi \
+    --expect=alt-d,enter --preview-window=$(fzf_smart_preview_pos))"
   local key=$(head -1 <<< "$out")
   local selection=$(tail +2 <<< "$out")
   local files=()
@@ -187,3 +188,14 @@ d() {
     dirs -v | head -10
   fi
 }
+
+# output the best fzf preview window position depending on current
+# tmux pane dimensions
+fzf_smart_preview_pos() {
+  local  width=$(tmux display-message -p '#{pane_width}')
+  local height=$(tmux display-message -p '#{pane_height}')
+
+  # landscape mode if width > 2 * height
+  [ $width -gt $((2 * $height)) ] && echo right || echo up
+}
+
