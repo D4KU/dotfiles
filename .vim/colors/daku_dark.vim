@@ -93,3 +93,5 @@ hi IlluminatedWord ctermbg=235
 hi GitGutterAdd ctermfg=235
 hi link GitGutterChange GitGutterAdd
 hi link GitGutterDelete GitGutterAdd
+
+hi link HighlightedyankRegion Visual

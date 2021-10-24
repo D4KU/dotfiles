@@ -84,6 +84,10 @@ call plug#begin($plugDir)
     Plug 'lilydjwg/colorizer'
         let g:colorizer_maxlines = 500
 
+    " Highlight just yanked text
+    Plug 'machakann/vim-highlightedyank'
+        let g:highlightedyank_highlight_duration = 250
+
     " Highlight trailing whitespace
     Plug 'ntpeters/vim-better-whitespace'
         nnoremap <silent> ]w <Cmd>NextTrailingWhitespace<CR>
@@ -292,7 +296,7 @@ call plug#begin($plugDir)
         omap o <Plug>(textobj-entire-i)
 
     " Text object for indent level
-    Plug 'michaeljsmith/vim-indent-object'
+    Plug 'davidxmoody/vim-indent-object'
 
     " Automatically adjust shiftwidth to current document
     Plug 'roryokane/detectindent'
