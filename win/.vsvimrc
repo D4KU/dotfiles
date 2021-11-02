@@ -4,7 +4,13 @@ set ignorecase " Do case insensitive matching
 set incsearch  " Show matches as search pattern is typed
 set smartcase  " Override 'ignore case' if search contains capitals
 
-" Easier navigate between tabs
+" Swap semicolon and colon
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
+" Navigate between tabs
 nnoremap J gT
 nnoremap K gt
 nnoremap zj J
@@ -28,17 +34,22 @@ nnoremap gk k
 " qq to record, Q to replay
 nnoremap Q @q
 
+" Insert a single character in front or behind cursor
+nnoremap cd i_<Esc>r
+nnoremap cD a_<Esc>r
+
+" Move to first and last word in paragraph
+nnoremap z{ {w
+nnoremap z} }ge
+
+" Select lastly pasted text
+nnoremap <expr> gp `[v`]
+
 " Switch panes
 nnoremap <A-L> <C-W>w
 
 " Move without leaving insert mode
 inoremap <A-L> <Esc>la
-
-" Swap semicolon and colon
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
 
 " Map Alt-J and Alt-K to move view up and down
 nnoremap <A-J> <C-Y>
@@ -47,6 +58,9 @@ nnoremap <A-K> <C-E>
 " Paste and then format the pasted text
 nnoremap ]p pv`.=
 nnoremap [p Pv`.=
+
+" Substitute word under cursor
+nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
 
 " Paste over selection, and then format the pasted text
 vnoremap [p "_dPv`.= `

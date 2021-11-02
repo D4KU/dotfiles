@@ -92,7 +92,7 @@ call plug#begin($plugDir)
     Plug 'ntpeters/vim-better-whitespace'
         nnoremap <silent> ]w <Cmd>NextTrailingWhitespace<CR>
         nnoremap <silent> [w <Cmd>PrevTrailingWhitespace<CR>
-        let g:better_whitespace_ctermcolor = 52
+        let g:better_whitespace_ctermcolor = 234
         let g:better_whitespace_filetypes_blacklist = [
             \ 'diff',
             \ 'gitcommit',

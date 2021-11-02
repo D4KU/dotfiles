@@ -24,8 +24,8 @@ autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=sh | endif
 " Overwrite windows terminal's cursor style
 augroup cursorfix
   autocmd!
-  autocmd BufEnter,InsertLeave * silent! call matchadd('Cursor', '\%#', 900, 88)
-  autocmd InsertEnter * silent! call matchdelete(88)
+  autocmd BufEnter,WinEnter,InsertLeave * silent! call matchadd('Cursor', '\%#', 900, 88)
+  autocmd BufLeave,InsertEnter * silent! call matchdelete(88)
 augroup END
 
 " augroup autoformat
