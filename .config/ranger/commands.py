@@ -21,7 +21,7 @@ class wd(Command):
 
     def execute(self):
         command = self.wdpath + " show " + self.arg(1) + \
-            " | grep -oP '(?<=->\s).*'"
+            ' | grep -oP "(?<=->\s).*" | sed "s*^~*$HOME*"'
         subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, _ = subpro.communicate()
         if subpro.returncode == 0:
