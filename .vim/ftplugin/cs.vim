@@ -29,9 +29,22 @@ imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
 imap <silent> <buffer> ( <Plug>(PearTreeOpener_()<Esc><Plug>(omnisharp_signature_help)a
 inoremap <silent> <buffer> . .<C-X><C-O>
 
+" Create vertical split only if there are no windows to left or right to reuse
+function! RecycleVSplit()
+    if winnr() != winnr('l')
+        execute winnr('l') . 'wincmd q'
+        vsplit
+    elseif winnr() != winnr('h')
+        execute winnr('h') . 'wincmd q'
+        topleft vsplit
+    else
+        vsplit
+    endif
+endfunction
+
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
-nmap <silent> <buffer> <Leader>D <Plug>(omnisharp_preview_definition)
+nmap <silent> <buffer> <Leader>D <Cmd>call RecycleVSplit()<CR><Plug>(omnisharp_go_to_definition)
 nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementation)
 nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
 nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
@@ -68,6 +81,10 @@ nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
 command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 
 nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
+
+" Toggle between normal and expression function body
+nnoremap <Leader>b ^f="_cW<BS><CR><C-O>O{<Esc>jo}<Esc>k
+nnoremap <Leader>B "_yiB]}dd[{ddkJa=><Space><Esc>
 
 let g:OmniSharp_highlight_groups = {
     \ 'FieldName': 'Normal',

@@ -182,3 +182,23 @@ function! RepeatableMap(name, lhs, rhs, mode)
     " make lhs map to <Plug>name
     execute a:mode . 'map ' . a:lhs . ' <Plug>' . a:name
 endfunction
+
+function! Synonyms(word)
+    " 1. Grep thesaurus file with entire word.
+    "    Word boundaries \b don't allow the word to be part of another.
+    let l:grep = "grep -P '\\b" . a:word . "\\b' " . &thesaurus
+
+    " 2. (tr)anslate spaces into newlines
+    " 3. Let awk
+    "   a. Filter unique lines without having to sort (up until '&&')
+    "   b. Remove input word from list (after '&&')
+    let l:post_proc = " | tr ' ' '\n' | awk '!x[$0]++ && !/" . a:word . "/'"
+    return l:grep . l:post_proc
+endfunction
+
+" Set fzf.vim preview window postion dependent on window aspect ratio
+function! SmartFzfPreview()
+    let l:ratio = winwidth('%') / (1.0 * winheight('%'))
+    let l:side = l:ratio > 2 ? 'right' : 'up'
+    let g:fzf_preview_window = [l:side . ':50%', 'ctrl-/']
+endfunction

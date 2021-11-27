@@ -21,17 +21,17 @@ call plug#begin($plugDir)
         let g:fzf_layout = { 'window': 'enew' }
 
         " Thanks to clever-f plugin, : and , are free
-        nnoremap <silent> ,         <Cmd>Buffers<CR>
-        nnoremap <silent> :         <Cmd>History<CR>
-        nnoremap <silent> <Leader>, <Cmd>Files<CR>
-        nnoremap <silent> <Leader>. <Cmd>exec 'Files ' . expand('%:p:h')<CR>
-        nnoremap <silent> <Leader>- <Cmd>Lines<CR>
-        nnoremap <silent> <Leader>` <Cmd>Marks<CR>
-        nnoremap <silent> <Leader>/ <Cmd>History/<CR>
-        nnoremap <silent> <Leader>: <Cmd>History:<CR>
-        nnoremap <silent> <Leader>? <Cmd>Helptags<CR>
-        nnoremap <silent> <Leader>; <Cmd>Commands<CR>
-        nnoremap <silent> <Leader>' <Cmd>Snippets<CR>
+        nnoremap <silent> ,         <Cmd>call SmartFzfPreview() <bar> Buffers<CR>
+        nnoremap <silent> :         <Cmd>call SmartFzfPreview() <bar> History<CR>
+        nnoremap <silent> <Leader>, <Cmd>call SmartFzfPreview() <bar> Files<CR>
+        nnoremap <silent> <Leader>. <Cmd>call SmartFzfPreview() <bar> exec 'Files ' . expand('%:p:h')<CR>
+        nnoremap <silent> <Leader>- <Cmd>call SmartFzfPreview() <bar> Lines<CR>
+        nnoremap <silent> <Leader>` <Cmd>call SmartFzfPreview() <bar> Marks<CR>
+        nnoremap <silent> <Leader>/ <Cmd>call SmartFzfPreview() <bar> History/<CR>
+        nnoremap <silent> <Leader>: <Cmd>call SmartFzfPreview() <bar> History:<CR>
+        nnoremap <silent> <Leader>? <Cmd>call SmartFzfPreview() <bar> Helptags<CR>
+        nnoremap <silent> <Leader>; <Cmd>call SmartFzfPreview() <bar> Commands<CR>
+        nnoremap <silent> <Leader>' <Cmd>call SmartFzfPreview() <bar> Snippets<CR>
 
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
@@ -45,6 +45,9 @@ call plug#begin($plugDir)
         imap <C-X>j <Plug>(fzf-complete-file)
         imap <C-X>l <Plug>(fzf-complete-buffer-line)
         imap <C-X>L <Plug>(fzf-complete-line)
+        inoremap <expr> <C-X>t fzf#vim#complete(fzf#wrap({
+            \ 'options': '--query=""',
+            \ 'source': function('Synonyms')}))
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -344,13 +347,13 @@ call plug#begin($plugDir)
         " Translator
         let g:translator_target_lang = 'en'
         let g:translator_default_engines = ['google']
-        let g:translator_window_type = 'preview'
-        " Display translation in command line
-        nmap <Leader>t <Plug>Translate
-        vmap <Leader>t <Plug>TranslateV
+        let g:translator_window_type = 'popup'
         " Replace the text with translation
-        nmap <Leader>T <Plug>TranslateR
-        vmap <Leader>T <Plug>TranslateRV
+        nmap <Leader>t <Plug>TranslateR
+        vmap <Leader>t <Plug>TranslateRV
+        " Display translation in command line
+        nmap <Leader>T <Plug>TranslateW
+        vmap <Leader>T <Plug>TranslateWV
 
         func! ToggleTargetLang()
             if g:translator_target_lang ==? 'en'

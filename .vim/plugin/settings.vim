@@ -35,6 +35,7 @@ set backspace=indent,eol,start " Allow backspacing over start position of insert
 set showbreak=↪\          " Show indicator in front of wrapped lines
 set foldcolumn=0          " Show one depth of folds in sign column
 set foldtext=MyFoldText() " Custom function supplying text for closed folds
+set thesaurus+=~/.vim/thesaurus/english.txt " Synonym completion file path
 "set laststatus=2         " Always show statusbar
 "set scrolloff=1          " Keep some lines above and below cursor during scrolling
 "set timeoutlen=500       " Don't wait for character after pressing Escape

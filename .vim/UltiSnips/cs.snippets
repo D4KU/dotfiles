@@ -111,6 +111,15 @@ snippet <c "Debug.Log color tag"
 <color=$1>$0</color>
 endsnippet
 
+snippet ddl "Debug.Log as quick marker"
+Debug.Log("<color=red>I'M HERE$0</color>");
+endsnippet
+
+snippet #ifu "Unity Editor preprocessor" b
+#if UNITY_EDITOR
+$0#endif
+endsnippet
+
 snippet editor "Custom Editor" b
 using UnityEngine;
 using UnityEditor;
