@@ -17,6 +17,9 @@ noremap Y y$
 " qq to record, Q to replay
 noremap Q @q
 
+" Substitute word under cursor
+nnoremap S :%s/\<<C-R><C-W>\>/
+
 " Add fold column when first fold is created, remove it when all are
 " deleted
 noremap zf <Cmd>setlocal foldcolumn=2<CR>zf
@@ -25,10 +28,6 @@ noremap zE <Cmd>setlocal foldcolumn=0<CR>zE
 " Use original mapping to switch window and maximize it
 noremap <Leader>v <Cmd>vsplit<CR>
 noremap <Leader>V <Cmd>vsplit<CR><C-W>H
-
-" Open and close stuff
-noremap <Leader>l <Cmd>lopen<CR>
-noremap <Leader>L <Cmd>lclose<CR>
 
 " Map Alt-J and Alt-K to move view up and down
 nnoremap <Esc>j 2<C-Y>
@@ -60,9 +59,6 @@ call RepeatableMap('deleteAfterParagraph' , '<Leader>}', '}"_dd<C-O>', 'n')
 " Move between errors and automatically pick first fix
 call RepeatableMap('fixLastSpelling', '<Leader>[', '[s1z=', 'n')
 call RepeatableMap('fixNextSpelling', '<Leader>]', ']s1z=', 'n')
-
-" Substitute word under cursor
-nnoremap <Leader>S :%s/\<<C-R><C-W>\>/
 
 " Fix last spell error without leaving insert mode (with undo breaks)
 inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u

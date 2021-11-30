@@ -50,6 +50,7 @@ nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
 nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
 nmap <silent> <buffer> <Leader>G <Plug>(omnisharp_find_symbol)
 nmap <silent> <buffer> <Leader>u <Plug>(omnisharp_find_usages)
+nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
 
 " Finds members in the current buffer
 nmap <silent> <buffer> <Leader>m <Plug>(omnisharp_find_members)
@@ -61,6 +62,7 @@ imap <silent> <buffer> <C-X>h <Plug>(omnisharp_signature_help)
 " Find all code errors/warnings for the current solution and populate
 " the quickfix window
 nmap <silent> <buffer> <Leader>c <Plug>(omnisharp_global_code_check)
+nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
 
 " Navigate up and down by method/property/field
 nmap <silent> <buffer> <Leader>k <Plug>(omnisharp_navigate_up)
@@ -74,17 +76,19 @@ xmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 nmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
 xmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
 
-" Rename with dialog
-nmap <silent> <buffer> <F2> <Plug>(omnisharp_rename)
-
 " Rename without dialog - with cursor on the symbol to rename
 command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 
-nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
+function! ToggleExpressionBody()
+    if stridx(getline('.'), '=>') == -1
+        execute "normal! \"_yiB]}\"_dd[{\"_ddkJa=>\<Space>\<Esc>"
+    else
+        execute "normal! ^f=\"_dwhr\<CR>O{\<Esc>jo}\<Esc>k"
+    endif
+endfunction
 
 " Toggle between normal and expression function body
-nnoremap <Leader>b ^f="_cW<BS><CR><C-O>O{<Esc>jo}<Esc>k
-nnoremap <Leader>B "_yiB]}dd[{ddkJa=><Space><Esc>
+nnoremap <Leader>P <Cmd>call ToggleExpressionBody()<CR>
 
 let g:OmniSharp_highlight_groups = {
     \ 'FieldName': 'Normal',

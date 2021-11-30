@@ -52,6 +52,9 @@ call plug#begin($plugDir)
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
 
+    " Git
+    Plug 'tpope/vim-fugitive'
+
     " ======================== Improved visual feedback ======================
     " Color scheme
     Plug 'AlessandroYorba/Despacio'
@@ -176,6 +179,11 @@ call plug#begin($plugDir)
 
     " Tab completion in insert mode
     Plug 'ervandew/supertab'
+
+    " Mappings to toggle quickfix and loclist
+    Plug 'Gavinok/vim-togglelist'
+        noremap <Leader>l <Cmd>call togglelist#ToggleQuickfixList()<CR>
+        noremap <Leader>L <Cmd>call togglelist#ToggleLocationList()<CR>
 
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align'
