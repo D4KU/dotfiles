@@ -2,6 +2,7 @@ alias gp='git pull --recurse-submodules'
 alias gP='git push --recurse-submodules=check'
 alias gs='git status'
 alias gc='git commit -m'
+alias git='noglob git'
 alias db='dotbare'
 alias gn='geeknote'
 alias -g ...='../..'
@@ -71,6 +72,11 @@ ff() {
   hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
   file=$(rg --files-with-matches --no-messages "$1" | fzf --select-1 --preview=$hi --preview-window=$(fzf_smart_preview_pos))
   [[ -n "$file" ]] && vim -c "call search('\v$1', 'c')" "$file"
+}
+
+# Find and replace recursively in files
+fr() {
+  find . -type f -name "$3" -print0 | xargs -0 sed -i '' -e "s/$1/$2/g"
 }
 
 ######################## Tmux ########################
