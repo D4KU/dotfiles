@@ -1,20 +1,40 @@
+snippet Prop "Full property"
+    private ${1:int} ${2:var};
+    public $1 `!p snip.rv = t[2][0].upper() + t[2][1:] if t[2] else ""`
+    {
+        get
+        {
+            $0return $2;
+        }
+        set
+        {
+            $2 = value;
+        }
+    }
+endsnippet
+
+snippet #p "Pragma warning" b
+#pragma warning disable $1
+#pragma warning restore $1
+endsnippet
+
 snippet [s "Serializable" b
 [Serializable
 endsnippet
 
-snippet <pr
+snippet <pr "Doc parameter reference"
 <paramref name="$0"/>
 endsnippet
 
-snippet <t
-<typeparam name="${1}">${2:$1}</typeparam>
+snippet <t "Doc type parameter"
+<typeparam name="$1">$0</typeparam>
 endsnippet
 
-snippet <tr
+snippet <tr "Doc type parameter reference"
 <typeparamref name="$0"/>
 endsnippet
 
-snippet <l
+snippet <l "Doc list"
 <list type="${3:number}">
     <listheader>
         <term>$1</term>
@@ -24,18 +44,18 @@ snippet <l
 </list>
 endsnippet
 
-snippet <i
+snippet <i "Doc list item"
 <item>
     <term>$1</term>
     <description>$2</description>
 </item>
 endsnippet
 
-snippet <a
+snippet <a "Doc Author"
 <author>$0</author>
 endsnippet
 
-snippet <in
+snippet <in "Doc inheritance"
 <inheritdoc cref="$0"/>
 endsnippet
 

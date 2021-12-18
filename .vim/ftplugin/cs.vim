@@ -82,6 +82,8 @@ command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 function! ToggleExpressionBody()
     if stridx(getline('.'), '=>') == -1
         execute "normal! \"_yiB]}\"_dd[{\"_ddkJa=>\<Space>\<Esc>"
+        " Remove 'return'
+        call setline(".", substitute(getline("."), "return ", "", ""))
     else
         execute "normal! ^f=\"_dwhr\<CR>O{\<Esc>jo}\<Esc>k"
     endif
