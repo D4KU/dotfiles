@@ -18,6 +18,7 @@ set softtabstop=4         " Let backspace delete indent
 set expandtab             " Tabs are spaces, not tabs
 set gdefault		          " Search global by default
 set spell                 " Enable spell checking
+set mouse=a               " Enable mouse for all modes
 set spelllang=en_us,de_de " Spell check English and German
 set matchpairs+=<:>       " Add angled brackets to % move
 set splitright            " Create new panes to the right

@@ -466,6 +466,7 @@ call plug#begin($plugDir)
     "     "   \}
 
     " C# coding
+    Plug 'prabirshrestha/asyncomplete.vim', { 'for': 'cs' }
     Plug 'omniSharp/omnisharp-vim', { 'for': 'cs' }
 
     " Visual debugging
