@@ -20,6 +20,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
+export NEXTWORD_DATA_PATH="$HOME/.nextword"
 export FZF_DEFAULT_OPTS="
 --cycle
 --preview-window=border-none
@@ -63,15 +64,43 @@ ra() {
   cd "$(cat $HOME/.local/share/ranger/dir)"
 }
 
+# Pass file list to fzf and execute command on selection
+_on_each() {
+  local out=$(echo $1 | fzf --multi --exit-0 --select-1 \
+    --preview=$preview \
+    --expect=alt-d,enter \
+    --preview-window=$(fzf_smart_preview_pos) $2)
+  local key=$(head -1 <<< $out)
+  local selection=$(tail +2 <<< $out)
+  local files=()
+
+  while IFS= read -r file
+  do
+    files+=($file)
+  done <<< $selection
+
+  case $key in
+    alt-d)
+      cd "$(dirname ${files[-1]})"
+      ;;
+    enter)
+      ${@:3} ${files[@]}
+      ;;
+  esac
+}
+
 # Show grep results
 ff() {
   if [ ! "$#" -gt 0 ]; then
     echo "Need a string to search for"
     return 1
   fi
-  hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
-  file=$(rg --files-with-matches --no-messages "$1" | fzf --select-1 --preview=$hi --preview-window=$(fzf_smart_preview_pos))
-  [[ -n "$file" ]] && vim -c "call search('\v$1', 'c')" "$file"
+
+  local hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+  _on_each \
+    "$(rg --files-with-matches --no-messages "$1")" \
+    --preview=$hi \
+    vim -c "call search('\v$1', 'c')"
 }
 
 # Find and replace recursively in files
@@ -136,26 +165,7 @@ v() {
     fasd -f -e ${EDITOR:-vim} "$*"
     return $?
   fi
-
-  local out="$(fasd -Rfl | fzf --preview $preview --no-sort --multi \
-    --expect=alt-d,enter --preview-window=$(fzf_smart_preview_pos))"
-  local key=$(head -1 <<< "$out")
-  local selection=$(tail +2 <<< "$out")
-  local files=()
-
-  while IFS= read -r file
-  do
-    files+=("$file")
-  done <<< "$selection"
-
-  case "$key" in
-    alt-d)
-      cd "$(dirname "${files[-1]}")"
-      ;;
-    enter)
-      ${EDITOR:-vim} "${files[@]}"
-      ;;
-  esac
+  _on_each "$(fasd -Rfl)" "" ${EDITOR:-vim}
 }
 
 # open best matched dir using `fasd` if given argument,
