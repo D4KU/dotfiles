@@ -6,12 +6,11 @@ alias git='noglob git'
 alias db='dotbare'
 alias gn='geeknote'
 alias -g ...='../..'
-alias x-www-browser='firefox.exe'
-alias gnome-www-browser='firefox.exe'
 alias untar='tar -zxvf'
 alias exp='explorer.exe "$(wslpath -w "$PWD")"'
 alias groot='git rev-parse --show-toplevel'
 
+export BROWSER=firefox.exe
 export VISUAL=vim
 export EDITOR="$VISUAL"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
@@ -43,7 +42,7 @@ eval "$(fasd --init posix-hook)"
 up() {
   sudo apt-get update
   sudo apt-get upgrade -y
-  sudo apt autoremove
+  sudo apt autoremove -y
   zinit update --all
   vim -c "PlugUpdate | qa!"
 }

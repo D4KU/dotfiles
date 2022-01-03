@@ -92,10 +92,8 @@ endfunction
 
 " Online documentation search
 function! Doc(url)
-    let l:browser = "firefox.exe"
-    let l:wordUnderCursor = expand("<cword>")
-    let l:url = substitute(a:url, "%", l:wordUnderCursor, "g")
-    execute "silent !" . l:browser . " " . l:url . "&"
+    let l:url = substitute(a:url, "%", expand("<cword>"), "g")
+    execute "silent !$BROWSER " . l:url . "&"
     execute "redraw!"
 endfunction
 

@@ -38,9 +38,11 @@ zinit light romkatv/powerlevel10k
 zinit snippet $(omzs vi-mode)
 zinit wait lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
+    zdharma-continuum/fast-syntax-highlighting \
     atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
     zsh-users/zsh-autosuggestions \
+    pick"git-it-on.plugin.zsh" \
+    peterhurford/git-it-on.zsh \
     atload"mvcmd wd _wd; mvcmd fuzzywd wd" \
     mfaerevaag/wd \
     atinit". ~/.posixrc; . ~/.fzf.zsh" \

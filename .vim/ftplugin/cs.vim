@@ -92,6 +92,12 @@ endfunction
 " Toggle between normal and expression function body
 nnoremap <Leader>P <Cmd>call ToggleExpressionBody()<CR>
 
+" Insert base method call
+nnoremap <Leader>O O<Esc>"_cc<Esc>[{k%%By%2<C-O>pIbase.<Esc>A;<Esc>==%%l
+
+" Turn one-line body into Allman body
+nnoremap <Leader>A viB:s/;/;\r<CR>%hR<CR>{<CR><Esc>=aB
+
 let g:OmniSharp_highlight_groups = {
     \ 'FieldName': 'Normal',
     \ 'LocalName': 'Normal',
