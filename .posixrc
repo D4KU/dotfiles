@@ -1,10 +1,11 @@
-alias gp='git pull --recurse-submodules'
+alias gp='git pull'
+alias gpr='git pull --recurse-submodules'
 alias gP='git push --recurse-submodules=check'
 alias gs='git status'
 alias gc='git commit -m'
 alias git='noglob git'
-alias db='dotbare'
-alias gn='geeknote'
+alias db=dotbare
+alias gn=geeknote
 alias -g ...='../..'
 alias untar='tar -zxvf'
 alias exp='explorer.exe "$(wslpath -w "$PWD")"'
@@ -25,6 +26,11 @@ export FZF_DEFAULT_OPTS="
 --preview-window=border-none
 --bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
 --bind='alt-t:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'"
+
+GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
+FORGIT_LOG_FZF_OPTS="
+--bind='ctrl-e${GLO_SUBSTR}show | vim -)'
+--bind='alt-c${GLO_SUBSTR}checkout 2> /tmp/glo)+reload(cat /tmp/glo)'"
 
 KEYTIMEOUT=1
 HISTSIZE=25000
