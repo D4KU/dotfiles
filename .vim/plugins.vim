@@ -58,6 +58,7 @@ call plug#begin($plugDir)
     " ======================== Improved visual feedback ======================
     " Color scheme
     Plug 'AlessandroYorba/Despacio'
+    Plug 'pgdouyon/vim-yin-yang'
 
     " Status line style
     Plug 'itchyny/lightline.vim'
@@ -82,8 +83,9 @@ call plug#begin($plugDir)
 
     " Preview registers
     Plug 'junegunn/vim-peekaboo'
+        let g:peekaboo_window = 'vertical botright 90new'
 
-    " " Show marks on left border
+    " Show marks on left border
     " Plug 'kshenoy/vim-signature'
 
     " Highlight colors in their... color

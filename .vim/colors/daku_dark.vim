@@ -21,9 +21,8 @@ hi EndOfBuffer ctermfg=16
 " Vertical split bar
 hi VertSplit ctermfg=None ctermbg=None
 
-" hi clear Cursor
-
 " Cursor line
+hi Cursor ctermfg=16
 hi CursorLine cterm=None ctermbg=233
 hi clear CursorColumn
 hi link CursorColumn CursorLine
@@ -59,12 +58,12 @@ hi clear Search
 hi Search cterm=inverse
 hi QuickfixLine cterm=bold
 
-" Autocompletion popup
-hi Pmenu ctermfg=250 ctermbg=234
-" hi clear Pmenu
-" hi clear PmenuSbar
+" Autocompletion Autocompletion popup
+hi Pmenu ctermfg=246 ctermbg=233
+hi PmenuSel ctermfg=256 ctermbg=234
+hi clear PmenuSbar
 " hi clear PmenuThumb
-" hi PmenuThumb ctermbg=235
+hi PmenuThumb ctermbg=235
 
 " Diff mode
 hi clear DiffAdd
@@ -82,12 +81,12 @@ hi clear SignatureMarkText
 hi SignatureMarkText ctermfg=245
 
 " ALE plugin
-hi ALEError ctermbg=52
+hi ALEError ctermfg=9
 hi ALEErrorSign ctermfg=red
 hi ALEWarningSign ctermfg=220
 
 " Illuminate Plugin
-hi IlluminatedWord ctermbg=235
+hi IlluminatedWord ctermfg=95 ctermbg=None
 
 " GitGutter Plugin
 hi GitGutterAdd ctermfg=235

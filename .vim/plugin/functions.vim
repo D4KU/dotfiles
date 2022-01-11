@@ -2,8 +2,7 @@
 func! ToggleLight()
     if g:lightactive
         try
-            colorscheme despacio
-            hi Number ctermfg=9
+            colorscheme yin
         catch
             colorscheme delek
         endtry
