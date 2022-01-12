@@ -1,7 +1,7 @@
 set nocompatible	    " No Vi backwards compatibility
-if !has('gui_running')
-  set t_Co=256            " More Colors!
-endif
+" if !has('gui_running')
+"   set t_Co=256            " More Colors!
+" endif
 set encoding=utf-8        " UTF-8 character encoding
 set hlsearch              " Highlight search results
 set smartcase             " Override 'ignore case' if search contains capitals
@@ -32,6 +32,7 @@ set formatoptions-=o      " Don't automatically insert comment leader on 'o'
 set belloff=all           " Play no sounds
 set cursorline            " Highlight current line
 set nomodeline            " Don't execute modelines
+set noruler               " Don't show cursor position in bottom right corner
 set backspace=indent,eol,start " Allow backspacing over start position of insert mode
 set showbreak=↪\          " Show indicator in front of wrapped lines
 set foldcolumn=0          " Show one depth of folds in sign column

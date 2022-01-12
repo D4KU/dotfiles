@@ -1,6 +1,4 @@
 let colors_name = "daku_dark"
-let g:limelight_conceal_ctermfg = 238
-let g:indentLine_color_term = 235
 
 " Background
 hi clear Normal

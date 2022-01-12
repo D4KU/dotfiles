@@ -69,7 +69,7 @@ call plug#begin($plugDir)
                 \ ['filename'],
                 \ ['modified', 'readonly', 'filetype'],
                 \ ],
-            \ 'right': [['position']],
+            \ 'right': [],
             \ }
         let g:lightline.inactive = {
             \ 'left': [['filename'], ['modified']],
@@ -134,8 +134,13 @@ call plug#begin($plugDir)
     " File overview as scrollbar
     Plug 'wfxr/minimap.vim'
         let g:minimap_base_highlight = 'Comment'
+        let g:minimap_cursor_color = 'IlluminatedWord'
+        let g:minimap_search_color = 'Pmenu'
+        let g:minimap_highlight_search = 1
         let g:minimap_git_colors = 1
         let g:minimap_left = 1
+        let g:minimap_block_buftypes =
+            \ ['nofile', 'nowrite', 'quickfix', 'terminal', 'prompt', 'help']
         noremap <Leader>~ <Cmd>MinimapToggle<CR>
 
     " Lines mark indentation level
@@ -144,6 +149,7 @@ call plug#begin($plugDir)
         let g:indentLine_char_list = ['¦']
         let g:indentLine_concealcursor = ''
         let g:indentLine_faster = 1
+        let g:indentLine_color_term = 235
         noremap <silent> <Leader><Bar> <Cmd>IndentLinesToggle<CR>
 
     " ============================== New motions =============================
@@ -511,6 +517,7 @@ call plug#begin($plugDir)
 
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'
+        let g:limelight_conceal_ctermfg = 238
         nnoremap <silent> <Leader><F4> <Cmd>Limelight!!<CR>
 
     " Highlight bad word choices
