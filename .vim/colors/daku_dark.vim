@@ -44,8 +44,7 @@ hi Folded ctermfg=237
 hi FoldColumn ctermfg=235
 
 " Matching Bracket
-hi clear Matchparen
-hi Matchparen cterm=bold,underline
+hi Matchparen ctermfg=95, ctermbg=None
 
 " Selection
 hi clear Visual
@@ -80,11 +79,11 @@ hi SignatureMarkText ctermfg=245
 
 " ALE plugin
 hi ALEError ctermfg=9
-hi ALEErrorSign ctermfg=red
+hi link ALEErrorSign ALEError
 hi ALEWarningSign ctermfg=220
 
 " Illuminate Plugin
-hi IlluminatedWord ctermfg=95 ctermbg=None
+hi link IlluminatedWord MatchParen
 
 " GitGutter Plugin
 hi GitGutterAdd ctermfg=235

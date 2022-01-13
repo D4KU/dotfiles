@@ -226,11 +226,9 @@ call plug#begin($plugDir)
 
     " Exchange text
     Plug 'tommcdo/vim-exchange'
-        " Swap adjacent words and move cursor to their start or end
-        nmap cl cxiwwcxiw
-        nmap ch cxiwbcxiw
-        nmap cL cxiwwcxiwb
-        nmap cH cxiwbcxiww
+        " Swap adjacent words
+        nmap c> cxiwwcxiw
+        nmap c< cxiwbcxiw
 
     " Completion for text in adjacent tmux panes
     Plug 'wellle/tmux-complete.vim'
@@ -428,10 +426,10 @@ call plug#begin($plugDir)
     " let g:ale_completion_enabled = 1
     Plug 'dense-analysis/ale', { 'for': [ 'python', 'cs' ] }
         nmap gl <Plug>(ale_lint)
-        nmap [k <Plug>(ale_previous_wrap)
-        nmap ]k <Plug>(ale_next_wrap)
-        nmap [K <Plug>(ale_first)
-        nmap ]K <Plug>(ale_last)
+        nmap ch <Plug>(ale_previous_wrap)
+        nmap cl <Plug>(ale_next_wrap)
+        nmap cH <Plug>(ale_first)
+        nmap cL <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_lint_on_text_changed = 'never'
         let g:ale_sign_error = '·'
