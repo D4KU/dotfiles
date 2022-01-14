@@ -180,6 +180,25 @@ function! RepeatableMap(name, lhs, rhs, mode)
     execute a:mode . 'map ' . a:lhs . ' <Plug>' . a:name
 endfunction
 
+" Create mapping to swap adjacent text objects
+function! ExchangeMap(scope, obj, forw, backw)
+    call s:ExchangeMap_Impl('>', a:scope, a:obj, a:forw)
+    call s:ExchangeMap_Impl('<', a:scope, a:obj, a:backw)
+endfunction
+function! s:ExchangeMap_Impl(sign, scope, obj, motion)
+    let l:name = 'exchange' . a:obj . a:motion
+    let l:lhs = a:sign . a:obj
+    let l:rhs = ':<C-U>call <SID>Exchange("' . a:scope . a:obj . '", "' . a:motion . '", v:count1)<CR>'
+    call RepeatableMap(l:name, l:lhs, l:rhs, 'n')
+endfunction
+function! s:Exchange(obj, motion, count)
+    let l:i = a:count
+    while l:i > 0
+        let l:i -= 1
+        execute 'normal cx' . a:obj . a:motion . 'cx' . a:obj
+    endwhile
+endfunction
+
 function! Synonyms(word)
     " 1. Grep thesaurus file with entire word.
     "    Word boundaries \b don't allow the word to be part of another.

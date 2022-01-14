@@ -226,9 +226,6 @@ call plug#begin($plugDir)
 
     " Exchange text
     Plug 'tommcdo/vim-exchange'
-        " Swap adjacent words
-        nmap c> cxiwwcxiw
-        nmap c< cxiwbcxiw
 
     " Completion for text in adjacent tmux panes
     Plug 'wellle/tmux-complete.vim'
@@ -472,7 +469,10 @@ call plug#begin($plugDir)
     "     "   \}
 
     " C# coding
+    " Plug 'prabirshrestha/async.vim', { 'for': 'markdown' }
     Plug 'prabirshrestha/asyncomplete.vim', { 'for': 'cs' }
+    Plug 'prabirshrestha/asyncomplete-buffer.vim', { 'for': 'cs' }
+    " Plug 'high-moctane/asyncomplete-nextword.vim', { 'for': 'markdown' }
     Plug 'omniSharp/omnisharp-vim', { 'for': 'cs' }
 
     " Visual debugging
