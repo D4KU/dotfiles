@@ -56,13 +56,6 @@ call RepeatableMap('moveLeft' , '<Leader><', 'dd<C-W>hp<C-W>l', 'n')
 call RepeatableMap('deleteBeforeParagraph', '<Leader>{', '{"_dd<C-O>', 'n')
 call RepeatableMap('deleteAfterParagraph' , '<Leader>}', '}"_dd<C-O>', 'n')
 
-" Swap adjacent text objects
-call ExchangeMap('i', 'w', 'w', 'b')
-call ExchangeMap('i', 'W', 'W', 'B')
-call ExchangeMap('i', '<Leader>w', '<Leader>w', '<Leader>b')
-call ExchangeMap('i', 'p', '}j', '{k')
-call ExchangeMap('a', 'f', '<Leader>j', '<Leader>k')
-
 " Move between errors and automatically pick first fix
 call RepeatableMap('fixLastSpelling', '<Leader>[', '[s1z=', 'n')
 call RepeatableMap('fixNextSpelling', '<Leader>]', ']s1z=', 'n')

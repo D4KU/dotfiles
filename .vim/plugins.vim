@@ -185,6 +185,17 @@ call plug#begin($plugDir)
             \   ['public', 'protected', 'private'],
             \ ]
 
+    " Move around text-objects
+    Plug 'D4KU/vim-pushover'
+        let g:pushover_maps =
+            \ {
+            \   'w': ['iw', 'w', 'b'],
+            \   'W': ['iW', 'W', 'B'],
+            \   '<Leader>w': ['i<Leader>w', '<Leader>w', '<Leader>b'],
+            \   'p': ['ip', '}j', '{k'],
+            \   'f': ['af', '<Leader>j', '<Leader>k'],
+            \ }
+
     " Tab completion in insert mode
     Plug 'ervandew/supertab'
 
