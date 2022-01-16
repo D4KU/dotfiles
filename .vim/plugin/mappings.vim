@@ -39,6 +39,12 @@ nnoremap <Esc>K 10<C-E>
 nnoremap <Esc>l <C-W>5<
 nnoremap <Esc>h <C-W>5>
 
+" Move around in insert mode
+inoremap <Esc>k <Up>
+inoremap <Esc>j <Down>
+inoremap <Esc>l <Right>
+inoremap <Esc>h <Left>
+
 " Insert a single character in front or behind cursor
 nnoremap cd i_<Esc>r
 nnoremap cD a_<Esc>r

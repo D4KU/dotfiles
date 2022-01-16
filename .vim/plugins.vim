@@ -120,6 +120,13 @@ call plug#begin($plugDir)
         let g:polyglot_disabled = ['autoindent', 'csv.plugin']
         let g:python_highlight_all = 1
 
+    " Scroll buffer smoothly
+    Plug 'terryma/vim-smooth-scroll'
+        noremap <silent> <C-U> <Cmd>call smooth_scroll#up(&scroll, 0, 3)<CR>
+        noremap <silent> <C-D> <Cmd>call smooth_scroll#down(&scroll, 0, 3)<CR>
+        noremap <silent> <C-B> <Cmd>call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+        noremap <silent> <C-F> <Cmd>call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
     " Improved feedback on search
     Plug 'vim-scripts/IndexedSearch'
 
@@ -251,6 +258,9 @@ call plug#begin($plugDir)
     " Search for selection
     Plug 'bronson/vim-visual-star-search'
 
+    " Text-objects for markdown
+    Plug 'Tokubara/vim-textobj-markdown', { 'for': 'markdown' }
+
     " Word column text object
     Plug 'coderifous/textobj-word-column.vim'
 
@@ -277,7 +287,7 @@ call plug#begin($plugDir)
         omap Ax <Plug>(textobj-comment-big-a)
 
     " Function text object
-    Plug 'jamesl33/vim-textobj-function'
+    Plug 'jamesl33/vim-textobj-function', { 'for': ['cs', 'vim'] }
 
     " Text object for text after a character
     Plug 'junegunn/vim-after-object'
@@ -296,10 +306,10 @@ call plug#begin($plugDir)
         nmap >, <Plug>Argumentative_MoveRight
 
     " Text object for chained member access
-    Plug 'D4KU/vim-textobj-chainmember'
+    Plug 'D4KU/vim-textobj-chainmember', { 'for': 'cs' }
 
     " Text object for C-like if, while, function, class, ...
-    Plug 'D4KU/vim-textobj-headedblock'
+    Plug 'D4KU/vim-textobj-headedblock', { 'for': 'cs' }
 
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
