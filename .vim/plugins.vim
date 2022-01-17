@@ -269,6 +269,7 @@ call plug#begin($plugDir)
         " let g:AutoPairsMultilineClose = 0
         " let g:AutoPairsFlyMode = 1
         " let b:autopairs_enabled = 0
+
         " let g:AutoPairsCenterLine = 0
         " let g:AutoPairsShortcutToggle = '<C-X>x'
         " let g:AutoPairsMapCh = ''
@@ -277,14 +278,16 @@ call plug#begin($plugDir)
     Plug 'farmergreg/vim-lastplace'
 
     " Comment text object
-    Plug 'glts/vim-textobj-comment'
+    Plug 'D4KU/vim-textobj-comment'
         let g:textobj_comment_no_default_key_mappings = 1
         xmap ax <Plug>(textobj-comment-a)
         omap ax <Plug>(textobj-comment-a)
         xmap ix <Plug>(textobj-comment-i)
         omap ix <Plug>(textobj-comment-i)
-        xmap Ax <Plug>(textobj-comment-big-a)
-        omap Ax <Plug>(textobj-comment-big-a)
+        xmap iX <Plug>(textobj-comment-big-i)
+        omap iX <Plug>(textobj-comment-big-i)
+        xmap aX <Plug>(textobj-comment-big-a)
+        omap aX <Plug>(textobj-comment-big-a)
 
     " Function text object
     Plug 'jamesl33/vim-textobj-function', { 'for': ['cs', 'vim'] }
@@ -331,7 +334,13 @@ call plug#begin($plugDir)
         omap o <Plug>(textobj-entire-i)
 
     " Text object for indent level
-    Plug 'davidxmoody/vim-indent-object'
+    Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
+        onoremap II <Esc><Cmd>call <SID>Indent_II()<CR>
+        function! s:Indent_II()
+            let g:indent_object_ignore_blank_line = 0
+            execute 'normal ' . v:operator . 'iIdd'
+            let g:indent_object_ignore_blank_line = 1
+        endfunction
 
     " Automatically adjust shiftwidth to current document
     Plug 'roryokane/detectindent'
