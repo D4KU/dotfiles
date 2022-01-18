@@ -1,37 +1,33 @@
 let colors_name = "daku_light"
-let g:limelight_conceal_ctermfg = 250
+let g:better_whitespace_ctermcolor = 254
 let g:indentLine_color_term = 254
+let g:limelight_conceal_ctermfg = 250
 
-" Spell check
-hi clear SpellBad
-hi clear SpellCap
-hi clear SpellLocal
-hi SpellBad cterm=bold,underline
-hi SpellLocal cterm=bold
-hi SpellCap cterm=underline
+hi ColorColumn                                ctermbg=white
+hi CursorLine   cterm=None      ctermbg=254
+hi FoldColumn                   ctermfg=252   ctermbg=None
+hi Folded                                     ctermbg=None
+hi LineNr                       ctermfg=250   ctermbg=None
+hi Matchparen                   ctermfg=None  ctermbg=195
+hi Normal                                     ctermbg=white
+hi Pmenu                        ctermfg=240   ctermbg=254
+hi PmenuSel                     ctermfg=232   ctermbg=255
+hi PmenuThumb                                 ctermbg=235
+hi Search       cterm=inverse
+hi SpellBad     cterm=underline ctermfg=None  ctermbg=None
+hi SpellCap     cterm=italic    ctermfg=None  ctermbg=None
+hi SpellLocal   cterm=bold
+hi StatusLine   cterm=None      ctermfg=9     ctermbg=254
+hi StatusLineNC cterm=None      ctermfg=242   ctermbg=254
+hi VertSplit                    ctermfg=white
+hi Visual                                     ctermbg=253
 
-hi LineNr ctermbg=None ctermfg=250
-hi clear CursorLineNr
-hi link CursorLineNr LineNr
-
-hi ColorColumn ctermbg=white
-hi CursorLine cterm=None ctermbg=254
 hi clear CursorColumn
-hi link CursorColumn CursorLine
-hi Normal ctermbg=white
-hi EndOfBuffer ctermfg=white
-hi Search cterm=inverse
-hi StatusLine cterm=None ctermbg=254 ctermfg=9
-hi StatusLineNC cterm=None ctermbg=254 ctermfg=242
-hi VertSplit ctermfg=white
-hi Visual ctermbg=253
-hi Folded ctermbg=None
-
-" Signature plugin
+hi clear CursorLineNr
+hi clear PmenuSbar
 hi clear SignColumn
-" hi SignatureMarkText ctermbg=None
-hi clear SignatureMarkText
-hi SignatureMarkText ctermfg=245
+hi clear SpellLocal
 
-" Illuminate Plugin
-hi IlluminatedWord ctermbg=253
+hi link CursorColumn CursorLine
+hi link IlluminatedWord MatchParen
+hi link HighlightedyankRegion Visual

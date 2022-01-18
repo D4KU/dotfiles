@@ -79,7 +79,10 @@ call plug#begin($plugDir)
             \ 'position': '%c %l/%L',
             \ 'select': '%{lightline#mode()==?"select"?"SELECT":""}',
             \ }
-		let g:lightline.enable = { 'statusline': 1 }
+		let g:lightline.enable = {
+            \ 'statusline': 1,
+            \ 'tabline': 0,
+            \ }
 
     " Preview registers
     Plug 'junegunn/vim-peekaboo'
@@ -156,7 +159,6 @@ call plug#begin($plugDir)
         let g:indentLine_char_list = ['¦']
         let g:indentLine_concealcursor = ''
         let g:indentLine_faster = 1
-        let g:indentLine_color_term = 235
         noremap <silent> <Leader><Bar> <Cmd>IndentLinesToggle<CR>
 
     " ============================== New motions =============================
@@ -459,6 +461,7 @@ call plug#begin($plugDir)
         nmap cL <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_lint_on_text_changed = 'never'
+        let g:ale_set_signs = 0
         let g:ale_sign_error = '·'
         let g:ale_sign_warning = '·'
         let g:ale_lint_on_insert_leave = 1
@@ -545,7 +548,6 @@ call plug#begin($plugDir)
 
     " Highlight current paragraph
     Plug 'junegunn/limelight.vim'
-        let g:limelight_conceal_ctermfg = 238
         nnoremap <silent> <Leader><F4> <Cmd>Limelight!!<CR>
 
     " Highlight bad word choices
