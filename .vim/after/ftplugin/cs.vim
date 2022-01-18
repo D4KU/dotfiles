@@ -1,7 +1,7 @@
 call matchup#util#append_match_words('/\*:\*/,#region:#endregion,#if:#else:#endif')
 call matchup#util#append_match_words('#pragma warning disable:#pragma warning restore')
 
-call textobj#user#plugin('preprocesors', {
+call textobj#user#plugin('preprocesor', {
 \   'region': {
 \     'pattern': ['#region', '#endregion'],
 \     'select-a': 'ar',
@@ -16,10 +16,16 @@ call textobj#user#plugin('preprocesors', {
 \     'pattern': ['#pragma warning disable', '#pragma warning restore.*'],
 \     'select-a': 'aP',
 \     'select-i': 'iP',
+\   }
+\ })
+
+call textobj#user#plugin('conditional', {
+\   'i': {
+\     'pattern': '.*\((\|&&\?\|||\?\)\zs.\{-}\%#.\{-}\ze\()\|$\|&&\?\|||\?\)',
+\     'select': 'i&',
 \   },
-\   'conditional': {
-\     'pattern': ['\((\|&&\|||\)', ' \?\ze\()\|$\|&&\|||\)'],
-\     'select-a': 'a&',
-\     'select-i': 'i&',
-\   },
+\   'a': {
+\     'pattern': '.*\((\zs\|\zs\(&&\|||\)\).\{-}\%#.\{-}\(\(&&\?\|||\?\)\s*\ze\|\ze)\|$\)',
+\     'select': 'a&',
+\   }
 \ })
