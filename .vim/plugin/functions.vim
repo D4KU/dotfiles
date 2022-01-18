@@ -6,11 +6,9 @@ func! ToggleLight()
         catch
             colorscheme delek
         endtry
-        colorscheme daku_dark
         let g:lightactive = 0
     else
         colorscheme morning
-        colorscheme daku_light
         let g:lightactive = 1
     endif
 endfunc
