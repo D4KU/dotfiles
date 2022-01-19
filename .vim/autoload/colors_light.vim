@@ -1,10 +1,4 @@
-augroup BrightColorOverride
-    autocmd!
-    autocmd ColorScheme yang    call s:Override()
-    autocmd ColorScheme morning call s:Override()
-augroup END
-
-function! s:Override() abort
+function! colors_light#apply() abort
     let g:better_whitespace_ctermcolor = 254
     let g:indentLine_color_term = 254
     let g:limelight_conceal_ctermfg = 250
@@ -25,8 +19,8 @@ function! s:Override() abort
     hi SpellLocal   cterm=bold
     hi StatusLine   cterm=None      ctermfg=9     ctermbg=254
     hi StatusLineNC cterm=None      ctermfg=242   ctermbg=254
-    hi VertSplit                    ctermfg=white
     hi Visual                                     ctermbg=253
+    hi VertSplit                    ctermfg=white
 
     hi clear CursorColumn
     hi clear CursorLineNr

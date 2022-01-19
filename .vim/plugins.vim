@@ -8,12 +8,12 @@ call plug#begin($plugDir)
     " =========================== Tool integration ===========================
     " Ranger integration
     Plug 'francoiscabrol/ranger.vim'
+        " Redirect the dependency on the BClose plugin to Bbye
+        command -bang Bclose Bwipeout
         let g:ranger_map_keys = 0
+        let g:ranger_replace_netrw = 1
         nnoremap <silent> <Leader>f <Cmd>Ranger<CR>
         nnoremap <silent> <Leader>F <Cmd>RangerWorkingDirectory<CR>
-        " Redirect the dependency on the BClose plugin to Bbye
-        " command -bang Bclose :Bwipeout
-        " let g:ranger_replace_netrw = 1
 
     " Fuzzy file finder
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -21,17 +21,18 @@ call plug#begin($plugDir)
         let g:fzf_layout = { 'window': 'enew' }
 
         " Thanks to clever-f plugin, : and , are free
-        nnoremap <silent> ,         <Cmd>call SmartFzfPreview() <bar> Buffers<CR>
-        nnoremap <silent> :         <Cmd>call SmartFzfPreview() <bar> History<CR>
-        nnoremap <silent> <Leader>, <Cmd>call SmartFzfPreview() <bar> Files<CR>
-        nnoremap <silent> <Leader>. <Cmd>call SmartFzfPreview() <bar> exec 'Files ' . expand('%:p:h')<CR>
-        nnoremap <silent> <Leader>- <Cmd>call SmartFzfPreview() <bar> Lines<CR>
-        nnoremap <silent> <Leader>` <Cmd>call SmartFzfPreview() <bar> Marks<CR>
-        nnoremap <silent> <Leader>/ <Cmd>call SmartFzfPreview() <bar> History/<CR>
-        nnoremap <silent> <Leader>: <Cmd>call SmartFzfPreview() <bar> History:<CR>
-        nnoremap <silent> <Leader>? <Cmd>call SmartFzfPreview() <bar> Helptags<CR>
-        nnoremap <silent> <Leader>; <Cmd>call SmartFzfPreview() <bar> Commands<CR>
-        nnoremap <silent> <Leader>' <Cmd>call SmartFzfPreview() <bar> Snippets<CR>
+        nnoremap <silent> ,         <Cmd>call fzf#smartpreview() <Bar> Buffers<CR>
+        nnoremap <silent> :         <Cmd>call fzf#smartpreview() <Bar> History<CR>
+        nnoremap <silent> <Leader>, <Cmd>call fzf#smartpreview() <Bar> Files<CR>
+        nnoremap <silent> <Leader>. <Cmd>call fzf#smartpreview() <Bar> exec 'Files ' . expand('%:p:h')<CR>
+        nnoremap <silent> <Leader>- <Cmd>call fzf#smartpreview() <Bar> Lines<CR>
+        nnoremap <silent> <Leader>` <Cmd>call fzf#smartpreview() <Bar> Marks<CR>
+        nnoremap <silent> <Leader>/ <Cmd>call fzf#smartpreview() <Bar> History/<CR>
+        nnoremap <silent> <Leader>: <Cmd>call fzf#smartpreview() <Bar> History:<CR>
+        nnoremap <silent> <Leader>? <Cmd>call fzf#smartpreview() <Bar> Helptags<CR>
+        nnoremap <silent> <Leader>; <Cmd>call fzf#smartpreview() <Bar> Commands<CR>
+        nnoremap <silent> <Leader>' <Cmd>call fzf#smartpreview() <Bar> Snippets<CR>
+        nnoremap <silent> <Leader>" <Cmd>call fzf#smartpreview() <Bar> Colors<CR>
 
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
@@ -47,7 +48,7 @@ call plug#begin($plugDir)
         imap <C-X>L <Plug>(fzf-complete-line)
         inoremap <expr> <C-X>t fzf#vim#complete(fzf#wrap({
             \ 'options': '--query=""',
-            \ 'source': function('Synonyms')}))
+            \ 'source': function('tools#synonyms')}))
 
     " Tmux
     Plug 'christoomey/vim-tmux-navigator'
@@ -221,7 +222,7 @@ call plug#begin($plugDir)
         vmap <Leader>a <Plug>(LiveEasyAlign)
 
     " Quickly create tag hierarchies
-    " Plug 'mattn/emmet-vim'
+    Plug 'mattn/emmet-vim', { 'for': 'html' }
 
     " Close buffer without closing window
     Plug 'moll/vim-bbye'
@@ -239,7 +240,7 @@ call plug#begin($plugDir)
     " More mappings
     Plug 'tpope/vim-unimpaired'
 
-    Plug 'hauleth/asyncdo.vim'
+    " Plug 'hauleth/asyncdo.vim'
 
     " Surround anything with anything
     Plug 'tpope/vim-surround'
@@ -298,7 +299,8 @@ call plug#begin($plugDir)
     Plug 'junegunn/vim-after-object'
         autocmd VimEnter * call after_object#enable(
             \ ['P', 'p'],
-            \ '=', ':', '-', '#', ' ', '_', '/', ',', ';', '.')
+            \ '=', ':', '-', '_', '/', ',', ';', '.', '*', '@', '(', ')',
+            \ '[', ']', '{', '}', '<', '>')
 
     " Sub-clause / function argument text object
     Plug 'baabelfish/vim-argumentative'
@@ -337,10 +339,10 @@ call plug#begin($plugDir)
 
     " Text object for indent level
     Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
-        onoremap II <Esc><Cmd>call <SID>Indent_II()<CR>
-        function! s:Indent_II()
+        onoremap ij <Esc><Cmd>call <SID>Indent()<CR>
+        function! s:Indent()
             let g:indent_object_ignore_blank_line = 0
-            execute 'normal ' . v:operator . 'iIdd'
+            execute 'normal ' . v:operator . 'ii'
             let g:indent_object_ignore_blank_line = 1
         endfunction
 
@@ -366,7 +368,7 @@ call plug#begin($plugDir)
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
 
-    Plug 'vim-autoformat/vim-autoformat'
+    Plug 'vim-autoformat/vim-autoformat', { 'for': 'cs' }
         let g:formatdef_cs = 'clang-format -style=file'
         let g:formatters_cs = ['clangformat']
         let g:autoformat_verbosemode=1
@@ -379,7 +381,7 @@ call plug#begin($plugDir)
         let g:targets_nl = [ 'n', 'N' ]
 
     " Line text object
-    Plug 'wellle/line-targets.vim'
+    " Plug 'wellle/line-targets.vim'
 
     " ============================== New gadgets =============================
     " Calculator
@@ -416,13 +418,13 @@ call plug#begin($plugDir)
     " Rename currently edited file
     Plug 'vim-scripts/Rename2'
 
+    " Identify and search for unicode characters
     Plug 'chrisbra/unicode.vim'
 
     " ============================== Coding ==================================
     " Show and edit git hunks
     Plug 'airblade/vim-gitgutter'
         let g:gitgutter_map_keys = 0
-        " ◦▵
         let g:gitgutter_sign_modified = '·'
         let g:gitgutter_sign_modified_removed = '⨯'
         let g:gitgutter_sign_removed = '-'
@@ -448,7 +450,7 @@ call plug#begin($plugDir)
     "     let g:kite_log = 1
 
     " " Autocompletion
-    Plug 'davidhalter/jedi-vim', { 'for': [ 'python' ] }
+    Plug 'davidhalter/jedi-vim', { 'for': 'python' }
         let g:jedi#usages_command = "<Leader>u"
 
     " Linting and completion
@@ -511,12 +513,6 @@ call plug#begin($plugDir)
     " Visual debugging
     " Plug 'puremourning/vimspector', { 'for': [ 'cs' ] }
     "     let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-
-    " " Adjust indentation of pasted text
-    " Plug 'sickill/vim-pasta', { 'for': [ 'cs', 'python' ] }
-    "     let g:pasta_enabled_filetypes = [ 'cs', 'python' ]
-    "     let g:pasta_paste_before_mapping = '[P'
-    "     let g:pasta_paste_after_mapping = ']P'
 
     " Snippet engine
     if has('python3')

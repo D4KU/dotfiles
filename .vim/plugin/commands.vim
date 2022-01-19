@@ -1,10 +1,57 @@
-" See the difference between the current buffer and the file it was loaded
-" from, thus the changes you made.
-command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+" See the difference between the current buffer and the file on disk
+command! Diff vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
     \ | wincmd p | diffthis
 
-" Delete Windows line breaks
-command! DelWinLB %s/$/
+" Delete Carriage Return (Windows line breaks)
+command! Dcr %s/$/
+
+" Join all non-empty lines
+command! Join %s/\(\S\s*\)\n\(\s*\S\)/\1 \2
+
+" Fasd support
+command! Fasd call fzf#run(fzf#wrap({
+      \ 'source': 'fasd -al',
+      \ 'options': '--no-sort --tac --tiebreak=index'}))
+command! -nargs=? Z call fasd#z(<q-args>)
+command! -nargs=? V call fasd#v(<q-args>)
+
+" Slower but interactive version of fzf.vim's :Rg command
+command! -nargs=* -bang RG call fzf#rg(<q-args>, <bang>0)
+
+" Warp Directory integration
+command! -nargs=1 Wd call wd#cd(<f-args>)
+
+" Execute given command in shell, print to new buffer
+command! -complete=shellcmd -nargs=+ Shell call inshell#exec(<q-args>)
+
+" Add every opened file to fasd
+autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
+
+" Set file type to shell script if file ends on 'rc' and no other file type
+" is set
+autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=zsh | endif
+
+" Open help in vertical split
+augroup VerticalHelp
+  autocmd!
+  autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+augroup END
+
+" Apply overrides to often-used color schemes
+augroup ColorOverride
+    autocmd!
+    autocmd ColorScheme yin      call DarkColorsApply()
+    autocmd ColorScheme despacio call DarkColorsApply() | hi Number ctermfg=9
+    autocmd ColorScheme yang     call colors_light#apply()
+    autocmd ColorScheme morning  call colors_light#apply()
+augroup END
+
+" Overwrite windows terminal's cursor style
+augroup WSLCursorFix
+  autocmd!
+  autocmd BufEnter,WinEnter,InsertLeave * silent! call matchadd('Cursor', '\%#', 900, 88)
+  autocmd BufLeave,InsertEnter * silent! call matchdelete(88)
+augroup END
 
 " Go to last file if invoked without arguments.
 " autocmd VimEnter * nested if
@@ -14,50 +61,14 @@ command! DelWinLB %s/$/
 "   \   exe "normal! `0"|
 "   \ endif
 
-" Add every opened file to fasd
-autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
-
-" Set filetype to shell script if file ends on 'rc' and no other filetype is
-" set
-autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=sh | endif
-
-" Overwrite windows terminal's cursor style
-augroup cursorfix
-  autocmd!
-  autocmd BufEnter,WinEnter,InsertLeave * silent! call matchadd('Cursor', '\%#', 900, 88)
-  autocmd BufLeave,InsertEnter * silent! call matchdelete(88)
-augroup END
-
-" augroup autoformat
-"   autocmd!
-"   autocmd InsertLeave *.cs AutoformatLine
-" augroup END
-
-" Open help in vertical split
-augroup vimrc_help
-  autocmd!
-  autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
-augroup END
-
 " Dir of current file
 cabbrev <expr> %% expand('%:p:h')
 
 " Two dirs up
-cabbrev <expr> ... ../..
+cabbrev <expr> ... "../.."
 
 " Save as sudo
 cabbrev w!! w !sudo tee "%"
 
 " Save and source
-cabbrev ws w <bar> so %
-
-" Fasd support
-command! Fasd call fzf#run(fzf#wrap({'source': 'fasd -al', 'options': '--no-sort --tac --tiebreak=index'}))
-command! -nargs=? Z call FasdZ(<q-args>)
-command! -nargs=? V call FasdV(<q-args>)
-
-" Slower but interactive version of fzf.vim's :Rg command
-command! -nargs=* -bang RG call RgFzf(<q-args>, <bang>0)
-
-" Join all non-empty lines
-command! Join %s/\(\S\s*\)\n\(\s*\S\)/\1 \2
+cabbrev ws w <Bar> so %
