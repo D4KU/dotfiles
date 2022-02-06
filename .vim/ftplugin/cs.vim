@@ -1,4 +1,3 @@
-setlocal completeopt=menuone,noselect,preview
 setlocal commentstring=//%s
 
 " Look up documentation here
@@ -17,10 +16,16 @@ let g:OmniSharp_translate_cygwin_wsl = 1
 " still be fetched when you need it with the :OmniSharpDocumentation command.
 let g:omnicomplete_fetch_full_documentation = 0
 let g:OmniSharp_completion_without_overloads = 1
-let g:OmniSharp_highlighting = 3
+" let g:OmniSharp_highlighting = 3
 let g:OmniSharp_typeLookupInPreview = 1
 let g:OmniSharp_diagnostic_showid = 1
 " let g:OmniSharp_want_snippet = 1
+
+" Only use nice highlighting if current file isn't longer than 1000 lines
+augroup PerformantHighlight
+  autocmd!
+  autocmd BufEnter *.cs let g:OmniSharp_highlighting = line('$') > 1000 ? 1 : 3
+augroup END
 
 let g:OmniSharp_highlight_groups = {
     \ 'FieldName': 'Normal',
@@ -48,7 +53,7 @@ inoremap <silent> <buffer> ; <C-R>=smartsemicolon#insert()<CR>
 
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
-nmap <silent> <buffer> <Leader>D <Cmd>call s:RecycleVSplit()<CR><Plug>(omnisharp_go_to_definition)
+nmap <silent> <buffer> <Leader>D <Cmd>call RecycleVSplit()<CR><Plug>(omnisharp_go_to_definition)
 nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementation)
 nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
 nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
@@ -81,7 +86,7 @@ nmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
 xmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
 
 " Toggle between normal and expression function body
-nnoremap <Leader>P <Cmd>call s:ToggleExpressionBody()<CR>
+nnoremap <Leader>P <Cmd>call ToggleExpressionBody()<CR>
 
 " Insert base method call
 nnoremap <Leader>O O<Esc>"_cc<Esc>[{k%%By%2<C-O>pIbase.<Esc>A;<Esc>==%%l
@@ -97,7 +102,7 @@ nnoremap <silent> <Leader>U :call Doc(s:unityUrl)<CR>
 command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
 
 " Create vertical split only if there are no windows to left or right to reuse
-function! s:RecycleVSplit()
+function! RecycleVSplit()
     if winnr() != winnr('l')
         execute winnr('l') . 'wincmd q'
         vsplit
@@ -109,7 +114,7 @@ function! s:RecycleVSplit()
     endif
 endfunction
 
-function! s:ToggleExpressionBody()
+function! ToggleExpressionBody()
     if stridx(getline('.'), '=>') == -1
         execute "normal! \"_yiB]}\"_dd[{\"_ddkJa=>\<Space>\<Esc>"
         " Remove 'return'

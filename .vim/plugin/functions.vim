@@ -22,7 +22,7 @@ function! DarkColorsApply() abort
     hi QuickfixLine cterm=bold
     hi Search       cterm=inverse   ctermfg=None ctermbg=None
     hi SpellBad     cterm=underline ctermfg=None ctermbg=None
-    hi SpellCap     cterm=italic    ctermfg=None ctermbg=None
+    hi SpellCap     cterm=None      ctermfg=None ctermbg=None
     hi StatusLine   cterm=None      ctermfg=9    ctermbg=233
     hi StatusLineNC cterm=None      ctermfg=242  ctermbg=233
     hi TabLine      cterm=None      ctermfg=245  ctermbg=None
@@ -52,6 +52,11 @@ function! DarkColorsApply() abort
     hi GitGutterAdd ctermfg=235
     hi link GitGutterChange GitGutterAdd
     hi link GitGutterDelete GitGutterAdd
+
+    " YouCompleteMe
+    " hi link SyntasticErrorLine ALEError
+    hi link SyntasticError ALEError
+    hi link SyntasticErrorSign ALEErrorSign
 
     " Highlighted Yank
     hi link HighlightedyankRegion Visual

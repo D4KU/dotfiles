@@ -45,14 +45,13 @@ inoremap <Esc>j <Down>
 inoremap <Esc>l <Right>
 inoremap <Esc>h <Left>
 
-" Insert a single character in front or behind cursor
-nnoremap cd i_<Esc>r
-nnoremap cD a_<Esc>r
-
 " Paste without newline
 nnoremap zP i<CR><Esc>PkgJgJ
 " Paste without newline, remove indent whitespace
 nnoremap zp i<CR><Esc>l"_d0P"_d0kgJgJ
+
+nnoremap ]{ <Cmd>call search('{', 'z')<CR>
+nnoremap [} <Cmd>call search('}', 'zb')<CR>
 
 " Move lines between splits
 call RepeatableMap('moveRight', '<Leader>>', 'dd<C-W>lp<C-W>h', 'n')

@@ -1,8 +1,12 @@
-colorscheme yin
+try
+    colorscheme yin
+catch
+endtry
 let &colorcolumn="+".join(range(1,winwidth('%')),",+")
 set autowrite
 set backspace=indent,eol,start
 set belloff=all
+set completeopt=menuone,noselect
 set cursorline
 set encoding=utf-8
 set expandtab

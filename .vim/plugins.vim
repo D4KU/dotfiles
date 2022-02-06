@@ -1,17 +1,11 @@
-if has('win32')
-    let $plugDir = "~/vimfiles/plugged"
-else
-    let $plugDir = "~/.vim/plugged"
-endif
-
-call plug#begin($plugDir)
+call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " =========================== Tool integration ===========================
     " Ranger integration
-    Plug 'francoiscabrol/ranger.vim'
+    Plug 'francoiscabrol/ranger.vim', { 'on': ['Ranger', 'RangerWorkingDirectory'] }
         " Redirect the dependency on the BClose plugin to Bbye
         command -bang Bclose Bwipeout
         let g:ranger_map_keys = 0
-        let g:ranger_replace_netrw = 1
+        " let g:ranger_replace_netrw = 1
         nnoremap <silent> <Leader>f <Cmd>Ranger<CR>
         nnoremap <silent> <Leader>F <Cmd>RangerWorkingDirectory<CR>
 
@@ -29,7 +23,7 @@ call plug#begin($plugDir)
         nnoremap <silent> <Leader>` <Cmd>call fzf#smartpreview() <Bar> Marks<CR>
         nnoremap <silent> <Leader>/ <Cmd>call fzf#smartpreview() <Bar> History/<CR>
         nnoremap <silent> <Leader>: <Cmd>call fzf#smartpreview() <Bar> History:<CR>
-        nnoremap <silent> <Leader>? <Cmd>call fzf#smartpreview() <Bar> Helptags<CR>
+        nnoremap <silent> <Leader>! <Cmd>call fzf#smartpreview() <Bar> Helptags<CR>
         nnoremap <silent> <Leader>; <Cmd>call fzf#smartpreview() <Bar> Commands<CR>
         nnoremap <silent> <Leader>' <Cmd>call fzf#smartpreview() <Bar> Snippets<CR>
         nnoremap <silent> <Leader>" <Cmd>call fzf#smartpreview() <Bar> Colors<CR>
@@ -54,7 +48,7 @@ call plug#begin($plugDir)
     Plug 'christoomey/vim-tmux-navigator'
 
     " Git
-    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive', { 'on': ['G', 'Gdiffsplit'] }
 
     " ======================== Improved visual feedback ======================
     " Color scheme
@@ -135,7 +129,7 @@ call plug#begin($plugDir)
     Plug 'vim-scripts/IndexedSearch'
 
     " Shader file highlighting
-    Plug 'vim-scripts/ShaderHighLight'
+    " Plug 'vim-scripts/ShaderHighLight'
 
     " Keep showing outer blocks on buffer top
     Plug 'wellle/context.vim'
@@ -143,7 +137,7 @@ call plug#begin($plugDir)
         let g:context_highlight_tag = '<hide>'
 
     " File overview as scrollbar
-    Plug 'wfxr/minimap.vim'
+    Plug 'wfxr/minimap.vim', { 'on': 'MinimapToggle' }
         let g:minimap_base_highlight = 'Comment'
         let g:minimap_cursor_color = 'IlluminatedWord'
         let g:minimap_search_color = 'Pmenu'
@@ -155,7 +149,7 @@ call plug#begin($plugDir)
         noremap <Leader>~ <Cmd>MinimapToggle<CR>
 
     " Lines mark indentation level
-    Plug 'Yggdroot/indentLine'
+    Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
         let g:indentLine_enabled = 0
         let g:indentLine_char_list = ['¦']
         let g:indentLine_concealcursor = ''
@@ -186,7 +180,7 @@ call plug#begin($plugDir)
 
     " ============================= New mappings =============================
     " Switch word under cursor if it matches a pattern
-    Plug 'AndrewRadev/switch.vim'
+    Plug 'AndrewRadev/switch.vim', { 'on': '<Plug>(Switch)' }
         let g:switch_custom_definitions =
             \ [
             \   ['==', '>=', '<='],
@@ -207,7 +201,7 @@ call plug#begin($plugDir)
             \ }
 
     " Tab completion in insert mode
-    Plug 'ervandew/supertab'
+    " Plug 'ervandew/supertab'
 
     " Mappings to toggle quickfix and loclist
     Plug 'Gavinok/vim-togglelist'
@@ -215,7 +209,7 @@ call plug#begin($plugDir)
         noremap <Leader>L <Cmd>call togglelist#ToggleLocationList()<CR>
 
     " Easily align multiple lines of text
-    Plug 'junegunn/vim-easy-align'
+    Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(LiveEasyAlign)' }
         " Interactive align for a motion/text object
         nmap <Leader>a <Plug>(LiveEasyAlign)
         " Interactive align in visual mode
@@ -225,7 +219,7 @@ call plug#begin($plugDir)
     Plug 'mattn/emmet-vim', { 'for': 'html' }
 
     " Close buffer without closing window
-    Plug 'moll/vim-bbye'
+    Plug 'moll/vim-bbye', { 'on': ['Bdelete', 'Bwipeout'] }
 
     " Add Readline commands to insert mode
     " Plug 'tpope/vim-rsi'
@@ -235,7 +229,7 @@ call plug#begin($plugDir)
     Plug 'tpope/vim-commentary'
 
     " Ease session management
-    Plug 'tpope/vim-obsession'
+    " Plug 'tpope/vim-obsession'
 
     " More mappings
     Plug 'tpope/vim-unimpaired'
@@ -347,12 +341,12 @@ call plug#begin($plugDir)
         endfunction
 
     " Automatically adjust shiftwidth to current document
-    Plug 'roryokane/detectindent'
-        augroup DetectIndent
-           autocmd! BufReadPost * DetectIndent
-        augroup END
+    " Plug 'roryokane/detectindent'
+    "     augroup DetectIndent
+    "        autocmd! BufReadPost * DetectIndent
+    "     augroup END
     " might be better in the future:
-    " Plug 'tpope/vim-sleuth'
+    Plug 'tpope/vim-sleuth'
 
     " Lastly pasted text object
     Plug 'saaguero/vim-textobj-pastedtext'
@@ -368,7 +362,11 @@ call plug#begin($plugDir)
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
 
-    Plug 'vim-autoformat/vim-autoformat', { 'for': 'cs' }
+    Plug 'vim-autoformat/vim-autoformat', {
+        \ 'for': 'cs',
+        \ 'on': 'AutoformatLine',
+        \ }
+
         let g:formatdef_cs = 'clang-format -style=file'
         let g:formatters_cs = ['clangformat']
         let g:autoformat_verbosemode=1
@@ -389,34 +387,27 @@ call plug#begin($plugDir)
 
     " Translator
     Plug 'voldikss/vim-translator'
-        " Translator
         let g:translator_target_lang = 'en'
         let g:translator_default_engines = ['google']
         let g:translator_window_type = 'popup'
+
         " Replace the text with translation
         nmap <Leader>t <Plug>TranslateR
         vmap <Leader>t <Plug>TranslateRV
-        " Display translation in command line
+        " Display translation
         nmap <Leader>T <Plug>TranslateW
         vmap <Leader>T <Plug>TranslateWV
 
-        func! ToggleTargetLang()
-            if g:translator_target_lang ==? 'en'
-                let g:translator_target_lang = 'de'
-                echo "New target lang: de"
-            else
-                let g:translator_target_lang = 'en'
-                echo "New target lang: en"
-            endif
-        endfunc
-        noremap <silent> <Leader>z <Cmd>call ToggleTargetLang()<CR>
+        nnoremap <silent> <Leader>z <Cmd>let g:translator_target_lang =
+            \ g:translator_target_lang == 'en' ? 'de' : 'en'
+            \ <Bar> echo "New target lang: " . g:translator_target_lang<CR>
 
     " ======================= Command line improvements ======================
     " Search for multiple variants of a word
     Plug 'tpope/vim-abolish'
 
     " Rename currently edited file
-    Plug 'vim-scripts/Rename2'
+    Plug 'vim-scripts/Rename2', { 'on': 'Rename' }
 
     " Identify and search for unicode characters
     Plug 'chrisbra/unicode.vim'
@@ -449,13 +440,12 @@ call plug#begin($plugDir)
     "     let g:kite_supported_languages = ['*']
     "     let g:kite_log = 1
 
-    " " Autocompletion
-    Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-        let g:jedi#usages_command = "<Leader>u"
-
     " Linting and completion
-    " let g:ale_completion_enabled = 1
-    Plug 'dense-analysis/ale', { 'for': [ 'python', 'cs' ] }
+    Plug 'dense-analysis/ale', {
+        \ 'for': 'cs',
+        \ 'on': '<Plug>(ale_lint)',
+        \ }
+
         nmap gl <Plug>(ale_lint)
         nmap ch <Plug>(ale_previous_wrap)
         nmap cl <Plug>(ale_next_wrap)
@@ -463,14 +453,12 @@ call plug#begin($plugDir)
         nmap cL <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_lint_on_text_changed = 'never'
-        let g:ale_set_signs = 0
+        let g:ale_set_signs = 1
         let g:ale_sign_error = '·'
         let g:ale_sign_warning = '·'
         let g:ale_lint_on_insert_leave = 1
         let g:ale_lint_on_save = 1
-        " let g:ale_lint_on_enter = 1
-        let g:ale_set_quickfix = 1
-        let g:ale_warn_about_trailing_whitespace = 1
+        let g:ale_warn_about_trailing_whitespace = 0
         let g:ale_echo_msg_format = '[%linter%] %s'
         let g:ale_linters = {
             \ 'cs': [ 'OmniSharp' ]
@@ -482,7 +470,7 @@ call plug#begin($plugDir)
             \ }
 
     " Wrap and unwrap function arguments
-    Plug 'foosoft/vim-argwrap'
+    Plug 'foosoft/vim-argwrap', { 'on': '<Plug>(ArgWrapToggle)' }
         nmap <Leader>p <Plug>(ArgWrapToggle)
         let g:argwrap_wrap_closing_brace = 0
 
@@ -520,16 +508,37 @@ call plug#begin($plugDir)
             let g:UltiSnipsExpandTrigger='<C-S>'
             let g:UltiSnipsJumpForwardTrigger=g:UltiSnipsExpandTrigger
             let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
+
     endif
 
     " Makes vim a better merge tool for git
-    Plug 'samoshkin/vim-mergetool'
+    Plug 'samoshkin/vim-mergetool', { 'on': 'MergetoolStart' }
         let g:mergetool_layout = 'mr'
         let g:mergetool_prefer_revision = 'local'
         nmap <expr> <Left>  &diff? '<Plug>(MergetoolDiffExchangeLeft)'  : '<Left>'
         nmap <expr> <Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<Right>'
         nmap <expr> <Up>    &diff? '[czz' : '<Up>'
         nmap <expr> <Down>  &diff? ']czz' : '<Down>'
+
+        function! BuildYCM(info)
+          if a:info.status == 'installed' || a:info.force
+            !python3 ./install.py --clangd-completer
+          endif
+        endfunction
+    Plug 'ycm-core/YouCompleteMe', {
+        \   'for': ['python', 'cpp'],
+        \   'do': function('BuildYCM')
+        \   }
+        let g:ycm_autoclose_preview_window_after_completion = 1
+        let g:ycm_auto_hover = ''
+        let g:syntastic_enable_signs = 0
+        let g:syntastic_error_symbol = g:ale_sign_error
+        let g:syntastic_warning_symbol = g:ale_sign_warning
+        nmap <Leader>s <Plug>(YCMHover)
+        nnoremap <Leader>u <Cmd>YcmCompleter GoToReferences<CR>
+        nnoremap <Leader>i <Cmd>YcmCompleter GoToImplementation<CR>
+        nnoremap <Leader>x <Cmd>YcmCompleter FixIt<CR>
+        nnoremap <Leader>g :YcmCompleter GoToSymbol <C-R><C-W>
 
     " =========================== Writing prose ==============================
     " Preview markdown in browser
@@ -539,11 +548,11 @@ call plug#begin($plugDir)
     "     \ }
 
     " Show only small text area
-    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
         nnoremap <silent> <F4> <Cmd>Goyo<CR>
 
     " Highlight current paragraph
-    Plug 'junegunn/limelight.vim'
+    Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
         nnoremap <silent> <Leader><F4> <Cmd>Limelight!!<CR>
 
     " Highlight bad word choices
