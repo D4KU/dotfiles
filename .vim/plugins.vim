@@ -181,6 +181,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " ============================= New mappings =============================
     " Switch word under cursor if it matches a pattern
     Plug 'AndrewRadev/switch.vim', { 'on': '<Plug>(Switch)' }
+        nmap gs <Plug>(Switch)
         let g:switch_custom_definitions =
             \ [
             \   ['==', '>=', '<='],
@@ -447,10 +448,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         \ }
 
         nmap gl <Plug>(ale_lint)
-        nmap ch <Plug>(ale_previous_wrap)
-        nmap cl <Plug>(ale_next_wrap)
-        nmap cH <Plug>(ale_first)
-        nmap cL <Plug>(ale_last)
+        nmap zh <Plug>(ale_previous_wrap)
+        nmap zl <Plug>(ale_next_wrap)
+        nmap zH <Plug>(ale_first)
+        nmap zL <Plug>(ale_last)
         "set omnifunc=ale#completion#OmniFunc
         let g:ale_lint_on_text_changed = 'never'
         let g:ale_set_signs = 1
