@@ -10,49 +10,41 @@ p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # Make autosuggestions work
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
-export FORGIT_COPY_CMD='clip.exe'
 
+alias -s {md,txt,json,cs,csv,cpp,h,vim,py}=vim
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
+setopt pushdtohome
+setopt pushdsilent
 setopt pushdminus
-# setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt share_history
 
-. ~/.zinit/bin/zinit.zsh
 . ~/.p10k.zsh
-
-mvcmd() {
-    local orig=$(declare -f $1)
-    local new="$2${orig#$1}"
-    eval "$new"
-}
+. ~/.zinit/bin/zinit.zsh
 
 omzs() {
     echo OMZ::plugins/$1/$1.plugin.zsh
 }
 
-zinit light romkatv/powerlevel10k
-zinit snippet $(omzs vi-mode)
-zinit wait lucid for \
-    atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
+zi light romkatv/powerlevel10k
+zi snippet $(omzs vi-mode)
+zi wait lucid light-mode for \
+    atinit". ~/.posixrc; . ~/.fzf.zsh" \
+    d4ku/f \
+    mfaerevaag/wd \
+    d4ku/forgit \
+    kazhala/dotbare \
     atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
     zsh-users/zsh-autosuggestions \
-    pick"git-it-on.plugin.zsh" \
     peterhurford/git-it-on.zsh \
-    atload"mvcmd wd _wd; mvcmd fuzzywd wd" \
-    mfaerevaag/wd \
-    atinit". ~/.posixrc; . ~/.fzf.zsh" \
-    kazhala/dotbare \
-    wfxr/forgit \
-    d4ku/f \
     $(omzs command-not-found) \
-    $(omzs magic-enter) \
+    atload"zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
 
-zle-line-init () {
+zle-line-init() {
     # Set beam cursor e.g. after exiting from vim
     echo -ne '\e[5 q'
 }
@@ -68,12 +60,10 @@ zle-keymap-select() {
     fi
 }
 
-# fuzzy select warp point when no parameter is passed
-fuzzywd() {
-  if [ $# -gt 0 ]; then
-    _wd $*
-  else
-    local dir=$(_wd list | grep -P '(?<=->\s\s).*' -o | fzf +m)
-    cd "$dir"
-  fi
+accept-line() {
+    if [[ -z "$BUFFER" && "$CONTEXT" == start ]]; then
+	BUFFER="f 1"
+    fi
+    zle .accept-line
 }
+zle -N accept-line

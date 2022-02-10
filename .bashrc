@@ -102,6 +102,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-. ~/.zinit/plugins/kazhala---dotbare/dotbare.plugin.bash
-. ~/.zinit/plugins/wfxr---forgit/forgit.plugin.sh
 [ -f ~/.posixrc ] && . ~/.posixrc
+. ~/.zinit/plugins/kazhala---dotbare/dotbare.plugin.bash
+. ~/.zinit/plugins/d4ku---forgit/forgit.plugin.sh

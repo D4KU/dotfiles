@@ -6,7 +6,7 @@ alias gc='git commit -m'
 alias git='noglob git'
 alias db=dotbare
 alias gn=geeknote
-alias -g ...='../..'
+alias ...='../..'
 alias untar='tar -zxvf'
 alias exp='explorer.exe "$(wslpath -w "$PWD")"'
 alias groot='git rev-parse --show-toplevel'
@@ -33,11 +33,11 @@ FORGIT_LOG_GRAPH_ENABLE=0
 FORGIT_LOG_FZF_OPTS="
 --bind='ctrl-e${GLO_SUBSTR}show | vim -R -)'
 --bind='alt-c${GLO_SUBSTR}checkout 2> /tmp/glo)+reload(cat /tmp/glo)'"
+FORGIT_COPY_CMD='clip.exe'
 
 KEYTIMEOUT=1
 HISTSIZE=25000
 SAVEHIST=5000
-preview='highlight --force -O ansi {}'
 
 # disable scroll lock through ctrl-s
 # stty -ixon
@@ -46,12 +46,14 @@ preview='highlight --force -O ansi {}'
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 eval "$(fasd --init posix-hook)"
+eval "$(thefuck --alias)"
+local preview='highlight --force -O ansi {}'
 
 up() {
   sudo apt-get update
   sudo apt-get upgrade -y
   sudo apt autoremove -y
-  zinit update --all
+  zinit update --all --parallel
   vim -c "PlugUpdate | qa!"
 }
 
