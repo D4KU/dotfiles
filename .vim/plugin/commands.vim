@@ -5,6 +5,9 @@ command! Diff vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 " Delete Carriage Return (Windows line breaks)
 command! Dcr %s/$/
 
+" Pretty-print python
+command! PrettyPy %!python -m json.tool
+
 " Join all non-empty lines
 command! Join %s/\(\S\s*\)\n\(\s*\S\)/\1 \2
 
@@ -46,11 +49,10 @@ augroup ColorOverride
     autocmd ColorScheme morning  call colors_light#apply()
 augroup END
 
-" Overwrite windows terminal's cursor style
-augroup WSLCursorFix
-  autocmd!
-  autocmd BufEnter,WinEnter,InsertLeave * silent! call matchadd('Cursor', '\%#', 900, 88)
-  autocmd BufLeave,InsertEnter * silent! call matchdelete(88)
+" Disable things in large files
+augroup LargeFile
+    autocmd!
+    autocmd BufWinEnter * call LargeFile(expand("<afile>"))
 augroup END
 
 " Go to last file if invoked without arguments.

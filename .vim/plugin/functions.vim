@@ -71,3 +71,35 @@ function! RepeatableMap(name, lhs, rhs, mode)
     " make lhs map to <Plug>name
     execute a:mode . 'map ' . a:lhs . ' <Plug>' . a:name
 endfunction
+
+" Things to do in large files
+function! LargeFile(fname)
+    if getfsize(a:fname) >= 10 * 1024 * 1024
+        set nowrap
+        DisableWhitespace
+        call RemoveCursorMatch()
+
+        augroup WSLCursorFix
+            autocmd!
+        augroup END
+    else
+        set wrap
+        EnableWhitespace
+        call AddCursorMatch()
+
+        " Overwrite windows terminal's cursor style
+        augroup WSLCursorFix
+            autocmd!
+            autocmd WinEnter,InsertLeave * call AddCursorMatch()
+            autocmd WinLeave,InsertEnter * call RemoveCursorMatch()
+        augroup END
+    endif
+endfunction
+
+function! AddCursorMatch()
+    silent! call matchadd('Cursor', '\%#', 900, 88)
+endfunction
+
+function! RemoveCursorMatch()
+    silent! call matchdelete(88)
+endfunction

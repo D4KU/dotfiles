@@ -98,6 +98,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'ntpeters/vim-better-whitespace'
         nnoremap <silent> ]w <Cmd>NextTrailingWhitespace<CR>
         nnoremap <silent> [w <Cmd>PrevTrailingWhitespace<CR>
+        let g:current_line_whitespace_disabled_soft = 1
         let g:better_whitespace_ctermcolor = 234
         let g:better_whitespace_filetypes_blacklist = [
             \ 'diff',
@@ -252,6 +253,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " ============================== Autocommands ============================
     " Jump between pairs
     Plug 'andymass/vim-matchup'
+        let g:matchup_matchparen_deferred = 1
 
     " Search for selection
     Plug 'bronson/vim-visual-star-search'
