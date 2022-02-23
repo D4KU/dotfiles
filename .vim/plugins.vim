@@ -10,7 +10,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nnoremap <silent> <Leader>F <Cmd>RangerWorkingDirectory<CR>
 
     " Fuzzy file finder
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf', { 'dir': '~/.local/share/fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
         let g:fzf_layout = { 'window': 'enew' }
 

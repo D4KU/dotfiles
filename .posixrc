@@ -3,7 +3,6 @@ alias gpr='git pull --recurse-submodules'
 alias gP='git push --recurse-submodules=check'
 alias gs='git status'
 alias gc='git commit -m'
-alias git='noglob git'
 alias db=dotbare
 alias gn=geeknote
 alias ...='../..'
@@ -14,13 +13,10 @@ alias groot='git rev-parse --show-toplevel'
 export BROWSER=firefox.exe
 export VISUAL=vim
 export EDITOR="$VISUAL"
+export XDG_DATA_HOME="$HOME/.local/share"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
-export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man:$MANPATH"
-export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info:$INFOPATH"
 export DISPLAY=localhost:0.0
-export NEXTWORD_DATA_PATH="$HOME/.nextword"
 export FZF_DEFAULT_OPTS="
 --cycle
 --preview-window=border-none
@@ -45,9 +41,8 @@ SAVEHIST=5000
 # Show when running in a shell spawned by ranger
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
-eval "$(fasd --init posix-hook)"
 eval "$(thefuck --alias)"
-local preview='highlight --force -O ansi {}'
+preview='highlight --force -O ansi {}'
 
 up() {
   sudo apt-get update

@@ -11,6 +11,7 @@ p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
+alias git='noglob git'
 alias -s {md,txt,json,cs,csv,cpp,h,vim,py}=vim
 setopt auto_cd
 setopt auto_pushd
@@ -22,27 +23,27 @@ setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt share_history
 
-. ~/.p10k.zsh
-. ~/.zinit/bin/zinit.zsh
+source $HOME/.p10k.zsh
+source ${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.zsh
 
 omzs() {
     echo OMZ::plugins/$1/$1.plugin.zsh
 }
 
 zi light romkatv/powerlevel10k
-zi snippet $(omzs vi-mode)
+zi light jeffreytse/zsh-vi-mode
 zi wait lucid light-mode for \
     atinit". ~/.posixrc; . ~/.fzf.zsh" \
     d4ku/f \
     mfaerevaag/wd \
     d4ku/forgit \
     kazhala/dotbare \
-    atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
-    zsh-users/zsh-autosuggestions \
     peterhurford/git-it-on.zsh \
-    $(omzs command-not-found) \
     atload"zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
+    atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
+    zsh-users/zsh-autosuggestions \
+    $(omzs command-not-found) \
 
 zle-line-init() {
     # Set beam cursor e.g. after exiting from vim
