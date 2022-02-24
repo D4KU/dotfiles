@@ -39,6 +39,10 @@ nnoremap <Esc>K 10<C-E>
 nnoremap <Esc>l <C-W>5<
 nnoremap <Esc>h <C-W>5>
 
+" Make cl and ch useful
+nnoremap cl c2l
+nnoremap ch c2h
+
 " Move around in insert mode
 inoremap <Esc>k <Up>
 inoremap <Esc>j <Down>

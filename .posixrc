@@ -49,7 +49,7 @@ up() {
   sudo apt-get upgrade -y
   sudo apt autoremove -y
   zinit update --all --parallel
-  vim -c "PlugUpdate | qa!"
+  vim -es -u vimrc -i NONE -c "PlugInstall" -c "qa"
 }
 
 # Make dir and change to it
