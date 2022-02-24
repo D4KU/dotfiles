@@ -45,10 +45,14 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             \ 'source': function('tools#synonyms')}))
 
     " Tmux
+    Plug 'tmux-plugins/tpm', { 'dir': '~/.tmux/plugins/tpm', 'do': 'tmux source ~/.tmux.conf' }
     Plug 'christoomey/vim-tmux-navigator'
 
     " Git
     Plug 'tpope/vim-fugitive', { 'on': ['G', 'Gdiffsplit'] }
+
+    " Zsh plugin manager
+    " Plug 'zdharma-continuum/zinit', { 'dir': '~/.local/share/zinit' }
 
     " ======================== Improved visual feedback ======================
     " Color scheme
