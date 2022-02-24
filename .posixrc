@@ -49,7 +49,9 @@ up() {
   sudo apt-get upgrade -y
   sudo apt autoremove -y
   zinit update --all --parallel
-  vim -es -u vimrc -i NONE -c "PlugInstall" -c "qa"
+  vim -i NONE -c "PlugInstall" -c "qa"
+  $HOME/.tmux/plugins/tpm/bin/update_plugins all
+  tmux source $HOME/.tmux.conf
 }
 
 # Make dir and change to it
@@ -159,6 +161,16 @@ ftpane() {
 agi() {
   echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi)" \
   >> "$(git rev-parse --show-toplevel)/.gitignore"
+}
+
+# warp url: open bookmarked url in browser
+wu() {
+  local file="$HOME/urls"
+  if [ $# -gt 0 ]; then
+    $BROWSER $(sed -n "/^$1 /s/^$1 //p" "$file")
+    return
+  fi
+  cat "$file"
 }
 
 ######################## Fasd ########################
