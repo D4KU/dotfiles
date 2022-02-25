@@ -17,11 +17,8 @@ from ranger.core.loader import CommandLoader
 
 
 class wd(Command):
-    wdpath = "~/.zinit/plugins/mfaerevaag---wd/wd.sh"
-
     def execute(self):
-        command = self.wdpath + " show " + self.arg(1) + \
-            ' | grep -oP "(?<=->\s).*" | sed "s*^~*$HOME*"'
+        command = "wd.sh path " + self.arg(1)
         subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, _ = subpro.communicate()
         if subpro.returncode == 0:
@@ -29,7 +26,7 @@ class wd(Command):
             self.fm.cd(direc)
 
     def tab(self):
-        command = self.wdpath + " list | grep -oP '(?<=->\s\s).*'"
+        command = "wd.sh list | grep -oP '(?<=->\s\s).*'"
         subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, _ = subpro.communicate()
         if subpro.returncode == 0:

@@ -35,6 +35,7 @@ zi light jeffreytse/zsh-vi-mode
 zi wait lucid light-mode for \
     atinit". ~/.posixrc; . ~/.fzf.zsh" \
     d4ku/f \
+    as"program" src"wd.plugin.zsh" \
     mfaerevaag/wd \
     d4ku/forgit \
     kazhala/dotbare \
