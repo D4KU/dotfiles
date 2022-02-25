@@ -43,12 +43,6 @@ nnoremap <Esc>h <C-W>5>
 nnoremap cl c2l
 nnoremap ch c2h
 
-" Move around in insert mode
-inoremap <Esc>k <Up>
-inoremap <Esc>j <Down>
-inoremap <Esc>l <Right>
-inoremap <Esc>h <Left>
-
 " Paste without newline
 nnoremap zP i<CR><Esc>PkgJgJ
 " Paste without newline, remove indent whitespace

@@ -262,21 +262,18 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Search for selection
     Plug 'bronson/vim-visual-star-search'
 
-    " Text-objects for markdown
-    Plug 'Tokubara/vim-textobj-markdown', { 'for': 'markdown' }
+    " Paste from clipboard automatically sets 'paste'
+    Plug 'ConradIrwin/vim-bracketed-paste'
 
     " Word column text object
     Plug 'coderifous/textobj-word-column.vim'
 
     " Automatically close brackets
-    " Plug 'jiangmiao/auto-pairs'
-        " let g:AutoPairsMultilineClose = 0
-        " let g:AutoPairsFlyMode = 1
-        " let b:autopairs_enabled = 0
-
-        " let g:AutoPairsCenterLine = 0
-        " let g:AutoPairsShortcutToggle = '<C-X>x'
-        " let g:AutoPairsMapCh = ''
+    Plug 'jiangmiao/auto-pairs'
+        let g:AutoPairsMultilineClose = 0
+        let g:AutoPairsCenterLine = 0
+        let g:AutoPairsMapCh = ''
+        let g:AutoPairsShortcutToggle = '<C-X>x'
 
     " Open file at last position
     Plug 'farmergreg/vim-lastplace'
@@ -348,12 +345,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         endfunction
 
     " Automatically adjust shiftwidth to current document
-    " Plug 'roryokane/detectindent'
-    "     augroup DetectIndent
-    "        autocmd! BufReadPost * DetectIndent
-    "     augroup END
-    " might be better in the future:
     Plug 'tpope/vim-sleuth'
+
+    " Text-objects for markdown
+    Plug 'Tokubara/vim-textobj-markdown', { 'for': 'markdown' }
 
     " Lastly pasted text object
     Plug 'saaguero/vim-textobj-pastedtext'
@@ -362,12 +357,12 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Make plugin commands repeatable
     Plug 'tpope/vim-repeat'
 
-    " Automatically close pairs
-    Plug 'tmsvg/pear-tree'
-        let g:pear_tree_map_special_keys = 1
-        let g:pear_tree_smart_backspace = 1
-        let g:pear_tree_smart_openers = 1
-        let g:pear_tree_smart_closers = 1
+    " " Automatically close pairs
+    " Plug 'tmsvg/pear-tree'
+    "     let g:pear_tree_map_special_keys = 1
+    "     let g:pear_tree_smart_backspace = 1
+    "     let g:pear_tree_smart_openers = 1
+    "     let g:pear_tree_smart_closers = 1
 
     Plug 'vim-autoformat/vim-autoformat', {
         \ 'for': 'cs',
@@ -377,7 +372,6 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         let g:formatdef_cs = 'clang-format -style=file'
         let g:formatters_cs = ['clangformat']
         let g:autoformat_verbosemode=1
-        inoremap <Esc>a <Esc>:<C-U>AutoformatLine<CR>
         nnoremap gL :<C-U>AutoformatLine<CR>
         vnoremap gL :<C-U>'<,'>AutoformatLine<CR>
 

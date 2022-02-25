@@ -130,3 +130,6 @@ endfunction
 "     autocmd CursorHold *.cs OmniSharpTypeLookup
 " augroup END
 
+if exists("g:AutoPairs")
+    let b:AutoPairs = AutoPairsDefine({'\w\zs<' : '>'})
+endif
