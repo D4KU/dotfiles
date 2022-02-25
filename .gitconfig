@@ -1,0 +1,17 @@
+[user]
+	email = d4k@tuta.io
+	name = D4KU
+[core]
+	autocrlf = input
+	quotepath = false
+	; pager = "diff-so-fancy | less --tabs=4 -RFX"
+[merge]
+	tool = vim_mergetool
+	conflictstyle = diff3
+[mergetool "vim_mergetool"]
+	cmd = vim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+	trustExitCode = true
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
+[color "diff"]
+	meta = yellow
