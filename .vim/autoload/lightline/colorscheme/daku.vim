@@ -1,9 +1,9 @@
-let s:black = [ '#000000', '0' ]
-let s:black2 = [ '#121212', '233' ]
-let s:gray = [ '#262626', '234' ]
-let s:gray2 = [ '#3a3a3a', '236' ]
+let s:black = [ '#080808', '0' ]
+let s:black2 = [ '#111111', '233' ]
+let s:gray = [ '#222222', '234' ]
+let s:gray2 = [ '#383838', '236' ]
 let s:gray3 = [ '#4e4e4e', '242' ]
-let s:gray4 = [ '#626262', '250' ]
+let s:gray4 = [ '#AAAAAA', '250' ]
 let s:red = [ '#d70000', '9' ]
 
 let s:p = {'normal': {}, 'inactive': {}}

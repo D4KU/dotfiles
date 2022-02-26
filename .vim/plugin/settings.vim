@@ -37,6 +37,7 @@ set softtabstop=4
 set spell
 set spelllang=en_us,de_de
 set splitright
+set termguicolors
 set textwidth=78
 set thesaurus+=~/.vim/thesaurus/english.txt
 set ttyfast
