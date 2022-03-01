@@ -13,6 +13,7 @@ let b:argwrap_tail_indent_braces = '('
 let b:argwrap_tail_comma = 1
 
 " YouCompleteMe
+call SetUpYCM()
 nnoremap <Leader>d <Cmd>YcmCompleter GoToDeclaration<CR>
 nnoremap <Leader>h <Cmd>YcmCompleter GetDoc<CR>
 

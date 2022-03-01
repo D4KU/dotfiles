@@ -509,7 +509,6 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             let g:UltiSnipsExpandTrigger='<C-S>'
             let g:UltiSnipsJumpForwardTrigger=g:UltiSnipsExpandTrigger
             let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
-
     endif
 
     " Makes vim a better merge tool for git
@@ -521,25 +520,36 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nmap <expr> <Up>    &diff? '[czz' : '<Up>'
         nmap <expr> <Down>  &diff? ']czz' : '<Down>'
 
+    " Execute make commands in background
+    Plug 'tpope/vim-dispatch', { 'for': 'cpp', 'on': 'Dispatch' }
+
         function! BuildYCM(info)
-          if a:info.status == 'installed' || a:info.force
-            !python3 ./install.py --clangd-completer
-          endif
+            if a:info.status == 'installed' || a:info.force
+                !python3 ./install.py --clangd-completer
+            endif
         endfunction
     Plug 'ycm-core/YouCompleteMe', {
         \   'for': ['python', 'cpp'],
         \   'do': function('BuildYCM')
         \   }
         let g:ycm_autoclose_preview_window_after_completion = 1
+        let g:ycm_always_populate_location_list = 1
         let g:ycm_auto_hover = ''
         let g:syntastic_enable_signs = 0
         let g:syntastic_error_symbol = g:ale_sign_error
         let g:syntastic_warning_symbol = g:ale_sign_warning
-        nmap <Leader>s <Plug>(YCMHover)
-        nnoremap <Leader>u <Cmd>YcmCompleter GoToReferences<CR>
-        nnoremap <Leader>i <Cmd>YcmCompleter GoToImplementation<CR>
-        nnoremap <Leader>x <Cmd>YcmCompleter FixIt<CR>
-        nnoremap <Leader>g :YcmCompleter GoToSymbol <C-R><C-W>
+
+        function! SetUpYCM()
+            command! -nargs=1 R YcmCompleter RefactorRename <args>
+            nmap <Leader>s <Plug>(YCMHover)
+            nnoremap <Leader>u <Cmd>YcmCompleter GoToReferences<CR>
+            nnoremap <Leader>i <Cmd>YcmCompleter GoToImplementation<CR>
+            nnoremap <Leader>x <Cmd>YcmCompleter FixIt<CR>
+            nnoremap <Leader>g :YcmCompleter GoToSymbol <C-R><C-W>
+            nnoremap <F2> :YcmCompleter RefactorRename <C-R><C-W>
+            nnoremap zh <Cmd>lprevious<CR>
+            nnoremap zl <Cmd>lnext<CR>
+        endfunction
 
     " =========================== Writing prose ==============================
     " Preview markdown in browser
