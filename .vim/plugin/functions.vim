@@ -3,6 +3,7 @@ function! DarkColorsApply() abort
     let g:better_whitespace_guicolor = '#333333'
     let g:indentLine_color_term = 235
     let g:limelight_conceal_ctermfg = 238
+    let g:limelight_conceal_guifg = '#555555'
 
     hi ColorColumn                               ctermbg=NONE               guibg=bg
     hi Cursor                       ctermfg=16                guifg=black
@@ -15,7 +16,7 @@ function! DarkColorsApply() abort
     hi FoldColumn                   ctermfg=235  ctermbg=NONE guifg=#333333 guibg=NONE
     hi Folded                       ctermfg=237  ctermbg=NONE guifg=#333333 guibg=NONE
     hi LineNr                       ctermfg=238  ctermbg=NONE guifg=#444444 guibg=NONE
-    hi Matchparen                   ctermfg=95   ctermbg=NONE guifg=#604040 guibg=NONE
+    hi Matchparen                   ctermfg=95   ctermbg=NONE guifg=#806060 guibg=NONE
     hi Normal                                    ctermbg=NONE               guibg=NONE
     hi Pmenu                        ctermfg=246  ctermbg=233  guifg=#777777 guibg=#111111
     hi PmenuSel                     ctermfg=256  ctermbg=234  guifg=#AAAAAA guibg=#222222
