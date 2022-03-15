@@ -44,6 +44,12 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 eval "$(thefuck --alias)"
 preview='highlight --force -O ansi {}'
 
+# option manual
+oman()
+{
+  man -P less\ -p\ \""  ${2}"\" ${1}
+}
+
 up() {
   sudo apt-get update
   sudo apt-get upgrade -y
