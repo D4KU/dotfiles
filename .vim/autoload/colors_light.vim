@@ -3,24 +3,25 @@ function! colors_light#apply() abort
     let g:indentLine_color_term = 254
     let g:limelight_conceal_ctermfg = 250
 
-    hi ColorColumn                                ctermbg=white
-    hi CursorLine   cterm=None      ctermbg=254
-    hi FoldColumn                   ctermfg=252   ctermbg=None
-    hi Folded                                     ctermbg=None
-    hi LineNr                       ctermfg=250   ctermbg=None
-    hi Matchparen                   ctermfg=None  ctermbg=195
+    hi ColorColumn                                ctermbg=white           guibg=bg
+    hi CursorLine   cterm=NONE      ctermbg=254
+    hi EndOfBuffer                  ctermfg=NONE
+    hi FoldColumn                   ctermfg=252   ctermbg=NONE
+    hi Folded                                     ctermbg=NONE
+    hi LineNr                       ctermfg=250   ctermbg=NONE
+    hi Matchparen                   ctermfg=NONE  ctermbg=195             guibg=#CCEDFF
     hi Normal                                     ctermbg=white
     hi Pmenu                        ctermfg=240   ctermbg=254
     hi PmenuSel                     ctermfg=232   ctermbg=255
     hi PmenuThumb                                 ctermbg=235
     hi Search       cterm=inverse
-    hi SpellBad     cterm=underline ctermfg=None  ctermbg=None
-    hi SpellCap     cterm=italic    ctermfg=None  ctermbg=None
+    hi SpellBad     cterm=underline ctermfg=NONE  ctermbg=NONE
+    hi SpellCap     cterm=italic    ctermfg=NONE  ctermbg=NONE
     hi SpellLocal   cterm=bold
-    hi StatusLine   cterm=None      ctermfg=9     ctermbg=254
-    hi StatusLineNC cterm=None      ctermfg=242   ctermbg=254
+    hi StatusLine   cterm=NONE      ctermfg=9     ctermbg=254
+    hi StatusLineNC cterm=NONE      ctermfg=242   ctermbg=254
     hi Visual                                     ctermbg=253
-    hi VertSplit                    ctermfg=white
+    hi VertSplit                    ctermfg=white              guifg=bg
 
     hi clear CursorColumn
     hi clear CursorLineNr

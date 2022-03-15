@@ -1,7 +1,14 @@
 try
-    colorscheme yin
+    " choose different colorscheme if tmux light mode is on
+    call system('tmux showenv -g TMUX_LIGHT')
+    if v:shell_error
+        colorscheme yin
+    else
+        colorscheme yang
+    endif
 catch
 endtry
+
 let &colorcolumn="+".join(range(1,winwidth('%')),",+")
 set autowrite
 set backspace=indent,eol,start
