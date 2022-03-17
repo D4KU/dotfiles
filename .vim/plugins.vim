@@ -138,10 +138,22 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Keep showing outer blocks on buffer top
     Plug 'wellle/context.vim'
-        let g:context_add_mappings = 0
+        " let g:context_add_mappings = 0
         let g:context_add_autocmds = 0
         let g:context_border_char = ' '
         let g:context_highlight_tag = '<hide>'
+        augroup ContextVim
+            autocmd!
+            autocmd VimEnter     * ContextActivate
+            autocmd BufAdd       * call context#update('BufAdd')
+            autocmd BufEnter     * call context#update('BufEnter')
+            " autocmd CursorMoved  *.cs call context#update('CursorMoved')
+            autocmd VimResized   * call context#update('VimResized')
+            autocmd CursorHold   * call context#update('CursorHold')
+            autocmd User GitGutter call context#update('GitGutter')
+            autocmd OptionSet number,relativenumber,numberwidth,signcolumn,tabstop,list
+                        \          call context#update('OptionSet')
+        augroup END
 
     " File overview as scrollbar
     Plug 'wfxr/minimap.vim', { 'on': 'MinimapToggle' }
