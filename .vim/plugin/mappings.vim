@@ -22,12 +22,11 @@ nnoremap S :%s/\<<C-R><C-W>\>/
 
 " Add fold column when first fold is created, remove it when all are
 " deleted
-noremap zf <Cmd>setlocal foldcolumn=2<CR>zf
-noremap zE <Cmd>setlocal foldcolumn=0<CR>zE
+nnoremap zf <Cmd>setlocal foldcolumn=2<CR>zf
+nnoremap zE <Cmd>setlocal foldcolumn=0<CR>zE
 
-" Use original mapping to switch window and maximize it
-noremap <Leader>v <Cmd>vsplit<CR>
-noremap <Leader>V <Cmd>vsplit<CR><C-W>H
+nnoremap <Leader>v <Cmd>vsplit<CR>
+nnoremap <Leader>V <Cmd>vsplit<CR><C-W>H
 
 " Map Alt-J and Alt-K to move view up and down
 nnoremap <Esc>j 2<C-Y>
@@ -50,6 +49,8 @@ nnoremap zp i<CR><Esc>l"_d0P"_d0kgJgJ
 
 nnoremap ]{ <Cmd>call search('{', 'z')<CR>
 nnoremap [} <Cmd>call search('}', 'zb')<CR>
+
+call EasymotionMaps("abcdefghijklmnopqrstuvwxyz0123456789(){}[]<>;,=&|")
 
 " Move lines between splits
 call RepeatableMap('moveRight', '<Leader>>', 'dd<C-W>lp<C-W>h', 'n')

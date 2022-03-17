@@ -54,7 +54,7 @@ inoremap <silent> <buffer> ; <C-R>=smartsemicolon#insert()<CR>
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
 nmap <silent> <buffer> <Leader>D <Cmd>call RecycleVSplit()<CR><Plug>(omnisharp_go_to_definition)
-nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementation)
+nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementations)
 nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
 nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
 nmap <silent> <buffer> <Leader>G <Plug>(omnisharp_find_symbol)
@@ -82,8 +82,8 @@ nmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 xmap <silent> <buffer> <Leader><CR> <Plug>(omnisharp_code_actions)
 
 " Repeat the last code action performed (does not use a selector)
-nmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
-xmap <silent> <buffer> <Leader>@ <Plug>(omnisharp_code_action_repeat)
+nmap <silent> <buffer> <Leader>q <Plug>(omnisharp_code_action_repeat)
+xmap <silent> <buffer> <Leader>q <Plug>(omnisharp_code_action_repeat)
 
 " Toggle between normal and expression function body
 nnoremap <Leader>P <Cmd>call ToggleExpressionBody()<CR>
