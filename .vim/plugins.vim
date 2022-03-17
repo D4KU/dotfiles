@@ -138,6 +138,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Keep showing outer blocks on buffer top
     Plug 'wellle/context.vim'
+        let g:context_add_mappings = 0
+        let g:context_add_autocmds = 0
         let g:context_border_char = ' '
         let g:context_highlight_tag = '<hide>'
 
@@ -268,12 +270,12 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Word column text object
     Plug 'coderifous/textobj-word-column.vim'
 
-    " Automatically close brackets
-    Plug 'jiangmiao/auto-pairs'
-        let g:AutoPairsMultilineClose = 0
-        let g:AutoPairsCenterLine = 0
-        let g:AutoPairsMapCh = ''
-        let g:AutoPairsShortcutToggle = '<C-X>x'
+    " " Automatically close brackets
+    " Plug 'jiangmiao/auto-pairs'
+    "     let g:AutoPairsMultilineClose = 0
+    "     let g:AutoPairsCenterLine = 0
+    "     let g:AutoPairsMapCh = ''
+    "     let g:AutoPairsShortcutToggle = '<C-X>x'
 
     " Open file at last position
     Plug 'farmergreg/vim-lastplace'
@@ -311,7 +313,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nmap >, <Plug>Argumentative_MoveRight
 
     " Text object for chained member access
-    Plug 'D4KU/vim-textobj-chainmember', { 'for': 'cs' }
+    Plug 'D4KU/vim-textobj-chainmember', { 'for': ['cs', 'cpp', 'python'] }
 
     " Text object for C-like if, while, function, class, ...
     Plug 'D4KU/vim-textobj-headedblock', { 'for': 'cs' }
@@ -357,12 +359,13 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Make plugin commands repeatable
     Plug 'tpope/vim-repeat'
 
-    " " Automatically close pairs
-    " Plug 'tmsvg/pear-tree'
-    "     let g:pear_tree_map_special_keys = 1
-    "     let g:pear_tree_smart_backspace = 1
-    "     let g:pear_tree_smart_openers = 1
-    "     let g:pear_tree_smart_closers = 1
+    " Automatically close pairs
+    Plug 'tmsvg/pear-tree'
+        let g:pear_tree_repeatable_expand = 0
+        let g:pear_tree_map_special_keys = 1
+        let g:pear_tree_smart_backspace = 1
+        let g:pear_tree_smart_openers = 1
+        let g:pear_tree_smart_closers = 1
 
     Plug 'vim-autoformat/vim-autoformat', {
         \ 'for': 'cs',

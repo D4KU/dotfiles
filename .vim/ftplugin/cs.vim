@@ -1,8 +1,8 @@
 setlocal commentstring=//%s
 
 " Look up documentation here
-let s:dotNetUrl="'https://docs.microsoft.com/en-us/search/?terms=%&category=Reference&scope=.NET'"
-let s:unityUrl="'https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%'"
+let dotNetUrl="'https://docs.microsoft.com/en-us/search/?terms=%&category=Reference&scope=.NET'"
+let unityUrl="'https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%'"
 
 " Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
@@ -95,8 +95,8 @@ nnoremap <Leader>O O<Esc>"_cc<Esc>[{k%%By%2<C-O>pIbase.<Esc>A;<Esc>==%%l
 nnoremap <Leader>A viB:s/;/;\r<CR>%hR<CR>{<CR><Esc>=aB
 
 " Look up documentation
-nnoremap <silent> <Leader>K :call Doc(s:dotNetUrl)<CR>
-nnoremap <silent> <Leader>U :call Doc(s:unityUrl)<CR>
+nnoremap <silent> <Leader>K :call tools#doc(dotNetUrl)<CR>
+nnoremap <silent> <Leader>U :call tools#doc(unityUrl)<CR>
 
 " Rename without dialog - with cursor on the symbol to rename
 command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")

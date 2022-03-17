@@ -29,3 +29,7 @@ call textobj#user#plugin('conditional', {
 \     'select': 'a&',
 \   }
 \ })
+
+let b:pear_tree_pairs = extend(deepcopy(g:pear_tree_pairs), {
+\ '<': {'closer': '>', 'not_at': ['\W'], 'not_in': ['String', 'csParens']},
+\ }, 'keep')
