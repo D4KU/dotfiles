@@ -313,6 +313,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             \ ['P', 'p'],
             \ '=', ':', '-', '_', '/', ',', ';', '.', '*', '@', '(', ')',
             \ '[', ']', '{', '}', '<', '>')
+        vnoremap pp p
 
     " Sub-clause / function argument text object
     Plug 'baabelfish/vim-argumentative'
@@ -351,10 +352,11 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Text object for indent level
     Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
-        onoremap ij <Esc><Cmd>call <SID>Indent()<CR>
-        function! s:Indent()
+        onoremap ij <Esc><Cmd>call <SID>Indent(v:operator)<CR>
+        vnoremap ij <Esc><Cmd>call <SID>Indent('v')<CR>
+        function! s:Indent(operator)
             let g:indent_object_ignore_blank_line = 0
-            execute 'normal ' . v:operator . 'ii'
+            execute 'normal ' . a:operator . 'ii'
             let g:indent_object_ignore_blank_line = 1
         endfunction
 
