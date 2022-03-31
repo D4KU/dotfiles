@@ -184,8 +184,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
-        let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyz"
-        map <Leader><Leader><Leader> <Plug>(easymotion-overwin-f)
+        let g:EasyMotion_keys = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        nmap <Bslash> <Plug>(easymotion-overwin-f)
 
     " Motions based on indent depths
     Plug 'jeetsukumaran/vim-indentwise'
@@ -351,14 +351,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         omap o <Plug>(textobj-entire-i)
 
     " Text object for indent level
-    Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
-        onoremap ij <Esc><Cmd>call <SID>Indent(v:operator)<CR>
-        vnoremap ij <Esc><Cmd>call <SID>Indent('v')<CR>
-        function! s:Indent(operator)
-            let g:indent_object_ignore_blank_line = 0
-            execute 'normal ' . a:operator . 'ii'
-            let g:indent_object_ignore_blank_line = 1
-        endfunction
+    Plug 'kana/vim-textobj-indent'
 
     " Automatically adjust shiftwidth to current document
     Plug 'tpope/vim-sleuth'

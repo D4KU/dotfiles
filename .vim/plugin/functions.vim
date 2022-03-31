@@ -74,13 +74,6 @@ function! RepeatableMap(name, lhs, rhs, mode)
     execute a:mode . 'map ' . a:lhs . ' <Plug>' . a:name
 endfunction
 
-" Create mappings for easymotion overwin search
-function! EasymotionMaps(keys)
-    for l:key in split(a:keys, '\zs')
-        execute 'nmap \' . l:key . ' <Plug>(easymotion-overwin-f)' . l:key
-    endfor
-endfunction
-
 " Things to do in large files
 function! LargeFile(fname)
     if getfsize(a:fname) >= 10 * 1024 * 1024
