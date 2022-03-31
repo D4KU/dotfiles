@@ -115,12 +115,13 @@ function! RecycleVSplit()
 endfunction
 
 function! ToggleExpressionBody()
-    if stridx(getline('.'), '=>') == -1
+    let l:idx = stridx(getline('.'), '=>')
+    if l:idx == -1
         execute "normal! \"_yiB]}\"_dd[{\"_ddkJa=>\<Space>\<Esc>"
         " Remove 'return'
         call setline(".", substitute(getline("."), "return ", "", ""))
     else
-        execute "normal! ^f=\"_dwhr\<CR>O{\<Esc>jo}\<Esc>k"
+        execute "normal! " . l:idx . "|l\"_dwi{\<CR>\<C-O>o}\<Esc>"
     endif
 endfunction
 
