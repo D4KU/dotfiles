@@ -1,21 +1,25 @@
 call matchup#util#append_match_words('/\*:\*/,#region:#endregion,#if:#else:#endif')
 call matchup#util#append_match_words('#pragma warning disable:#pragma warning restore')
 
+let s:a = '.*\(\n^\w*\n\)*'
 call textobj#user#plugin('preprocesor', {
 \   'region': {
-\     'pattern': ['#region', '#endregion'],
+\     'pattern': ['.*#region.*\n', '.*#endregion' . s:a],
 \     'select-a': 'ar',
 \     'select-i': 'ir',
+\     'region-type': 'V',
 \   },
 \   'if': {
-\     'pattern': ['#if', '#endif'],
+\     'pattern': ['.*#if.*\n', '.*#endif' . s:a],
 \     'select-a': 'ad',
 \     'select-i': 'id',
+\     'region-type': 'V',
 \   },
 \   'warning': {
-\     'pattern': ['#pragma warning disable', '#pragma warning restore.*'],
+\     'pattern': ['.*#pragma warning disable.*\n', '.*#pragma warning restore' . s:a],
 \     'select-a': 'aP',
 \     'select-i': 'iP',
+\     'region-type': 'V',
 \   }
 \ })
 

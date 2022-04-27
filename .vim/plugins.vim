@@ -199,7 +199,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " ============================= New mappings =============================
     " Switch word under cursor if it matches a pattern
-    Plug 'AndrewRadev/switch.vim', { 'on': '<Plug>(Switch)' }
+    Plug 'AndrewRadev/switch.vim'
         nmap gs <Plug>(Switch)
         let g:switch_custom_definitions =
             \ [
