@@ -366,7 +366,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         omap o <Plug>(textobj-entire-i)
 
     " Text object for indent level
-    Plug 'kana/vim-textobj-indent'
+    " Plug 'kana/vim-textobj-indent'
+
+    " Text object for indent level
+    Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
 
     " Automatically adjust shiftwidth to current document
     Plug 'tpope/vim-sleuth'
