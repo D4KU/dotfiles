@@ -14,8 +14,8 @@ let b:argwrap_tail_comma = 1
 
 " YouCompleteMe
 call SetUpYCM()
-nnoremap <Leader>d <Cmd>YcmCompleter GoToDeclaration<CR>
-nnoremap <Leader>h <Cmd>YcmCompleter GetDoc<CR>
+nnoremap <buffer> <Leader>d <Cmd>YcmCompleter GoToDeclaration<CR>
+nnoremap <buffer> <Leader>h <Cmd>YcmCompleter GetDoc<CR>
 
 " Switch.vim plugin settings
 let g:switch_custom_definitions +=

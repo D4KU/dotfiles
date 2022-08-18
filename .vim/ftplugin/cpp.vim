@@ -1,4 +1,4 @@
-" YouCompleteMe
-call SetUpYCM()
-nnoremap <Leader>d <Cmd>YcmCompleter GoToImprecise<CR>
-nnoremap <Leader>h <Cmd>YcmCompleter GetDocImprecise<CR>
+" Insert semicolon at end of line
+inoremap <silent> <buffer> ; <C-R>=smartsemicolon#insert()<CR>
+
+

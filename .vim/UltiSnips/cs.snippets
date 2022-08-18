@@ -13,6 +13,14 @@ snippet Prop "Full property"
     }
 endsnippet
 
+snippet switche
+switch
+{
+    $1 => $2,
+    _ => $0,
+};
+endsnippet
+
 snippet #p "Pragma warning" b
 #pragma warning disable $1
 #pragma warning restore $1
@@ -132,7 +140,7 @@ snippet <c "Debug.Log color tag"
 endsnippet
 
 snippet ddl "Debug.Log as quick marker"
-Debug.Log("<color=red>I'M HERE$0</color>");
+Debug.Log($"{$1}     {$0}");
 endsnippet
 
 snippet #ifu "Unity Editor preprocessor" b
@@ -157,5 +165,14 @@ public class $1Editor : Editor
             trg.$0
         EditorGUILayout.EndHorizontal();
     }
+}
+endsnippet
+
+snippet gizmo "Unity OnDrawGizmos()" b
+private void OnDrawGizmos()
+{
+    Gizmos.color = Color.yellow;
+    Gizmos.DrawSphere(transform.position, .2f);
+    Gizmos.DrawLine(transform.position, transform.position + transform.forward);
 }
 endsnippet
