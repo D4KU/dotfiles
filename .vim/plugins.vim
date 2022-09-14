@@ -370,12 +370,24 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Text object for indent level
     Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
+        onoremap iI <Esc><Cmd>call <SID>Indent(v:operator)<CR>
+        vnoremap iI <Esc><Cmd>call <SID>Indent('v')<CR>
+        function! s:Indent(operator)
+            let g:indent_object_ignore_blank_line = 0
+            execute 'normal ' . a:operator . 'ii'
+            let g:indent_object_ignore_blank_line = 1
+        endfunction
+        " One impossible case: with the cursor on line a you can't select
+        " lines a and b exclusively via this plugin
+        " aaaaaa
+        "   bbbb
+        " cccccc
 
     " Automatically adjust shiftwidth to current document
     Plug 'tpope/vim-sleuth'
 
     " Text-objects for markdown
-    Plug 'Tokubara/vim-textobj-markdown', { 'for': 'markdown' }
+    Plug 'coachshea/vim-textobj-markdown', { 'for': 'markdown' }
 
     " Lastly pasted text object
     Plug 'saaguero/vim-textobj-pastedtext'

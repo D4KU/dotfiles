@@ -153,11 +153,15 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof($1))]
+[CanEditMultipleObjects]
 public class $1Editor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+        if (targets.Length > 1)
+            return;
+
         var trg = ($1)target;
 
         var r = EditorGUILayout.BeginHorizontal();

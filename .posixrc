@@ -55,7 +55,7 @@ up() {
   sudo apt-get upgrade -y
   sudo apt autoremove -y
   zinit update --all --parallel
-  vim -i NONE -c "PlugInstall" -c "qa"
+  vim -i NONE -c "PlugUpdate" -c "qa"
   $HOME/.tmux/plugins/tpm/bin/update_plugins all
   tmux source $HOME/.tmux.conf
 }
