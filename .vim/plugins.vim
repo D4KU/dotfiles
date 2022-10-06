@@ -59,6 +59,9 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'AlessandroYorba/Despacio'
     Plug 'pgdouyon/vim-yin-yang'
 
+    " Rainbow parenthesis
+    Plug 'frazrepo/vim-rainbow'
+
     " Status line style
     Plug 'itchyny/lightline.vim'
         let g:lightline = { 'colorscheme': 'daku' }
