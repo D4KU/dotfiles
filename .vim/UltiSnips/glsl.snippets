@@ -15,6 +15,12 @@ TEXTURE2D(_$1);
 SAMPLER(sampler_$1);
 endsnippet
 
+snippet cbuf
+CBUFFER_START(${1:UnityPerMaterial})
+$0
+CBUFFER_END
+endsnippet
+
 snippet shader
 Shader "Custom/$1"
 {

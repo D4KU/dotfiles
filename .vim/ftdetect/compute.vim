@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.compute set filetype=hlsl
+autocmd BufRead,BufNewFile *.compute setfiletype(glsl)
