@@ -1,8 +1,6 @@
 " Set fzf.vim preview window postion dependent on window aspect ratio
 function! fzf#smartpreview()
-    let l:ratio = winwidth('%') / (1.0 * winheight('%'))
-    let l:side = l:ratio > 2 ? 'right' : 'up'
-    let g:fzf_preview_window = [l:side . ':50%', 'ctrl-/']
+    let g:fzf_preview_window = [winwidth('%') / winheight('%') > 2 ? 'right' : 'up']
 endfunction
 
 " Slower but interactive version of fzf.vim's :Rg command

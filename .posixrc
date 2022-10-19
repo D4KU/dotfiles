@@ -21,10 +21,11 @@ export FZF_DEFAULT_OPTS="
 --cycle
 --preview-window=border-none
 --bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
---bind='alt-t:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
+--bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
 --bind='alt-y:execute-silent(echo {} | clip.exe)'"
 
 GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
+FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
 FORGIT_LOG_GRAPH_ENABLE=0
 FORGIT_LOG_FZF_OPTS="
 --bind='ctrl-e${GLO_SUBSTR}show | vim -R -)'
