@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.cginc setfiletype(glsl)
+autocmd BufRead,BufNewFile *.cginc setfiletype glsl

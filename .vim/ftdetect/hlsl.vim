@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.hlsl setfiletype(glsl)
+autocmd BufRead,BufNewFile *.hlsl setfiletype glsl

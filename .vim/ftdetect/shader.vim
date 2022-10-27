@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.shader setfiletype(glsl)
+autocmd BufRead,BufNewFile *.shader setfiletype glsl
