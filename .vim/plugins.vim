@@ -60,7 +60,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'pgdouyon/vim-yin-yang'
 
     " Rainbow parenthesis
-    Plug 'frazrepo/vim-rainbow'
+    Plug 'frazrepo/vim-rainbow', { 'on': ['RainbowToggle'] }
 
     " Status line style
     Plug 'itchyny/lightline.vim'
@@ -314,7 +314,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'junegunn/vim-after-object'
         autocmd VimEnter * call after_object#enable(
             \ ['P', 'p'],
-            \ '=', ':', '-', '_', '/', ',', ';', '.', '*', '@', '(', ')',
+            \ '=', ':', '-', '_', '/', ',', ';', '.', '*', '@', '#', '(', ')',
             \ '[', ']', '{', '}', '<', '>')
         vnoremap pp p
 
@@ -392,9 +392,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Text-objects for markdown
     Plug 'coachshea/vim-textobj-markdown', { 'for': 'markdown' }
 
-    " Lastly pasted text object
+    " gb for lastly pasted text object
     Plug 'saaguero/vim-textobj-pastedtext'
-        let g:pastedtext_select_key = 'v'
 
     " Make plugin commands repeatable
     Plug 'tpope/vim-repeat'
