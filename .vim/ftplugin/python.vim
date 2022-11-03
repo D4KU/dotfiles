@@ -4,8 +4,8 @@ setlocal formatoptions-=t
 setlocal formatoptions-=c
 setlocal textwidth=72
 
-" Current buffer
-nnoremap <buffer> <Leader>X :w<CR>:exec 'Shell python3' shellescape(@%, 1)<CR>
+" Execute current buffer
+nnoremap <buffer> <Leader>X :w<CR>:exec 'Dispatch python' shellescape(@%, 1)<CR>
 
 " Argwrap plugin settings
 let b:argwrap_wrap_closing_brace = 1

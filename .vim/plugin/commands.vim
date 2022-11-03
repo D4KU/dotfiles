@@ -24,20 +24,14 @@ command! -nargs=* -bang RG call fzf#rg(<q-args>, <bang>0)
 " Warp Directory integration
 command! -nargs=1 Wd call wd#cd(<f-args>)
 
-" Execute given command in shell, print to new buffer
-command! -complete=shellcmd -nargs=+ Shell call inshell#exec(<q-args>)
-
 " Add every opened file to fasd
 autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
 
-" Set file type to shell script if file ends on 'rc' and no other file type
-" is set
-autocmd BufNewFile,BufRead *rc if (!&ft) | setl ft=zsh | endif
-
-" Open help in vertical split
-augroup VerticalHelp
+" Open help and preview in vertical split
+augroup VerticalScratch
   autocmd!
   autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+  autocmd BufEnter * if &previewwindow | wincmd L | endif
 augroup END
 
 " Apply overrides to often-used color schemes
