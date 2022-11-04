@@ -266,10 +266,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'tommcdo/vim-exchange'
 
     " Completion for text in adjacent tmux panes
-    Plug 'wellle/tmux-complete.vim'
+    " Plug 'wellle/tmux-complete.vim'
 
     " Resize split to selection
-    Plug 'wellle/visual-split.vim'
+    " Plug 'wellle/visual-split.vim'
 
     " ============================== Autocommands ============================
     " Jump between pairs
@@ -285,7 +285,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Word column text object
     Plug 'coderifous/textobj-word-column.vim'
 
-    " " Automatically close brackets
+    " Automatically close brackets
     " Plug 'jiangmiao/auto-pairs'
     "     let g:AutoPairsMultilineClose = 0
     "     let g:AutoPairsCenterLine = 0
@@ -426,7 +426,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " ============================== New gadgets =============================
     " Calculator
-    Plug 'sk1418/HowMuch'
+    " Plug 'sk1418/HowMuch'
 
     " Translator
     Plug 'voldikss/vim-translator'
@@ -483,6 +483,9 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     "     let g:kite_supported_languages = ['*']
     "     let g:kite_log = 1
 
+    " Completion for cmake
+    Plug 'huleiak47/vim-cmake-complete', { 'for': 'cmake' }
+
     " Linting and completion
     Plug 'dense-analysis/ale', {
         \ 'for': 'cs',
@@ -527,7 +530,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
     "     let g:sharpenup_codeactions_glyph = '*'
 
-    " " Smart comma & semicolon insertion
+    " Smart comma & semicolon insertion
     " Plug 'd4ku/cosco.vim', { 'for': ['cs', 'shaderlab'] }
     "     let g:cosco_ignore_comment_lines = 1
     "     " let g:cosco_ignore_ft_pattern = {
@@ -562,19 +565,18 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nmap <expr> <Up>    &diff? '[czz' : '<Up>'
         nmap <expr> <Down>  &diff? ']czz' : '<Down>'
 
-    " Execute make commands in background
-    Plug 'tpope/vim-dispatch', { 'for': 'cpp', 'on': 'Dispatch' }
+    " See command line output inside vim
+    Plug 'tpope/vim-dispatch'
 
         function! BuildYCM(info)
             if a:info.status == 'installed' || a:info.force
-                !python3 ./install.py --clangd-completer
+                !python ./install.py --clangd-completer
             endif
         endfunction
     Plug 'ycm-core/YouCompleteMe', {
         \   'for': ['python', 'cpp'],
         \   'do': function('BuildYCM')
         \   }
-        let g:ycm_autoclose_preview_window_after_completion = 1
         let g:ycm_always_populate_location_list = 1
         let g:ycm_auto_hover = ''
         let g:syntastic_enable_signs = 0
