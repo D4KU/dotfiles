@@ -1,6 +1,7 @@
 " Switch.vim plugin settings
 let b:switch_custom_definitions =
     \ [
-    \   ['ON', 'OFF'],
+    \   ['OFF', 'ON'],
+    \   ['AND', 'OR'],
     \ ]
 
