@@ -18,7 +18,7 @@ nnoremap <buffer> <Leader>d <Cmd>YcmCompleter GoToDeclaration<CR>
 nnoremap <buffer> <Leader>h <Cmd>YcmCompleter GetDoc<CR>
 
 " Switch.vim plugin settings
-let g:switch_custom_definitions +=
+let b:switch_custom_definitions =
     \ [
     \   ['if', 'elif'],
     \   ['is', 'is not'],

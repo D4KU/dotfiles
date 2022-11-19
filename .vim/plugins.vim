@@ -105,6 +105,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'ntpeters/vim-better-whitespace'
         nnoremap <silent> ]w <Cmd>NextTrailingWhitespace<CR>
         nnoremap <silent> [w <Cmd>PrevTrailingWhitespace<CR>
+        let g:show_spaces_that_precede_tabs = 1
         let g:current_line_whitespace_disabled_soft = 1
         let g:better_whitespace_ctermcolor = 234
         let g:better_whitespace_filetypes_blacklist = [
@@ -128,10 +129,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Scroll buffer smoothly
     Plug 'terryma/vim-smooth-scroll'
-        noremap <silent> <C-U> <Cmd>call smooth_scroll#up(&scroll, 0, 3)<CR>
-        noremap <silent> <C-D> <Cmd>call smooth_scroll#down(&scroll, 0, 3)<CR>
-        noremap <silent> <C-B> <Cmd>call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-        noremap <silent> <C-F> <Cmd>call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+        nnoremap <silent> <C-U> <Cmd>call smooth_scroll#up(&scroll, 0, 3)<CR>
+        nnoremap <silent> <C-D> <Cmd>call smooth_scroll#down(&scroll, 0, 3)<CR>
+        nnoremap <silent> <C-B> <Cmd>call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+        nnoremap <silent> <C-F> <Cmd>call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
     " Improved feedback on search
     Plug 'vim-scripts/IndexedSearch'
@@ -168,7 +169,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         let g:minimap_left = 1
         let g:minimap_block_buftypes =
             \ ['nofile', 'nowrite', 'quickfix', 'terminal', 'prompt', 'help']
-        noremap <Leader>~ <Cmd>MinimapToggle<CR>
+        nnoremap <Leader>~ <Cmd>MinimapToggle<CR>
 
     " Lines mark indentation level
     Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
@@ -176,7 +177,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         let g:indentLine_char_list = ['¦']
         let g:indentLine_concealcursor = ''
         let g:indentLine_faster = 1
-        noremap <silent> <Leader><Bar> <Cmd>IndentLinesToggle<CR>
+        nnoremap <silent> <Leader><Bar> <Cmd>IndentLinesToggle<CR>
 
     " ============================== New motions =============================
     " Camel case word motion
@@ -228,8 +229,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Mappings to toggle quickfix and loclist
     Plug 'Gavinok/vim-togglelist'
-        noremap <Leader>l <Cmd>call togglelist#ToggleQuickfixList()<CR>
-        noremap <Leader>L <Cmd>call togglelist#ToggleLocationList()<CR>
+        nnoremap <Leader>l <Cmd>call togglelist#ToggleQuickfixList()<CR>
+        nnoremap <Leader>L <Cmd>call togglelist#ToggleLocationList()<CR>
 
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(LiveEasyAlign)' }
@@ -372,19 +373,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Plug 'kana/vim-textobj-indent'
 
     " Text object for indent level
+    " Changes defined in ~/.vim/after/plugin/plugin.vim
     Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
-        onoremap iI <Esc><Cmd>call <SID>Indent(v:operator)<CR>
-        vnoremap iI <Esc><Cmd>call <SID>Indent('v')<CR>
-        function! s:Indent(operator)
-            let g:indent_object_ignore_blank_line = 0
-            execute 'normal ' . a:operator . 'ii'
-            let g:indent_object_ignore_blank_line = 1
-        endfunction
-        " One impossible case: with the cursor on line a you can't select
-        " lines a and b exclusively via this plugin
-        " aaaaaa
-        "   bbbb
-        " cccccc
 
     " Automatically adjust shiftwidth to current document
     Plug 'tpope/vim-sleuth'
