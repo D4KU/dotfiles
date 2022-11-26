@@ -57,14 +57,15 @@ augroup END
 "   \   exe "normal! `0"|
 "   \ endif
 
-" Dir of current file
-cabbrev <expr> %% expand('%:p:h')
+" Full path and dir of current file
+cnoreabbrev <expr> %% expand('%:p')
+cnoreabbrev <expr> %%% expand('%:p:h')
 
 " Two dirs up
-cabbrev <expr> ... "../.."
+cnoreabbrev <expr> ... "../.."
 
 " Save as sudo
-cabbrev w!! w !sudo tee "%"
+cnoreabbrev w!! w !sudo tee "%"
 
 " Save and source
-cabbrev ws w <Bar> so %
+cnoreabbrev ws w <Bar> so %

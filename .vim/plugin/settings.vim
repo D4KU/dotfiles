@@ -18,7 +18,6 @@ set cursorline
 set encoding=utf-8
 set expandtab
 set fillchars=vert:\ ,eob:\ ,fold:·,foldopen:┍,foldsep:│,foldclose:━
-set foldcolumn=0
 set foldtext=getline(v:foldstart).'\ '
 set formatoptions+=j
 set formatoptions-=l
@@ -28,6 +27,7 @@ set hidden
 set hlsearch
 set ignorecase
 set incsearch
+set laststatus=0
 set lazyredraw
 set matchpairs+=<:>
 set mouse=a

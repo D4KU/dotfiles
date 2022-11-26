@@ -25,12 +25,8 @@ call textobj#user#plugin('preprocesor', {
 
 call textobj#user#plugin('conditional', {
 \   'i': {
-\     'pattern': '.*\((\|&&\?\|||\?\)\zs.\{-}\%#.\{-}\ze\()\|$\|&&\?\|||\?\)',
+\     'pattern': '.*\((\|=>\?\s*\|&&\?\|||\?\)\zs.\{-}\%#.\{-}\ze\()\|;\|$\|&&\?\|||\?\)',
 \     'select': 'i&',
-\   },
-\   'a': {
-\     'pattern': '.*\((\zs\|\zs\(&&\|||\)\).\{-}\%#.\{-}\(\(&&\?\|||\?\)\s*\ze\|\ze)\|$\)',
-\     'select': 'a&',
 \   }
 \ })
 
