@@ -59,7 +59,7 @@ augroup END
 
 " Full path and dir of current file
 cnoreabbrev <expr> %% expand('%:p')
-cnoreabbrev <expr> %%% expand('%:p:h')
+cnoreabbrev <expr> %^ expand('%:p:h')
 
 " Two dirs up
 cnoreabbrev <expr> ... "../.."
@@ -68,4 +68,4 @@ cnoreabbrev <expr> ... "../.."
 cnoreabbrev w!! w !sudo tee "%"
 
 " Save and source
-cnoreabbrev ws w <Bar> so %
+cnoreabbrev ws w <Bar> source %

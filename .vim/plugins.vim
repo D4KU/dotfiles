@@ -17,16 +17,18 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         " Thanks to clever-f plugin, : and , are free
         nnoremap <silent> ,         <Cmd>call fzf#smartpreview() <Bar> Buffers<CR>
         nnoremap <silent> :         <Cmd>call fzf#smartpreview() <Bar> History<CR>
-        nnoremap <silent> <Leader>, <Cmd>call fzf#smartpreview() <Bar> Files<CR>
         nnoremap <silent> <Leader>. <Cmd>call fzf#smartpreview() <Bar> exec 'Files ' . expand('%:p:h')<CR>
-        nnoremap <silent> <Leader>- <Cmd>call fzf#smartpreview() <Bar> Lines<CR>
-        nnoremap <silent> <Leader>` <Cmd>call fzf#smartpreview() <Bar> Marks<CR>
-        nnoremap <silent> <Leader>/ <Cmd>call fzf#smartpreview() <Bar> History/<CR>
-        nnoremap <silent> <Leader>: <Cmd>call fzf#smartpreview() <Bar> History:<CR>
-        nnoremap <silent> <Leader>! <Cmd>call fzf#smartpreview() <Bar> Helptags<CR>
+        nnoremap <silent> <Leader>, <Cmd>call fzf#smartpreview() <Bar> Files<CR>
         nnoremap <silent> <Leader>; <Cmd>call fzf#smartpreview() <Bar> Commands<CR>
+        nnoremap <silent> <Leader>: <Cmd>call fzf#smartpreview() <Bar> History:<CR>
+        nnoremap <silent> <Leader>/ <Cmd>call fzf#smartpreview() <Bar> History/<CR>
+        nnoremap <silent> <Leader>? <Cmd>call fzf#smartpreview() <Bar> Helptags<CR>
         nnoremap <silent> <Leader>' <Cmd>call fzf#smartpreview() <Bar> Snippets<CR>
         nnoremap <silent> <Leader>" <Cmd>call fzf#smartpreview() <Bar> Colors<CR>
+        nnoremap <silent> <Leader>- <Cmd>call fzf#smartpreview() <Bar> Lines<CR>
+        nnoremap <silent> <Leader>` <Cmd>call fzf#smartpreview() <Bar> Marks<CR>
+        nnoremap <silent> <Leader>< <Cmd>call fzf#smartpreview() <Bar> GFiles<CR>
+        nnoremap <silent> <Leader>> <Cmd>call fzf#smartpreview() <Bar> GFiles?<CR>
 
         " Selecting mappings
         nmap <Leader><Tab> <Plug>(fzf-maps-n)
@@ -62,29 +64,29 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Rainbow parenthesis
     Plug 'frazrepo/vim-rainbow', { 'on': ['RainbowToggle'] }
 
-    " Status line style
-    Plug 'itchyny/lightline.vim'
-        let g:lightline = { 'colorscheme': 'daku' }
-        let g:lightline.active = {
-            \ 'left': [
-                \ ['select', 'paste'],
-                \ ['filename'],
-                \ ['modified', 'readonly', 'filetype'],
-                \ ],
-            \ 'right': [],
-            \ }
-        let g:lightline.inactive = {
-            \ 'left': [['filename'], ['modified']],
-            \ 'right': [],
-            \ }
-        let g:lightline.component = {
-            \ 'position': '%c %l/%L',
-            \ 'select': '%{lightline#mode()==?"select"?"SELECT":""}',
-            \ }
-		let g:lightline.enable = {
-            \ 'statusline': 1,
-            \ 'tabline': 0,
-            \ }
+    " " Status line style
+    " Plug 'itchyny/lightline.vim'
+    "     let g:lightline = { 'colorscheme': 'daku' }
+    "     let g:lightline.active = {
+    "         \ 'left': [
+    "             \ ['select', 'paste'],
+    "             \ ['filename'],
+    "             \ ['modified', 'readonly', 'filetype'],
+    "             \ ],
+    "         \ 'right': [],
+    "         \ }
+    "     let g:lightline.inactive = {
+    "         \ 'left': [['filename'], ['modified']],
+    "         \ 'right': [],
+    "         \ }
+    "     let g:lightline.component = {
+    "         \ 'position': '%c %l/%L',
+    "         \ 'select': '%{lightline#mode()==?"select"?"SELECT":""}',
+    "         \ }
+		" let g:lightline.enable = {
+    "         \ 'statusline': 1,
+    "         \ 'tabline': 0,
+    "         \ }
 
     " Preview registers
     Plug 'junegunn/vim-peekaboo'
@@ -257,6 +259,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " More mappings
     Plug 'tpope/vim-unimpaired'
+        " nmap p <Plug>(unimpaired-put-below-reformat)
+        " nmap P <Plug>(unimpaired-put-above-reformat)
+        " nnoremap =p p
+        " nnoremap =P P
 
     " Plug 'hauleth/asyncdo.vim'
 

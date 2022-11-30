@@ -1,18 +1,19 @@
 " Remap semicolon to colon in normal and visual mode
-noremap ; :
+nnoremap ; :
+nnoremap q; q:
 
 " Redo more intuitive
-noremap U <C-R>
-noremap <C-R> U
+nnoremap U <C-R>
+nnoremap <C-R> U
 
 " Match y behavior to d and c
-noremap Y y$
+nnoremap Y y$
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 
 " qq to record, Q to replay
 nnoremap Q @q
@@ -46,10 +47,6 @@ nnoremap <Leader>v i<CR><Esc>l"_d0P"_d0kgJgJ
 
 nnoremap ]{ <Cmd>call search('{', 'z')<CR>
 nnoremap [} <Cmd>call search('}', 'zb')<CR>
-
-" Move lines between splits
-call RepeatableMap('moveRight', '<Leader>>', 'dd<C-W>lp<C-W>h', 'n')
-call RepeatableMap('moveLeft' , '<Leader><', 'dd<C-W>hp<C-W>l', 'n')
 
 " Remove blank lines before and after paragraph
 call RepeatableMap('deleteBeforeParagraph', '<Leader>{', '{"_dd<C-O>', 'n')
