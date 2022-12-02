@@ -1,0 +1,15 @@
+global !p
+def add1(string):
+    try:
+        return str(int(string) + 1)
+    except:
+        return ""
+endglobal
+
+snippet clock "chrono clock"
+auto t${1:1} = std::chrono::high_resolution_clock::now();
+auto t`!p snip.rv = add1(t[1])` = std::chrono::high_resolution_clock::now();
+auto d$1 = std::chrono::duration_cast<std::chrono::milliseconds>(t`!p snip.rv = add1(t[1])` - t$1);
+std::cout << d$1.count() << " ms" << std::endl;
+endsnippet
+
