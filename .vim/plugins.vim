@@ -370,6 +370,11 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Text object for last searched pattern entire buffer
     Plug 'kana/vim-textobj-user'
     Plug 'kana/vim-textobj-lastpat'
+        let g:textobj_lastpat_no_default_key_mappings = 1
+        xmap a? <Plug>(textobj-lastpat-n)
+        omap a? <Plug>(textobj-lastpat-n)
+        xmap i? <Plug>(textobj-lastpat-N)
+        omap i? <Plug>(textobj-lastpat-N)
     Plug 'kana/vim-textobj-entire'
         let g:textobj_entire_no_default_key_mappings = 1
         xmap o <Plug>(textobj-entire-i)
