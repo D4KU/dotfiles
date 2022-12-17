@@ -21,13 +21,15 @@ switch
 };
 endsnippet
 
+snippet watch "Watch Timer Clock" b
+var watch = System.Diagnostics.Stopwatch.StartNew();
+$0watch.Stop();
+var elapsed = watch.ElapsedMilliseconds;
+endsnippet
+
 snippet #p "Pragma warning" b
 #pragma warning disable $1
 #pragma warning restore $1
-endsnippet
-
-snippet [s "Serializable" b
-[Serializable
 endsnippet
 
 snippet <pr "Doc parameter reference"
@@ -119,33 +121,51 @@ private void OnGUI()
 }
 endsnippet
 
-snippet [r "Require Component" b
-[RequireComponent(typeof($0))
+snippet [c "Context Menu" b
+[ContextMenu(nameof($0))
 endsnippet
 
 snippet [e "Execute Always" b
 [ExecuteAlways
 endsnippet
 
-snippet [t "Tooltip" b
-[Tooltip("$0")
-endsnippet
-
 snippet [h "Header" b
 [Header("$0")
+endsnippet
+
+snippet [r "Require Component" b
+[RequireComponent(typeof($0))
+endsnippet
+
+snippet [s "Serializable" b
+[Serializable
+endsnippet
+
+snippet [t "Tooltip" b
+[Tooltip("$0")
 endsnippet
 
 snippet <c "Debug.Log color tag"
 <color=$1>$0</color>
 endsnippet
 
-snippet ddl "Debug.Log as quick marker"
-Debug.Log($"{$1}     {$0}");
+global !p
+def expand_line(snip):
+    line = snip.buffer[snip.line]
+    snip.buffer[snip.line] = ''
+    snip.expand_anon(line)
+endglobal
+
+post_jump "expand_line(snip)"
+snippet 'si(\d+)' "String interpolation" r
+$"`!p snip.rv = '\t'.join([f'{{${i + 1}}}' for i in range(int(match.group(1)))])`"
 endsnippet
 
 snippet #ifu "Unity Editor preprocessor" b
 #if UNITY_EDITOR
-$0#endif
+    if ($0Application.isPlaying)
+        return;
+#endif
 endsnippet
 
 snippet editor "Custom Editor" b

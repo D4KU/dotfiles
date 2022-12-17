@@ -118,7 +118,7 @@ ff() {
 
   local hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
   _on_each \
-    "$(rg --files-with-matches --no-messages "$@")" \
+    "$(rg --files-with-matches --no-messages $@)" \
     --preview=$hi \
     vim -c "call search('\v$1', 'c')"
 }

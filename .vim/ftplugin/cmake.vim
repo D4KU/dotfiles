@@ -3,5 +3,6 @@ let b:switch_custom_definitions =
     \ [
     \   ['OFF', 'ON'],
     \   ['AND', 'OR'],
+    \   ['PUBLIC', 'PRIVATE'],
     \ ]
 
