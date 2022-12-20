@@ -1,6 +1,5 @@
 " Remap semicolon to colon in normal and visual mode
 nnoremap ; :
-nnoremap q; q:
 
 " Redo more intuitive
 nnoremap U <C-R>
@@ -44,6 +43,8 @@ nnoremap ch c2h
 nnoremap <Leader>V i<CR><Esc>PkgJgJ
 " Paste without newline, remove indent whitespace
 nnoremap <Leader>v i<CR><Esc>l"_d0P"_d0kgJgJ
+
+nnoremap <Leader>S :<C-U>call tools#swapAroundWord('')<Left><Left>
 
 nnoremap ]{ <Cmd>call search('{', 'z')<CR>
 nnoremap [} <Cmd>call search('}', 'zb')<CR>

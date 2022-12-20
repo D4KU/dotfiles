@@ -50,3 +50,14 @@ function! tools#synonyms(word)
     let l:post_proc = " | tr ' ' '\n' | awk '!x[$0]++ && !/" . a:word . "/'"
     return l:grep . l:post_proc
 endfunction
+
+" Swap WORDS adjacent to entered word
+function! tools#swapAroundWord(word)
+    let l:pre = '\v(.{-})(\(.*\)|[^[:blank:](]+%(\S*\(.*\))*)(\s+\V'
+    let l:post  = '\v\s+)(\(.*\)|[^[:blank:])]+%(\S*\(.*\))*)(.*)'
+    let l:m = matchlist(getline('.'), l:pre . a:word . l:post)
+    if len(l:m) > 5
+        call setline('.', l:m[1] . l:m[4] . l:m[3] . l:m[2] . l:m[5])
+    endif
+endfunction
+

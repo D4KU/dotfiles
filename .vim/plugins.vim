@@ -109,6 +109,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nnoremap <silent> [w <Cmd>PrevTrailingWhitespace<CR>
         let g:show_spaces_that_precede_tabs = 1
         let g:current_line_whitespace_disabled_soft = 1
+        let g:better_whitespace_operator = ''
         let g:better_whitespace_ctermcolor = 234
         let g:better_whitespace_filetypes_blacklist = [
             \ 'diff',
