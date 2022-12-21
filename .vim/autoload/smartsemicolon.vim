@@ -12,11 +12,18 @@ function! smartsemicolon#insert()
 
     if !s:CursorInComment()
                 \ && pos[2] < col('$')
-                \ && curLine =~ '[a-zA-Z0-9_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
+                \ && curLine =~ '[[:alnum:]_)\]''"]\%[\(++\)]\%[\(--\)]\s*$'
                 \ && nextLine !~ '{$'
                 \ && (curLineInd >= nextLineInd || nextLineEmpty)
-                \ && curLine !~ '^\s*for\s\?('
+                \ && curLine !~ '^\s*for\s*('
         try
+            " Remove trailing whitespace
+            try
+                let line = substitute(curLine, '\s\+$', '', '')
+                call setline(curLineNum, line)
+            catch
+            endtry
+
             " Insert semicolon at the lines' end
             exec("normal! A;")
         catch
