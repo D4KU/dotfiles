@@ -48,9 +48,6 @@ imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
 imap <silent> <buffer> ( <Plug>(PearTreeOpener_()<Esc><Plug>(omnisharp_signature_help)a
 inoremap <silent> <buffer> . .<C-X><C-O>
 
-" Insert semicolon at end of line
-inoremap <silent> <buffer> ; <C-R>=smartsemicolon#insert()<CR>
-
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
 nmap <silent> <buffer> <Leader>D <Cmd>call RecycleVSplit()<CR><Plug>(omnisharp_go_to_definition)

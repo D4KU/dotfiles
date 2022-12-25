@@ -230,11 +230,6 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Tab completion in insert mode
     " Plug 'ervandew/supertab'
 
-    " Mappings to toggle quickfix and loclist
-    Plug 'Gavinok/vim-togglelist'
-        nnoremap <Leader>l <Cmd>call togglelist#ToggleQuickfixList()<CR>
-        nnoremap <Leader>L <Cmd>call togglelist#ToggleLocationList()<CR>
-
     " Easily align multiple lines of text
     Plug 'junegunn/vim-easy-align', { 'on': '<Plug>(LiveEasyAlign)' }
         " Interactive align for a motion/text object
@@ -303,6 +298,9 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Open file at last position
     Plug 'farmergreg/vim-lastplace'
 
+    " Smartly insert semicolons
+    Plug 'D4KU/smart-semicolon.vim'
+
     " Comment text object
     Plug 'D4KU/vim-textobj-comment'
         let g:textobj_comment_no_default_key_mappings = 1
@@ -314,9 +312,6 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         omap iX <Plug>(textobj-comment-big-i)
         xmap aX <Plug>(textobj-comment-big-a)
         omap aX <Plug>(textobj-comment-big-a)
-
-    " Function text object
-    Plug 'jamesl33/vim-textobj-function', { 'for': ['cs', 'vim'] }
 
     " Text object for text after a character
     Plug 'junegunn/vim-after-object'
