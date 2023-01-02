@@ -332,10 +332,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nmap >, <Plug>Argumentative_MoveRight
 
     " Text object for chained member access
-    Plug 'D4KU/vim-textobj-chainmember', { 'for': ['cs', 'cpp', 'python'] }
+    Plug 'D4KU/vim-textobj-chainmember', { 'for': ['c', 'cs', 'cuda', 'python'] }
 
     " Text object for C-like if, while, function, class, ...
-    Plug 'D4KU/vim-textobj-headedblock', { 'for': 'cs' }
+    Plug 'D4KU/vim-textobj-headedblock', { 'for': ['c', 'cs', 'cuda', 'hlsl', 'glsl'] }
 
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
@@ -403,11 +403,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
 
-    Plug 'vim-autoformat/vim-autoformat', {
-        \ 'for': 'cs',
-        \ 'on': 'AutoformatLine',
-        \ }
-
+    Plug 'vim-autoformat/vim-autoformat', { 'for': 'cs', 'on': 'AutoformatLine' }
         let g:formatdef_cs = 'clang-format -style=file'
         let g:formatters_cs = ['clangformat']
         let g:autoformat_verbosemode=1
@@ -484,25 +480,19 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'huleiak47/vim-cmake-complete', { 'for': 'cmake' }
 
     " Linting and completion
-    Plug 'dense-analysis/ale', {
-        \ 'for': 'cs',
-        \ 'on': '<Plug>(ale_lint)',
-        \ }
-
+    Plug 'dense-analysis/ale', { 'for': 'cs' }
         nmap gl <Plug>(ale_lint)
         nmap zh <Plug>(ale_previous_wrap)
         nmap zl <Plug>(ale_next_wrap)
         nmap zH <Plug>(ale_first)
         nmap zL <Plug>(ale_last)
-        "set omnifunc=ale#completion#OmniFunc
         let g:ale_lint_on_text_changed = 'never'
-        let g:ale_set_signs = 1
-        let g:ale_sign_error = '·'
-        let g:ale_sign_warning = '·'
+        let g:ale_set_signs = 0
+        let g:ale_virtualtext_cursor = 0
         let g:ale_lint_on_insert_leave = 1
         let g:ale_lint_on_save = 1
         let g:ale_warn_about_trailing_whitespace = 0
-        let g:ale_echo_msg_format = '[%linter%] %s'
+        let g:ale_echo_msg_format = '%s'
         let g:ale_linters = {
             \ 'cs': [ 'OmniSharp' ]
             \ }
@@ -571,14 +561,12 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             endif
         endfunction
     Plug 'ycm-core/YouCompleteMe', {
-        \   'for': ['python', 'cpp'],
+        \   'for': ['python', 'c'],
         \   'do': function('BuildYCM')
         \   }
         let g:ycm_always_populate_location_list = 1
         let g:ycm_auto_hover = ''
         let g:syntastic_enable_signs = 0
-        let g:syntastic_error_symbol = g:ale_sign_error
-        let g:syntastic_warning_symbol = g:ale_sign_warning
 
         function! SetUpYCM()
             command! -nargs=1 R YcmCompleter RefactorRename <args>

@@ -1,31 +1,13 @@
 setlocal commentstring=//%s
 
-" Look up documentation here
-let dotNetUrl="'https://docs.microsoft.com/en-us/search/?terms=%&category=Reference&scope=.NET'"
-let unityUrl="'https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%'"
-
-" Use the stdio OmniSharp-roslyn server
 let g:OmniSharp_server_stdio = 1
-
-" If you have the .NET Framework installed in Windows, you may have better
-" results using the Windows binaries.
 let g:OmniSharp_translate_cygwin_wsl = 1
-
-" Fetch full documentation during omnicomplete requests.
-" By default, only Type/Method signatures are fetched. Full documentation can
-" still be fetched when you need it with the :OmniSharpDocumentation command.
 let g:omnicomplete_fetch_full_documentation = 0
 let g:OmniSharp_completion_without_overloads = 1
-" let g:OmniSharp_highlighting = 3
 let g:OmniSharp_typeLookupInPreview = 1
-let g:OmniSharp_diagnostic_showid = 1
+" let g:OmniSharp_highlighting = 3
+" let g:OmniSharp_diagnostic_showid = 1
 " let g:OmniSharp_want_snippet = 1
-
-" Only use nice highlighting if current file isn't longer than 1000 lines
-augroup PerformantHighlight
-  autocmd!
-  autocmd BufEnter *.cs let g:OmniSharp_highlighting = line('$') > 1000 ? 1 : 3
-augroup END
 
 let g:OmniSharp_highlight_groups = {
     \ 'FieldName': 'Normal',
@@ -92,6 +74,8 @@ nnoremap <Leader>O O<Esc>"_cc<Esc>[{k%%By%2<C-O>pIbase.<Esc>A;<Esc>==%%l
 nnoremap <Leader>A viB:s/;/;\r<CR>%hR<CR>{<CR><Esc>=aB
 
 " Look up documentation
+let dotNetUrl="'https://docs.microsoft.com/en-us/search/?terms=%&category=Reference&scope=.NET'"
+let unityUrl="'https://docs.unity3d.com/2020.2/Documentation/ScriptReference/30_search.html?q=%'"
 nnoremap <silent> <Leader>K :call tools#doc(dotNetUrl)<CR>
 nnoremap <silent> <Leader>U :call tools#doc(unityUrl)<CR>
 
@@ -112,13 +96,18 @@ function! RecycleVSplit()
 endfunction
 
 function! ToggleExpressionBody()
-    let l:idx = stridx(getline('.'), '=>')
-    if l:idx == -1
+    let l:line = getline('.')
+    let l:idx = stridx(l:line, '=>')
+    if l:idx < 0
         execute "normal! \"_yiB]}\"_dd[{\"_ddkJa=>\<Space>\<Esc>"
         " Remove 'return'
-        call setline(".", substitute(getline("."), "return ", "", ""))
+        call setline('.', substitute(l:line, 'return ', '', ''))
     else
-        execute "normal! " . l:idx . "|l\"_dwi{\<CR>\<C-O>o}\<Esc>"
+        let l:line2 = getline(line('.') - 1)
+        let l:return = stridx(l:line , 'void') < 0
+                  \ && stridx(l:line2, 'void') < 0
+                  \ ? 'return ' : ''
+        execute 'normal! ' . l:idx . "|l\"_dwi{\<CR>" . l:return "\<C-O>o}\<Esc>"
     endif
 endfunction
 

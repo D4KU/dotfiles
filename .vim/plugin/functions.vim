@@ -77,6 +77,7 @@ endfunction
 " Things to do in large files
 function! LargeFile(fname)
     if getfsize(a:fname) >= 10 * 1024 * 1024
+        let g:OmniSharp_highlighting = 1
         set nowrap
         DisableWhitespace
         call RemoveCursorMatch()
@@ -85,6 +86,7 @@ function! LargeFile(fname)
             autocmd!
         augroup END
     else
+        let g:OmniSharp_highlighting = 3
         set wrap
         EnableWhitespace
         call AddCursorMatch()
