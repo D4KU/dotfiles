@@ -76,7 +76,7 @@ endfunction
 
 " Things to do in large files
 function! LargeFile(fname)
-    if getfsize(a:fname) >= 10 * 1024 * 1024
+    if getfsize(a:fname) >= 100000
         let g:OmniSharp_highlighting = 1
         set nowrap
         DisableWhitespace

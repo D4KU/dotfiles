@@ -101,7 +101,7 @@ function! ToggleExpressionBody()
     if l:idx < 0
         execute "normal! \"_yiB]}\"_dd[{\"_ddkJa=>\<Space>\<Esc>"
         " Remove 'return'
-        call setline('.', substitute(l:line, 'return ', '', ''))
+        call setline('.', substitute(getline('.'), 'return ', '', ''))
     else
         let l:line2 = getline(line('.') - 1)
         let l:return = stridx(l:line , 'void') < 0
