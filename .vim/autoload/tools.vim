@@ -53,9 +53,11 @@ endfunction
 
 " Swap WORDS adjacent to entered word
 function! tools#swapAroundWord(word)
-    let l:pre = '\v(.{-})(\(.*\)|[^[:blank:](]+%(\S*\(.*\))*)(\s+\V'
-    let l:post  = '\v\s+)(\(.*\)|[^[:blank:])]+%(\S*\(.*\))*)(.*)'
-    let l:m = matchlist(getline('.'), l:pre . a:word . l:post)
+    let l:m1 = '\v(.{-}\(?)'
+    let l:mX = '(\w*%(\(.*\))*)'
+    let l:m3 = '(\s*\V' . a:word . '\v\s*)'
+    let l:m5 = '(.*)'
+    let l:m = matchlist(getline('.'), l:m1 . l:mX . l:m3 . l:mX . l:m5)
     if len(l:m) > 5
         call setline('.', l:m[1] . l:m[4] . l:m[3] . l:m[2] . l:m[5])
     endif
