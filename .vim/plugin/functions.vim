@@ -30,7 +30,7 @@ function! DarkColorsApply() abort
     hi TabLine      cterm=NONE      ctermfg=245  ctermbg=NONE               guibg=NONE
     hi TabLineFill  cterm=NONE                   ctermbg=NONE               guibg=NONE
     hi TabLineSel                                ctermbg=235
-    hi Visual                       ctermfg=NONE ctermbg=235  guifg=NONE    guibg=#181818
+    hi Visual                       ctermfg=NONE ctermbg=235  guifg=NONE    guibg=#222222
     hi VertSplit                    ctermfg=NONE ctermbg=NONE guifg=bg      guibg=NONE
 
     hi clear CursorLineNr
@@ -61,7 +61,7 @@ function! DarkColorsApply() abort
     hi link SyntasticErrorSign ALEErrorSign
 
     " Highlighted Yank
-    hi link HighlightedyankRegion Visual
+    hi link HighlightedyankRegion Search
 endfunction
 
 " Create mapping that is repeatable

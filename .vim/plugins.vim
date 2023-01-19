@@ -340,19 +340,19 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
         let g:fakeclip_no_default_key_mappings = 1
-        nmap +y <Plug>(fakeclip-y)
+        nmap vy <Plug>(fakeclip-y)
         vmap +y <Plug>(fakeclip-y)
-        nmap +yy <Plug>(fakeclip-Y)
-        nmap +Y <Plug>(fakeclip-y)$
+        nmap vyy <Plug>(fakeclip-Y)
+        nmap vY <Plug>(fakeclip-y)$
         vmap +Y <Plug>(fakeclip-y)$
-        nmap +d <Plug>(fakeclip-d)
+        nmap vd <Plug>(fakeclip-d)
         vmap +d <Plug>(fakeclip-d)
-        nmap +dd <Plug>(fakeclip-dd)
-        nmap +D <Plug>(fakeclip-D)
+        nmap vdd <Plug>(fakeclip-dd)
+        nmap vD <Plug>(fakeclip-D)
         vmap +D <Plug>(fakeclip-D)
-        nmap +p <Plug>(fakeclip-p)
+        nmap vp <Plug>(fakeclip-p)
         vmap +p <Plug>(fakeclip-p)
-        nmap +P <Plug>(fakeclip-P)
+        nmap vP <Plug>(fakeclip-P)
         vmap +P <Plug>(fakeclip-P)
 
     " I and A to prepend/append to visual selection
