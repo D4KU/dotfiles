@@ -1,3 +1,13 @@
+global !p
+from snip_help import add1
+endglobal
+
+snippet timer "time watch clock"
+t${1:1} = time.time()
+t`!p snip.rv = add1(t[1])` = time.time()
+print(t`!p snip.rv = add1(t[1])` - t$1)
+endsnippet
+
 snippet bp "Breakpoint"
 breakpoint()
 endsnippet
