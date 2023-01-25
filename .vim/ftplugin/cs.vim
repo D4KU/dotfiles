@@ -1,6 +1,5 @@
 setlocal commentstring=//%s
 
-let g:OmniSharp_server_stdio = 1
 let g:OmniSharp_translate_cygwin_wsl = 1
 let g:omnicomplete_fetch_full_documentation = 0
 let g:OmniSharp_completion_without_overloads = 1
@@ -26,8 +25,9 @@ let g:OmniSharp_popup_options = {
     \}
 
 " Trigger completion when certain characters are inserted
-imap <silent> <buffer> , ,<Esc><Plug>(omnisharp_signature_help)a
-imap <silent> <buffer> ( <Plug>(PearTreeOpener_()<Esc><Plug>(omnisharp_signature_help)a
+vnoremap <buffer> <expr> I <SID>RememberBlockVisualState()
+imap <silent> <buffer> <expr> , exists('b:in_block_insert') ? ',' : ',<Esc><Plug>(omnisharp_signature_help)a'
+imap <silent> <buffer> <expr> ( exists('b:in_block_insert') ? '(' : '<Plug>(PearTreeOpener_()<Esc><Plug>(omnisharp_signature_help)a'
 inoremap <silent> <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
@@ -110,6 +110,16 @@ function! ToggleExpressionBody()
         execute 'normal! ' . l:idx . "|l\"_dwi{\<CR>" . l:return "\<C-O>o}\<Esc>"
     endif
 endfunction
+
+function! s:RememberBlockVisualState()
+    let b:in_block_insert = 1
+    return 'I'
+endfunction
+
+augroup in_block_insert
+    au!
+    au FileType cs au InsertLeave <buffer> unlet! b:in_block_insert
+augroup END
 
 " augroup omnisharp_commands
 "     autocmd!
