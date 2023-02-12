@@ -37,13 +37,14 @@ zi wait lucid light-mode for \
     d4ku/f \
     as"program" src"wd.plugin.zsh" \
     mfaerevaag/wd \
-    d4ku/forgit \
-    kazhala/dotbare \
-    peterhurford/git-it-on.zsh \
     atload"zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
     atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
     zsh-users/zsh-autosuggestions \
+    ver"gcfb" \
+    d4ku/forgit \
+    kazhala/dotbare \
+    peterhurford/git-it-on.zsh \
     $(omzs command-not-found) \
 
 zle-line-init() {

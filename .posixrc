@@ -25,12 +25,12 @@ export FZF_DEFAULT_OPTS="
 --bind='alt-y:execute-silent(echo {} | clip.exe)'"
 
 GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
-FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
-FORGIT_LOG_GRAPH_ENABLE=0
-FORGIT_LOG_FZF_OPTS="
+export FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
+export FORGIT_LOG_GRAPH_ENABLE=0
+export FORGIT_LOG_FZF_OPTS="
 --bind='ctrl-e${GLO_SUBSTR}show | vim -R -)'
 --bind='alt-c${GLO_SUBSTR}checkout 2> /tmp/glo)+reload(cat /tmp/glo)'"
-FORGIT_COPY_CMD='clip.exe'
+export FORGIT_COPY_CMD='clip.exe'
 
 KEYTIMEOUT=1
 HISTSIZE=25000
@@ -62,7 +62,7 @@ up() {
   sudo apt-get upgrade -y
   sudo apt autoremove -y
   sudo apt autoclean
-  zinit update --all --parallel
+  zinit update --all --parallel --no-pager
   vim -i NONE -c "PlugUpdate" -c "qa"
   $HOME/.tmux/plugins/tpm/bin/update_plugins all
   tmux source $HOME/.tmux.conf
