@@ -32,7 +32,7 @@ inoremap <silent> <buffer> . .<C-X><C-O>
 
 " The following commands are contextual, based on the cursor position.
 nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_go_to_definition)
-nmap <silent> <buffer> <Leader>D <Cmd>call RecycleVSplit()<CR><Plug>(omnisharp_go_to_definition)
+nmap <silent> <buffer> <Leader>D <Cmd>call tools#recycleVSplit()<CR><Plug>(omnisharp_go_to_definition)
 nmap <silent> <buffer> <Leader>i <Plug>(omnisharp_find_implementations)
 nmap <silent> <buffer> <Leader>I <Plug>(omnisharp_preview_implementation)
 nmap <silent> <buffer> <Leader>g <Plug>(omnisharp_find_type)
@@ -81,19 +81,6 @@ nnoremap <silent> <Leader>U :call tools#doc(unityUrl)<CR>
 
 " Rename without dialog - with cursor on the symbol to rename
 command! -nargs=1 R :call OmniSharp#actions#rename#To("<args>")
-
-" Create vertical split only if there are no windows to left or right to reuse
-function! RecycleVSplit()
-    if winnr() != winnr('l')
-        execute winnr('l') . 'wincmd q'
-        vsplit
-    elseif winnr() != winnr('h')
-        execute winnr('h') . 'wincmd q'
-        topleft vsplit
-    else
-        vsplit
-    endif
-endfunction
 
 function! ToggleExpressionBody()
     let l:line = getline('.')

@@ -63,3 +63,15 @@ function! tools#swapAroundWord(word)
     endif
 endfunction
 
+" Create vertical split only if there are no windows to left or right to reuse
+function! tools#recycleVSplit()
+    if winnr() != winnr('l')
+        execute winnr('l') . 'wincmd q'
+        vsplit
+    elseif winnr() != winnr('h')
+        execute winnr('h') . 'wincmd q'
+        topleft vsplit
+    else
+        vsplit
+    endif
+endfunction
