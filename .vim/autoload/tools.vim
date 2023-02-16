@@ -51,10 +51,23 @@ function! tools#synonyms(word)
     return l:grep . l:post_proc
 endfunction
 
+function! s:Or(...)
+    return join(map(copy(a:000), '"%(" .. v:val .. ")"'), '|')
+endfunction
+
 " Swap WORDS adjacent to entered word
 function! tools#swapAroundWord(word)
+    let l:paren = '\(.{-}\)'
+    let l:brack = '\[.{-1,}\]'
+    let l:quot = "'.{-}'"
+    let l:dquot = '".{-}"'
+    let l:float = '-?\d*\.\d+f?'
+    let l:int = '-?%(\d+_)*\d+%(u|l)?'
+    let l:iden = '\h\w*'
+    let l:chain = l:iden . '%(' . s:Or('\.' . l:iden, l:paren, l:brack) . ')*'
+
+    let l:mX = '(' . s:Or(l:chain, l:float, l:int, l:paren, l:quot, l:dquot) . ')'
     let l:m1 = '\v(.{-}\(?)'
-    let l:mX = '(\w*%(\(.*\))*)'
     let l:m3 = '(\s*\V' . a:word . '\v\s*)'
     let l:m5 = '(.*)'
     let l:m = matchlist(getline('.'), l:m1 . l:mX . l:m3 . l:mX . l:m5)
