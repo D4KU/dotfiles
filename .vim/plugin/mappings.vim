@@ -44,8 +44,6 @@ nnoremap <Leader>V i<CR><Esc>PkgJgJ
 " Paste without newline, remove indent whitespace
 nnoremap <Leader>v i<CR><Esc>l"_d0P"_d0kgJgJ
 
-nnoremap <Leader>S :<C-U>call tools#swapAroundWord('')<Left><Left>
-
 nnoremap ]{ <Cmd>call search('{', 'z')<CR>
 nnoremap [} <Cmd>call search('}', 'zb')<CR>
 

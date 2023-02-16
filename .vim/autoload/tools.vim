@@ -51,31 +51,6 @@ function! tools#synonyms(word)
     return l:grep . l:post_proc
 endfunction
 
-function! s:Or(...)
-    return join(map(copy(a:000), '"%(" .. v:val .. ")"'), '|')
-endfunction
-
-" Swap WORDS adjacent to entered word
-function! tools#swapAroundWord(word)
-    let l:paren = '\(.{-}\)'
-    let l:brack = '\[.{-1,}\]'
-    let l:quot = "'.{-}'"
-    let l:dquot = '".{-}"'
-    let l:float = '-?\d*\.\d+f?'
-    let l:int = '-?%(\d+_)*\d+%(u|l)?'
-    let l:iden = '\h\w*'
-    let l:chain = l:iden . '%(' . s:Or('\.' . l:iden, l:paren, l:brack) . ')*'
-
-    let l:mX = '(' . s:Or(l:chain, l:float, l:int, l:paren, l:quot, l:dquot) . ')'
-    let l:m1 = '\v(.{-}\(?)'
-    let l:m3 = '(\s*\V' . a:word . '\v\s*)'
-    let l:m5 = '(.*)'
-    let l:m = matchlist(getline('.'), l:m1 . l:mX . l:m3 . l:mX . l:m5)
-    if len(l:m) > 5
-        call setline('.', l:m[1] . l:m[4] . l:m[3] . l:m[2] . l:m[5])
-    endif
-endfunction
-
 " Create vertical split only if there are no windows to left or right to reuse
 function! tools#recycleVSplit()
     if winnr() != winnr('l')

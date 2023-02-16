@@ -216,6 +216,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             \   ['public', 'protected', 'private'],
             \ ]
 
+    " Swap operands of infix operators
+    Plug 'D4KU/vim-turnstile'
+        nnoremap <Leader>S :<C-U>call turnstile#turn('')<Left><Left>
+
     " Move around text-objects
     Plug 'D4KU/vim-pushover'
         let g:pushover_maps =
