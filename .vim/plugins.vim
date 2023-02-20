@@ -268,6 +268,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Surround anything with anything
     Plug 'tpope/vim-surround'
+        nmap <expr> <Leader>c '<Plug>Csurround' . getline('.')[col('.') - 1]
 
     " Exchange text
     Plug 'tommcdo/vim-exchange'
