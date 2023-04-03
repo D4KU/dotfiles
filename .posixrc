@@ -10,6 +10,19 @@ alias untar='tar -zxvf'
 alias exp='explorer.exe "$(wslpath -w "$PWD")"'
 alias groot='git rev-parse --show-toplevel'
 
+FZF_HI='highlight --force -O ansi {}'
+FZF_CD_HI='ls -A1p {}'
+
+# output the best fzf preview window position depending on current
+# tmux pane dimensions
+fzf_smart_preview_pos() {
+  local  width=$(tmux display-message -p '#{pane_width}')
+  local height=$(tmux display-message -p '#{pane_height}')
+
+  # landscape mode if width > 2 * height
+  [ $width -gt $((2 * $height)) ] && echo right || echo up
+}
+
 export BROWSER=firefox.exe
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -23,6 +36,13 @@ export FZF_DEFAULT_OPTS="
 --bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
 --bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
 --bind='alt-y:execute-silent(echo {} | clip.exe)'"
+export FZF_CTRL_T_OPTS="
+--height=~80%
+--preview='[ -d {} ] && ($FZF_CD_HI) || ($FZF_HI)'
+--preview-window=$(fzf_smart_preview_pos)"
+export FZF_ALT_C_OPTS="
+--preview='$FZF_CD_HI'
+--preview-window=$(fzf_smart_preview_pos)"
 
 GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
 export FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
@@ -43,7 +63,6 @@ SAVEHIST=5000
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 eval "$(thefuck --alias)"
-preview='highlight --force -O ansi {}'
 
 # option manual
 oman()
@@ -87,8 +106,8 @@ ra() {
 # Pass file list to fzf and execute command on selection
 _on_each() {
   local out=$(echo $1 | fzf --multi --exit-0 \
-    --preview=$preview \
     --expect=alt-d,enter \
+    --preview=$FZF_HI \
     --preview-window=$(fzf_smart_preview_pos) $2)
   local key=$(head -1 <<< $out)
   local selection=$(tail +2 <<< $out)
@@ -111,16 +130,15 @@ _on_each() {
 
 # Show grep results
 ff() {
-  if [ ! "$#" -gt 0 ]; then
+  if [ ! $# -gt 0 ]; then
     echo "Need a string to search for"
     return 1
   fi
 
-  local hi="$preview 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
-  _on_each \
-    "$(rg --files-with-matches --no-messages $@)" \
-    --preview=$hi \
-    vim -c "call search('\v$1', 'c')"
+  local hi="rg --colors 'match:bg:yellow' --pretty --context 10 ${@:1:$# -1} '${@: -1}'"
+  _on_each "$(rg --files-with-matches --no-messages $@)" \
+    --preview="$FZF_HI 2> /dev/null | $hi || $hi {}" \
+    vim -c "call search('\v$tail', 'c')"
 }
 
 # Find and replace recursively in files
@@ -234,14 +252,3 @@ d() {
     dirs -v | head -10
   fi
 }
-
-# output the best fzf preview window position depending on current
-# tmux pane dimensions
-fzf_smart_preview_pos() {
-  local  width=$(tmux display-message -p '#{pane_width}')
-  local height=$(tmux display-message -p '#{pane_height}')
-
-  # landscape mode if width > 2 * height
-  [ $width -gt $((2 * $height)) ] && echo right || echo up
-}
-
