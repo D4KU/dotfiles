@@ -208,13 +208,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Switch word under cursor if it matches a pattern
     Plug 'AndrewRadev/switch.vim'
         nmap gs <Plug>(Switch)
-        let g:switch_custom_definitions =
-            \ [
-            \   ['==', '>=', '<='],
-            \   ['and', 'or'],
-            \   ['int', 'float', 'bool'],
-            \   ['public', 'protected', 'private'],
-            \ ]
+        nmap gS <Plug>(SwitchReverse)
 
     " Swap operands of infix operators
     Plug 'D4KU/vim-turnstile'

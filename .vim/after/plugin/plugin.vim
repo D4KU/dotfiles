@@ -7,6 +7,15 @@
 "     \ },
 "     \ }))
 
+let g:switch_custom_definitions =
+    \ [
+    \   ['==', '>=', '<='],
+    \   switch#Words(['and', 'or']),
+    \   switch#Words(['int', 'float', 'bool']),
+    \   switch#Words(['public', 'internal', 'protected', 'private']),
+    \   switch#Words(['abstract', 'override', 'virtual']),
+    \ ]
+
 onoremap iI <Esc><Cmd>call <SID>Indent(v:operator)<CR>
 vnoremap iI <Esc><Cmd>call <SID>Indent('v')<CR>
 function! s:Indent(operator)
@@ -14,3 +23,15 @@ function! s:Indent(operator)
     execute 'normal ' . a:operator . 'ii'
     let g:indent_object_ignore_blank_line = 1
 endfunction
+" One impossible case: with the cursor on line a you can't select
+" lines a and b exclusively via this plugin
+" aaaaaa
+"   bbbb
+" cccccc
+
+" Delete annoying commands
+delcommand DisableStripWhitespaceOnSave
+delcommand EnableStripWhitespaceOnSave
+delcommand ToggleStripWhitespaceOnSave
+delcommand ToggleWhitespace
+delcommand StripWhitespaceOnChangedLines
