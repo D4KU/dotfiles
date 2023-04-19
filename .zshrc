@@ -7,48 +7,44 @@ echo -ne '\e[5 q'
 p10kip="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ -r "$p10kip" ]] && source "$p10kip"
 
-# Make autosuggestions work
-[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
-
-alias git='noglob git'
-alias -s {md,txt,json,cs,csv,cpp,h,vim,py}=vim
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushdtohome
-setopt pushdsilent
-setopt pushdminus
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt share_history
-
 source $HOME/.p10k.zsh
 source ${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.zsh
 
-omzs() {
-    echo OMZ::plugins/$1/$1.plugin.zsh
+async-init() {
+    # Make autosuggestions work
+    [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+        export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+
+    source $HOME/.posixrc
+    source $HOME/.fzf.zsh
+
+    # File types to open with vim without prefixing their path with vim
+    alias -s {md,txt,json,cs,csv,cpp,h,vim,py,zsh,sh}=vim
+
+    setopt auto_cd
+    setopt auto_pushd
+    setopt pushd_ignore_dups
+    setopt pushdtohome
+    setopt pushdsilent
+    setopt pushdminus
+    setopt hist_ignore_dups
+    setopt hist_ignore_space
+    setopt share_history
+
+    # Zle widgets
+    zle -N zle-line-init
+    zle -N zle-keymap-select
+    zle -N accept-line
+    zle -N yank-to-clipboard
+
+    bindkey -v
+    bindkey -M vicmd 'vy' yank-to-clipboard
+    bindkey -M visual '^Y' yank-to-clipboard
+    bindkey '^ ' forward-word
 }
 
-zi light romkatv/powerlevel10k
-zi light jeffreytse/zsh-vi-mode
-zi wait lucid light-mode for \
-    atinit". ~/.posixrc; . ~/.fzf.zsh" \
-    d4ku/f \
-    as"program" src"wd.plugin.zsh" \
-    mfaerevaag/wd \
-    atload"zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
-    atload"!_zsh_autosuggest_start; bindkey '^ ' forward-word" \
-    zsh-users/zsh-autosuggestions \
-    ver"gcfb" \
-    d4ku/forgit \
-    kazhala/dotbare \
-    peterhurford/git-it-on.zsh \
-    $(omzs command-not-found) \
-
+# Set beam cursor e.g. after exiting from vim
 zle-line-init() {
-    # Set beam cursor e.g. after exiting from vim
     echo -ne '\e[5 q'
 }
 
@@ -63,10 +59,27 @@ zle-keymap-select() {
     fi
 }
 
+# Execute command when enter is pressed on an empty line
 accept-line() {
     if [[ -z "$BUFFER" && "$CONTEXT" == start ]]; then
-	BUFFER="f 1"
+        zle fzf-file-widget
     fi
     zle .accept-line
 }
-zle -N accept-line
+
+yank-to-clipboard() {
+    zle vi-yank
+    echo "$CUTBUFFER" | clip.exe
+}
+
+zinit light romkatv/powerlevel10k
+zinit wait lucid light-mode for \
+    atload"zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+    atinit"async-init" \
+    atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+    ver"gcfb" \
+    d4ku/forgit \
+    kazhala/dotbare \
+    peterhurford/git-it-on.zsh
