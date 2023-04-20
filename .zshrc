@@ -32,14 +32,17 @@ async-init() {
     setopt share_history
 
     # Zle widgets
+    zle -N vi-yank
     zle -N zle-line-init
     zle -N zle-keymap-select
     zle -N accept-line
     zle -N yank-to-clipboard
+    zle -N up-directory
 
     bindkey -v
-    bindkey -M vicmd 'vy' yank-to-clipboard
+    bindkey -M vicmd '^Y' yank-to-clipboard
     bindkey -M visual '^Y' yank-to-clipboard
+    bindkey -M vicmd '^?' up-directory
     bindkey '^ ' forward-word
 }
 
@@ -65,6 +68,24 @@ accept-line() {
         zle fzf-file-widget
     fi
     zle .accept-line
+}
+
+up-directory() {
+    cd ..
+    local precmd
+    for precmd in $precmd_functions; do
+        $precmd
+    done
+    zle reset-prompt
+}
+
+# highlight yanked text
+vi-yank() {
+    zle .vi-yank
+    local rest=${BUFFER#*$CUTBUFFER}
+    local ende=$(( ${#BUFFER} - ${#rest} ))
+    local start=$(( $ende - ${#CUTBUFFER} ))
+    region_highlight=("$start $ende standout")
 }
 
 yank-to-clipboard() {
