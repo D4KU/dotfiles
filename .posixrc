@@ -1,81 +1,42 @@
 alias gp='git pull'
 alias gpr='git pull --recurse-submodules'
 alias gP='git push --recurse-submodules=check'
-alias gs='git status'
+alias gs='git status -s'
 alias gc='git commit -m'
 alias db=dotbare
-alias gn=geeknote
 alias ...='../..'
 alias untar='tar -zxvf'
-alias exp='explorer.exe "$(wslpath -w "$PWD")"'
 alias groot='git rev-parse --show-toplevel'
 
-FZF_HI='highlight --force -O ansi {}'
-FZF_CD_HI='ls -A1p {}'
-
-# output the best fzf preview window position depending on current
-# tmux pane dimensions
-fzf_smart_preview_pos() {
-  local  width=$(tmux display-message -p '#{pane_width}')
-  local height=$(tmux display-message -p '#{pane_height}')
-
-  # landscape mode if width > 2 * height
-  [ $width -gt $((2 * $height)) ] && echo right || echo up
-}
-
-export BROWSER=firefox.exe
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export VISUAL=vim
 export EDITOR="$VISUAL"
+export BROWSER=firefox.exe
 export XDG_DATA_HOME="$HOME/.local/share"
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
 export DISPLAY=localhost:0.0
-export FZF_DEFAULT_OPTS="
---cycle
---preview-window=border-none
---bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
---bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
---bind='alt-y:execute-silent(echo {} | clip.exe)'"
-export FZF_CTRL_T_OPTS="
---height=~80%
---preview='[ -d {} ] && ($FZF_CD_HI) || ($FZF_HI)'
---preview-window=$(fzf_smart_preview_pos)"
-export FZF_ALT_C_OPTS="
---preview='$FZF_CD_HI'
---preview-window=$(fzf_smart_preview_pos)"
 
-GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
-export FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
-export FORGIT_LOG_GRAPH_ENABLE=0
-export FORGIT_LOG_FZF_OPTS="
---bind='ctrl-e${GLO_SUBSTR}show | vim -R -)'
---bind='alt-c${GLO_SUBSTR}checkout 2> /tmp/glo)+reload(cat /tmp/glo)'"
-export FORGIT_COPY_CMD='clip.exe'
-
-KEYTIMEOUT=1
-HISTSIZE=25000
-SAVEHIST=5000
+export KEYTIMEOUT=1
+export HISTSIZE=25000
+export SAVEHIST=5000
 
 # disable scroll lock through ctrl-s
 # stty -ixon
 
-# Show when running in a shell spawned by ranger
+# eval "$(thefuck --alias)"
+
+[ -f ~/.fzfrc ] && source ~/.fzfrc
+
+# show when running in a shell spawned by ranger
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
-eval "$(thefuck --alias)"
-
-# option manual
-oman()
-{
-  man -P less\ -p\ \""  ${2}"\" ${1}
-}
-
 # execute the last command again and insert output into command line
-redo()
-{
-  print -z "$(fc -s -- -1)"
-}
+redo() { print -z "$(fc -s -- -1)" }
 
+# open Windows Explorer in working dir
+exp() { explorer.exe "$(wslpath -w "$PWD")" }
+
+# update everything
 up() {
   sudo apt-get update
   sudo apt-get upgrade -y
@@ -87,116 +48,40 @@ up() {
   tmux source $HOME/.tmux.conf
 }
 
-# Make dir and change to it
-mcd() {
-  mkdir -p "$1" && cd -P "$1"
-}
-
-# Cd via windows path
-wcd() {
-  cd "$(wslpath $1)"
-}
-
 # Move to dir where ranger exited
 ra() {
-  ranger --choosedir=$HOME/.local/share/ranger/dir
-  cd "$(cat $HOME/.local/share/ranger/dir)"
+  ranger --choosedir=$XDG_DATA_HOME/ranger/dir
+  cd "$(cat $XDG_DATA_HOME/ranger/dir)"
 }
 
-# Pass file list to fzf and execute command on selection
-_on_each() {
-  local out=$(echo $1 | fzf --multi --exit-0 \
-    --expect=alt-d,enter \
-    --preview=$FZF_HI \
-    --preview-window=$(fzf_smart_preview_pos) $2)
-  local key=$(head -1 <<< $out)
-  local selection=$(tail +2 <<< $out)
-  local files=()
-
-  while IFS= read -r file
-  do
-    files+=($file)
-  done <<< $selection
-
-  case $key in
-    alt-d)
-      cd "$(dirname ${files[-1]})"
-      ;;
-    enter)
-      ${@:3} ${files[@]}
-      ;;
-  esac
-}
-
-# Show grep results
-ff() {
-  if [ ! $# -gt 0 ]; then
-    echo "Need a string to search for"
+# look up options in manual
+oman() {
+  if [ -z "$2" ]; then
+    echo "Usage: $0 MANPAGE OPTION"
+    echo "Example: $0 git-add -u"
     return 1
   fi
 
-  local hi="rg --colors 'match:bg:yellow' --pretty --context 10 ${@:1:$# -1} '${@: -1}'"
-  _on_each "$(rg --files-with-matches --no-messages $@)" \
-    --preview="$FZF_HI 2> /dev/null | $hi || $hi {}" \
-    vim -c "call search('\v$tail', 'c')"
+  man -P less\ -p\ \""  ${2}"\" ${1}
 }
 
-# Find and replace recursively in files
+# find and replace recursively in files
 fr() {
+  if [ -z "$3" ]; then
+    echo "Usage: $0 PATTERN SUBSTITUTE FILENAMES"
+    return 1
+  fi
+
   find . -type f -name "$3" -print0 | xargs -0 sed -i '' -e "s/$1/$2/g"
-}
-
-######################## Tmux ########################
-# tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
-# `tm` will allow you to select your tmux session via fzf.
-# `tm irc` will attach to the irc session (if it exists), else it will create it.
-tm() {
-  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
-  if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1")
-    return
-  fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || echo "No sessions found"
-}
-
-# fs [FUZZY PATTERN] - Select selected tmux session
-#   - Bypass fuzzy finder if there's only one match (--select-1)
-#   - Exit if there's no match (--exit-0)
-fs() {
-  local session
-  session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --query="$1" --select-1 --exit-0) &&
-  tmux switch-client -t "$session"
-}
-
-# ftpane - switch pane (@george-b)
-ftpane() {
-  local panes current_window current_pane target target_window target_pane
-  panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
-  current_pane=$(tmux display-message -p '#I:#P')
-  current_window=$(tmux display-message -p '#I')
-
-  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
-
-  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
-  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
-
-  if [[ $current_window -eq $target_window ]]; then
-    tmux select-pane -t ${target_window}.${target_pane}
-  else
-    tmux select-pane -t ${target_window}.${target_pane} &&
-    tmux select-window -t $target_window
-  fi
-}
-
-# add file to gitignore
-agi() {
-  echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi)" \
-  >> "$(git rev-parse --show-toplevel)/.gitignore"
 }
 
 # warp url: open bookmarked url in browser
 wu() {
+  if [ -z "$1" ]; then
+    echo "Usage: $0 BOOKMARK"
+    return 1
+  fi
+
   local file="$HOME/urls"
   if [ $# -gt 0 ]; then
     $BROWSER $(sed -n "/^$1 /s/^$1 //p" "$file")
@@ -205,46 +90,13 @@ wu() {
   cat "$file"
 }
 
-######################## Fasd ########################
-# open best matched file using `fasd` if given argument,
-# filter output of `fasd` using `fzf` else
-v() {
-  if [ $# -gt 0 ]; then
-    fasd -f -e ${EDITOR:-vim} "$*"
-    return $?
-  fi
-  _on_each "$(fasd -Rfl)" "" ${EDITOR:-vim}
-}
-
-# open best matched dir using `fasd` if given argument,
-# filter output of `fasd` using `fzf` else
-z() {
-  local dir
-  if [ $# -gt 0 ]; then
-    dir=$(fasd -de 'printf %s' $*)
-  else
-    dir="$(fasd -Rdl "$1" | fzf --no-sort)"
-  fi
-  cd "${dir}"
-}
-
-# cd into directory of file chosen via fasd
-vz() {
-  local file
-  if [ $# -gt 0 ]; then
-    file=$(fasd -f "$*")
-  else
-    file="$(fasd -Rfl "$1" | fzf --no-sort)"
-  fi
-  cd "$(dirname "$file")"
-}
-
 ##################### Dirs ###########################
 for i in {1..9}
 do
   alias $i="cd -$i > /dev/null"
 done
 
+# print latest working dirs
 d() {
   if [[ -n $1 ]]; then
     dirs "$@"
@@ -252,3 +104,9 @@ d() {
     dirs -v | head -10
   fi
 }
+
+# make dir and change to it
+mcd() { mkdir -p "$1" && cd -P "$1" }
+
+# change to Windows path
+wcd() { cd "$(wslpath $1)" }

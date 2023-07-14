@@ -1,0 +1,193 @@
+FZF_HI='highlight --force -O ansi {}'
+FZF_CD_HI='ls -A1p {}'
+GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
+
+# output the best fzf preview window position depending on current
+# tmux pane dimensions
+_fzf_preview_pos() {
+  local  width=$(tmux display-message -p '#{pane_width}')
+  local height=$(tmux display-message -p '#{pane_height}')
+
+  # landscape mode if width > 2 * height
+  [ $width -gt $((2 * $height)) ] && echo right || echo up
+}
+
+export FZF_DEFAULT_OPTS="
+--cycle
+--reverse
+--height=~80%
+--preview-window=border-none,$(_fzf_preview_pos)
+--bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
+--bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
+--bind='alt-y:execute-silent(echo {} | clip.exe)'"
+
+export FZF_CTRL_T_OPTS="--preview='[ -d {} ] && $FZF_CD_HI || $FZF_HI'"
+export FZF_ALT_C_OPTS="--preview='$FZF_CD_HI'"
+
+export FORGIT_FZF_DEFAULT_OPTS="
+--preview-window=$(_fzf_preview_pos)
+--bind='alt-n:jump'"
+export FORGIT_COPY_CMD='clip.exe'
+
+export FORGIT_LOG_FZF_OPTS="
+--bind='ctrl-e${GLO_SUBSTR}show | vim -R -)'
+--bind='alt-c${GLO_SUBSTR}checkout 2> /tmp/glo)+reload(cat /tmp/glo)'"
+
+export DOTBARE_FZF_DEFAULT_OPTS="--reverse --height=80%"
+
+# pass file list to fzf and execute command on selection
+_fzf_on_each() {
+  local out=$(echo $1 | fzf --multi --exit-0 \
+    --expect=alt-d,enter \
+    --preview=$FZF_HI $2)
+  local key=$(head -1 <<< $out)
+  local selection=$(tail +2 <<< $out)
+  local files=()
+
+  while IFS= read -r file
+  do
+    files+=($file)
+  done <<< $selection
+
+  case $key in
+    alt-d)
+      cd "$(dirname ${files[-1]})"
+      ;;
+    enter)
+      ${@:3} ${files[@]}
+      ;;
+  esac
+}
+
+# show grep results
+ff() {
+  if [ -z "$1" ]; then
+    echo "Usage: $0 [ripgrep OPTIONS] PATTERN"
+    return 1
+  fi
+
+  local tail="${@: -1}"
+  local hi="rg --colors 'match:bg:yellow' --pretty --context 10 ${@:1:$# -1} '$tail'"
+  _fzf_on_each "$(rg --files-with-matches --no-messages $@)" \
+    --preview="$FZF_HI 2> /dev/null | $hi || $hi {}" \
+    vim -c "call search('\v$tail', 'c')"
+}
+
+# change to dir of file
+fd() {
+  cd "$(dirname "$(fzf --exit-0 --preview=$FZF_HI)")"
+}
+
+# add file to gitignore
+agi() {
+  echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi)" \
+  >> "$(git rev-parse --show-toplevel)/.gitignore"
+}
+
+# change to parent directory
+u() {
+  case $1 in
+    --help)
+      echo \
+"Usage: $0 [PATTERN]
+Move up to parent directory matching PATTERN.
+If passed nothing, the directory can be chosen via fzf.
+
+Patterns:
+  --help     Print this message and exit
+  [INTEGER]  Move up INTEGER directories
+  [WORD]     Move to closest parent directory beginning with WORD"
+      return
+      ;;
+    '')
+      # remove last path segment and push result on stack until only
+      # root dir '/' remains
+      local remain="$PWD"
+      while [[ -d $remain ]] && [[ $remain != '/' ]]
+      do
+        remain=$(dirname "$remain")
+        # the stack: a string with paths separated by newlines
+        local dirs="${dirs}\n${remain}"
+      done
+
+      # pipe stack to fzf
+      # the first entry is an empty line and needs removal
+      cd "$(echo $dirs | sed '/^$/d' | fzf)"
+      ;;
+    *[!0-9]*)
+      # not a pure number was passed
+      # find a dir in the current path beginning with the passed string
+      # and jump to it
+      cd "$(pwd | sed -r "s|(.*/$1[^/]*/).*|\1|")"
+      ;;
+    *)
+      # matched a number
+      # concatenate as many '../' as the passed number
+      cd $(printf "%0.0s../" $(seq 1 $1))
+      ;;
+  esac
+}
+
+######################## Fasd ########################
+# open best matched file using `fasd` if given argument,
+# filter output of `fasd` using `fzf` else
+v() {
+  if [ $# -gt 0 ]; then
+    fasd -f -e ${EDITOR:-vim} "$*"
+    return $?
+  fi
+  _fzf_on_each "$(fasd -Rfl)" --no-sort ${EDITOR:-vim}
+}
+
+# open best matched dir using `fasd` if given argument,
+# filter output of `fasd` using `fzf` else
+z() {
+  local dir
+  if [ $# -gt 0 ]; then
+    dir=$(fasd -de 'printf %s' $*)
+  else
+    dir="$(fasd -Rdl "$1" | fzf --no-sort --preview=$FZF_CD_HI)"
+  fi
+  cd "${dir}"
+}
+
+######################## Tmux ########################
+# tm - create new tmux session, or switch to existing one. Works from within tmux too.
+# `tm` will allow you to select your tmux session via fzf.
+# `tm irc` will attach to the irc session (if it exists), else it will create it.
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1")
+    return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || echo "No sessions found"
+}
+
+# fs [FUZZY PATTERN] - Select tmux session
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
+}
+
+# ftpane - switch pane
+ftpane() {
+  local panes current_window current_pane target target_window target_pane
+  panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
+  current_pane=$(tmux display-message -p '#I:#P')
+  current_window=$(tmux display-message -p '#I')
+
+  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m) || return
+
+  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
+  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+
+  if [[ $current_window -eq $target_window ]]; then
+    tmux select-pane -t ${target_window}.${target_pane}
+  else
+    tmux select-pane -t ${target_window}.${target_pane} &&
+    tmux select-window -t $target_window
+  fi
+}

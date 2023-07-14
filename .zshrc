@@ -20,6 +20,7 @@ async-init() {
 
     # File types to open with vim without prefixing their path with vim
     alias -s {md,txt,json,cs,csv,cpp,h,vim,py,zsh,sh}=vim
+    alias git='noglob git'
 
     setopt auto_cd
     setopt auto_pushd
