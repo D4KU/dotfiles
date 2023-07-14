@@ -21,8 +21,8 @@ command! -nargs=? V call fasd#v(<q-args>)
 " Slower but interactive version of fzf.vim's :Rg command
 command! -nargs=* -bang RG call fzf#rg(<q-args>, <bang>0)
 
-" Warp Directory integration
-command! -nargs=1 Wd call wd#cd(<f-args>)
+" Substitute x, y, or z in variable name with given string
+command! -nargs=1 Xs call setline('.', substitute(getline('.'), '\c\<[xyz]\|[xyz]\>', <f-args>, 'g'))
 
 " Add every opened file to fasd
 autocmd BufReadPost * silent call system('fasd -A '.expand('%'))

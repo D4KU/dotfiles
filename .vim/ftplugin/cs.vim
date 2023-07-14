@@ -49,7 +49,7 @@ imap <silent> <buffer> <C-X>h <Plug>(omnisharp_signature_help)
 
 " Find all code errors/warnings for the current solution and populate
 " the quickfix window
-nmap <silent> <buffer> <Leader>c <Plug>(omnisharp_global_code_check)
+nmap <silent> <buffer> <Leader>C <Plug>(omnisharp_global_code_check)
 nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
 
 " Navigate up and down by method/property/field

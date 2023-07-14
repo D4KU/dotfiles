@@ -121,6 +121,16 @@ private void OnGUI()
 }
 endsnippet
 
+snippet gui "Draw variable OnGUI()" b
+object draw;
+private void OnGUI()
+{
+    if (draw != null)
+        GUILayout.Label(draw.ToString());
+}
+endsnippet
+
+
 snippet [c "Context Menu" b
 [ContextMenu(nameof($0))
 endsnippet
