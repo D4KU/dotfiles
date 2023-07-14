@@ -11,7 +11,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p $HOME/.vim/spell
 
-ZINIT_HOME="${XDG_DATA_HOME:-u/.local/share}/zinit"
+ZINIT_HOME="${XDG_DATA_HOME:$HOME/.local/share}/zinit"
 mkdir -p "$ZINIT_HOME"
 git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
