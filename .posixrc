@@ -1,7 +1,7 @@
 alias gp='git pull'
 alias gpr='git pull --recurse-submodules'
 alias gP='git push --recurse-submodules=check'
-alias gs='git status -s'
+alias gS='git diff --name-status --cached'
 alias gc='git commit -m'
 alias db=dotbare
 alias ...='../..'
@@ -35,6 +35,16 @@ redo() { print -z "$(fc -s -- -1)" }
 
 # open Windows Explorer in working dir
 exp() { explorer.exe "$(wslpath -w "$PWD")" }
+
+# list files on one branch but not on another
+new-files() {
+  if [ -z "$2" ]; then
+    echo "Usage: $0 SOURCE_BRANCH TARGET_BRANCH"
+    return 1
+  fi
+
+  git diff-tree -r --diff-filter=D $1 $2
+}
 
 # update everything
 up() {

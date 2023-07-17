@@ -1,5 +1,6 @@
-FZF_HI='highlight --force -O ansi {}'
+FZF_F_HI='highlight --force -O ansi {}'
 FZF_CD_HI='ls -A1p {}'
+FZF_HI="[ -d {} ] && $FZF_CD_HI || $FZF_F_HI"
 GLO_SUBSTR=':execute(echo {} | grep -Eo "[a-f0-9]{7,}" | head -1 | xargs git '
 
 # output the best fzf preview window position depending on current
@@ -16,17 +17,15 @@ export FZF_DEFAULT_OPTS="
 --cycle
 --reverse
 --height=~80%
---preview-window=border-none,$(_fzf_preview_pos)
+--preview-window=border-none
 --bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
 --bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
 --bind='alt-y:execute-silent(echo {} | clip.exe)'"
 
-export FZF_CTRL_T_OPTS="--preview='[ -d {} ] && $FZF_CD_HI || $FZF_HI'"
+export FZF_CTRL_T_OPTS="--preview='$FZF_HI'"
 export FZF_ALT_C_OPTS="--preview='$FZF_CD_HI'"
 
-export FORGIT_FZF_DEFAULT_OPTS="
---preview-window=$(_fzf_preview_pos)
---bind='alt-n:jump'"
+export FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
 export FORGIT_COPY_CMD='clip.exe'
 
 export FORGIT_LOG_FZF_OPTS="
@@ -39,7 +38,8 @@ export DOTBARE_FZF_DEFAULT_OPTS="--reverse --height=80%"
 _fzf_on_each() {
   local out=$(echo $1 | fzf --multi --exit-0 \
     --expect=alt-d,enter \
-    --preview=$FZF_HI $2)
+    --preview-window=$(_fzf_preview_pos) \
+    --preview=$FZF_F_HI $2)
   local key=$(head -1 <<< $out)
   local selection=$(tail +2 <<< $out)
   local files=()
@@ -69,19 +69,28 @@ ff() {
   local tail="${@: -1}"
   local hi="rg --colors 'match:bg:yellow' --pretty --context 10 ${@:1:$# -1} '$tail'"
   _fzf_on_each "$(rg --files-with-matches --no-messages $@)" \
-    --preview="$FZF_HI 2> /dev/null | $hi || $hi {}" \
+    --preview="$FZF_F_HI 2> /dev/null | $hi || $hi {}" \
     vim -c "call search('\v$tail', 'c')"
 }
 
 # change to dir of file
 fd() {
-  cd "$(dirname "$(fzf --exit-0 --preview=$FZF_HI)")"
+  cd "$(dirname "$(fzf --exit-0 --preview=$FZF_F_HI --preview-window=$(_fzf_preview_pos) $@)")"
 }
 
 # add file to gitignore
 agi() {
-  echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi)" \
+  echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi --preview=$FZF_HI --preview-window=$(_fzf_preview_pos))" \
   >> "$(git rev-parse --show-toplevel)/.gitignore"
+}
+
+# git status with changing to file directory on enter
+gs() {
+  local a="awk '{print \$2;}'"
+  local hi='git diff --color=always -- "$(echo {} | '$a')"'
+  local out="$(git status --short | fzf --exit-0 --no-sort --height='80%' --preview="$hi" --preview-window=$(_fzf_preview_pos) $@)"
+  out="$(echo "$out" | awk '{print $2;}')"
+  cd "$(dirname "$out")"
 }
 
 # change to parent directory
@@ -146,7 +155,7 @@ z() {
   if [ $# -gt 0 ]; then
     dir=$(fasd -de 'printf %s' $*)
   else
-    dir="$(fasd -Rdl "$1" | fzf --no-sort --preview=$FZF_CD_HI)"
+    dir="$(fasd -Rdl "$1" | fzf --no-sort --preview=$FZF_CD_HI --preview-window=$(_fzf_preview_pos))"
   fi
   cd "${dir}"
 }
