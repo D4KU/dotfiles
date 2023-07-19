@@ -86,11 +86,16 @@ agi() {
 
 # git status with changing to file directory on enter
 gs() {
-  local a="awk '{print \$2;}'"
-  local hi='git diff --color=always -- "$(echo {} | '$a')"'
+  local a="awk '{\$1=\$1};1'"
+  local b="cut -d' ' -f2-"
+  local c="tr -d '\"'"
+  local d="awk '{print \$1}'"
+  local e='b=$([ "$(echo {} | cut -c1-1)" = " " ] && echo "" || echo "--cached")'
+  local hi='a=$(echo {} | '$a' | '$b' | '$c'); '$e'; [ $(echo {} | '$d') = "??" ] && highlight --force -O ansi $a || git diff --color=always $b -- $a'
+  echo $hi
   local out="$(git status --short | fzf --exit-0 --no-sort --height='80%' --preview="$hi" --preview-window=$(_fzf_preview_pos) $@)"
-  out="$(echo "$out" | awk '{print $2;}')"
-  cd "$(dirname "$out")"
+  local f="echo '$out' | $a | $b | $c"
+  cd "$(dirname "$(eval $f)")"
 }
 
 # change to parent directory
