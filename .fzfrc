@@ -84,18 +84,46 @@ agi() {
   >> "$(git rev-parse --show-toplevel)/.gitignore"
 }
 
+# print all fields piped in, except the first
+# $ echo a "b c" | skipf
+# $ b c
+skipf() { awk '{$1=$1};1' | cut -d ' ' -f2- | tr -d \" }
+
+# highlight command for 'gs'
+_gshi() {
+  local a=$(echo $1 | skipf)
+
+  if [ -d "$a" ]; then
+    ls -A1p "$a"
+    return
+  fi
+
+  if [ $(echo $1 | awk '{print $1}') = '??' ]; then
+    git diff --color=always --no-index -- /dev/null "$a"
+    return
+  fi
+
+  if [ ! "$(echo $1 | cut -c1-1)" = ' ' ]; then
+    local b='--cached'
+  fi
+  git diff --color=always $b -- "$a"
+}
+
 # git status with changing to file directory on enter
 gs() {
-  local a="awk '{\$1=\$1};1'"
-  local b="cut -d' ' -f2-"
-  local c="tr -d '\"'"
-  local d="awk '{print \$1}'"
-  local e='b=$([ "$(echo {} | cut -c1-1)" = " " ] && echo "" || echo "--cached")'
-  local hi='a=$(echo {} | '$a' | '$b' | '$c'); '$e'; [ $(echo {} | '$d') = "??" ] && highlight --force -O ansi $a || git diff --color=always $b -- $a'
-  echo $hi
-  local out="$(git status --short | fzf --exit-0 --no-sort --height='80%' --preview="$hi" --preview-window=$(_fzf_preview_pos) $@)"
-  local f="echo '$out' | $a | $b | $c"
-  cd "$(dirname "$(eval $f)")"
+  local out=$(git -c color.status=always -c status.relativePaths=true \
+    status --short $(echo $1) \
+    | fzf --exit-0 --ansi --no-sort \
+    --height='80%' \
+    --preview="$(where skipf _gshi); _gshi {}" \
+    --preview-window=$(_fzf_preview_pos) ${@:2} \
+    | skipf)
+
+  if [ -d "$out" ]; then
+    cd "$out"
+  else
+    cd "$(dirname "$out")"
+  fi
 }
 
 # change to parent directory
