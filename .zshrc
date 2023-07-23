@@ -94,6 +94,9 @@ yank-to-clipboard() {
     echo "$CUTBUFFER" | clip.exe
 }
 
+# execute the last command again and insert output into command line
+redo() { print -z "$(fc -s -- -1)" }
+
 zinit light romkatv/powerlevel10k
 zinit wait lucid light-mode for \
     atload"zicompinit; zicdreplay" \

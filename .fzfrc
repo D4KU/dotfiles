@@ -73,11 +73,6 @@ ff() {
     vim -c "call search('\v$tail', 'c')"
 }
 
-# change to dir of file
-fd() {
-  cd "$(dirname "$(fzf --exit-0 --preview=$FZF_F_HI --preview-window=$(_fzf_preview_pos) $@)")"
-}
-
 # add file to gitignore
 agi() {
   echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi --preview=$FZF_HI --preview-window=$(_fzf_preview_pos))" \
@@ -86,12 +81,12 @@ agi() {
 
 # print all fields piped in, except the first
 # $ echo a "b c" | skipf
-# $ b c
-skipf() { awk '{$1=$1};1' | cut -d ' ' -f2- | tr -d \" }
+# $ "b c"
+skipf() { awk '{$1=$1};1' | cut -d ' ' -f2- }
 
 # highlight command for 'gs'
 _gshi() {
-  local a=$(echo $1 | skipf)
+  local a=$(echo $1 | skipf | tr -d \")
 
   if [ -d "$a" ]; then
     ls -A1p "$a"
@@ -109,21 +104,16 @@ _gshi() {
   git diff --color=always $b -- "$a"
 }
 
-# git status with changing to file directory on enter
+# git status with printing to command line on enter
 gs() {
-  local out=$(git -c color.status=always -c status.relativePaths=true \
+  print -z $(git -c color.status=always -c status.relativePaths=true \
     status --short $(echo $1) \
-    | fzf --exit-0 --ansi --no-sort \
+    | sort -ibr \
+    | fzf --exit-0 --ansi \
     --height='80%' \
     --preview="$(where skipf _gshi); _gshi {}" \
     --preview-window=$(_fzf_preview_pos) ${@:2} \
     | skipf)
-
-  if [ -d "$out" ]; then
-    cd "$out"
-  else
-    cd "$(dirname "$out")"
-  fi
 }
 
 # change to parent directory
