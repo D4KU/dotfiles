@@ -4,7 +4,7 @@ Install via the following commands:
 ```
 sudo add-apt-repository ppa:jonathonf/vim
 sudo apt-get update
-sudo apt-get install vim zsh ripgrep fasd python3-pip highlight unzip -y
+sudo apt-get install vim zsh ripgrep fd-find fasd python3-pip highlight unzip -y
 pip install ranger-fm thefuck grip tldr
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
