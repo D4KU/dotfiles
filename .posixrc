@@ -32,10 +32,10 @@ if [ -n "$RANGER_LEVEL" ]; then export PS1="[r]$PS1"; fi
 
 # cd override that moves to a file's dir when a file path is passed
 cd() {
-  if [ -d "${@: -1}" ]; then
-    builtin cd $@
-  else
+  if [ -f "${@: -1}" ]; then
     builtin cd ${@:2:$# -1} "$(dirname "${@: -1}")"
+  else
+    builtin cd $@
   fi
 }
 
@@ -66,8 +66,8 @@ up() {
 
 # Move to dir where ranger exited
 ra() {
-  ranger --choosedir=$XDG_DATA_HOME/ranger/dir
-  cd "$(cat $XDG_DATA_HOME/ranger/dir)"
+  ranger $@ --choosedir=$XDG_DATA_HOME/ranger/dir
+  builtin cd "$(cat $XDG_DATA_HOME/ranger/dir)"
 }
 
 # look up options in manual
@@ -109,7 +109,7 @@ wu() {
 ##################### Dirs ###########################
 for i in {1..9}
 do
-  alias $i="cd -$i > /dev/null"
+  alias $i="builtin cd -$i > /dev/null"
 done
 
 # print latest working dirs
