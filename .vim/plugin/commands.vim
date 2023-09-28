@@ -19,7 +19,7 @@ command! -nargs=? Z call fasd#z(<q-args>)
 command! -nargs=? V call fasd#v(<q-args>)
 
 " Slower but interactive version of fzf.vim's :Rg command
-command! -nargs=* -bang RG call fzf#rg(<q-args>, <bang>0)
+" command! -nargs=* -bang RG call fzf#rg(<q-args>, <bang>0)
 
 " Substitute x, y, or z in variable name with given string
 command! -nargs=1 Xs call setline('.', substitute(getline('.'), '\c\<[xyz]\|[xyz]\>', <f-args>, 'g'))
@@ -31,7 +31,7 @@ autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
 augroup VerticalScratch
   autocmd!
   autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
-  autocmd BufEnter * if &previewwindow | wincmd L | endif
+  " autocmd BufEnter * if &previewwindow | wincmd L | endif
 augroup END
 
 " Apply overrides to often-used color schemes

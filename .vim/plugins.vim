@@ -556,13 +556,14 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
         function! BuildYCM(info)
             if a:info.status == 'installed' || a:info.force
-                !python ./install.py --clangd-completer
+                !python3 ./install.py --clangd-completer
             endif
         endfunction
     Plug 'ycm-core/YouCompleteMe', {
         \   'for': ['python', 'c'],
         \   'do': function('BuildYCM')
         \   }
+        let g:ycm_autoclose_preview_window_after_insertion = 1
         let g:ycm_always_populate_location_list = 1
         let g:ycm_auto_hover = ''
         let g:syntastic_enable_signs = 0
