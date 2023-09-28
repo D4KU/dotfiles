@@ -22,7 +22,7 @@ export FZF_DEFAULT_OPTS="
 --bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
 --bind='alt-y:execute-silent(echo {} | clip.exe)'"
 
-export FZF_CTRL_T_COMMAND='fdfind --type file | cut -c 3-'
+export FZF_CTRL_T_COMMAND='fdfind --type file'
 export FZF_CTRL_T_OPTS="--preview='$FZF_HI'"
 export FZF_ALT_C_OPTS="--preview='$FZF_CD_HI'"
 
