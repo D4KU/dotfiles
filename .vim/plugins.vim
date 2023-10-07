@@ -478,8 +478,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Completion for cmake
     Plug 'huleiak47/vim-cmake-complete', { 'for': 'cmake' }
 
-    " Linting and completion
-    Plug 'dense-analysis/ale', { 'for': 'cs' }
+    " Linting
+    Plug 'dense-analysis/ale', { 'for': ['cs', 'python'] }
         nmap gl <Plug>(ale_lint)
         nmap zh <Plug>(ale_previous_wrap)
         nmap zl <Plug>(ale_next_wrap)
@@ -564,7 +564,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         \   'do': function('BuildYCM')
         \   }
         let g:ycm_autoclose_preview_window_after_insertion = 1
-        let g:ycm_always_populate_location_list = 1
+        " let g:ycm_always_populate_location_list = 1
         let g:ycm_auto_hover = ''
         let g:syntastic_enable_signs = 0
 
@@ -576,8 +576,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             nnoremap <Leader>x <Cmd>YcmCompleter FixIt<CR>
             nnoremap <Leader>g :YcmCompleter GoToSymbol <C-R><C-W>
             nnoremap <F2> :YcmCompleter RefactorRename <C-R><C-W>
-            nnoremap zh <Cmd>lprevious<CR>
-            nnoremap zl <Cmd>lnext<CR>
+            " nnoremap zh <Cmd>lprevious<CR>
+            " nnoremap zl <Cmd>lnext<CR>
         endfunction
 
     " =========================== Writing prose ==============================
