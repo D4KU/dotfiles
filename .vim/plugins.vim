@@ -331,10 +331,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nmap >, <Plug>Argumentative_MoveRight
 
     " Text object for chained member access
-    Plug 'D4KU/vim-textobj-chainmember', { 'for': ['c', 'cs', 'cuda', 'python'] }
+    Plug 'D4KU/vim-textobj-chainmember', { 'for': ['c', 'cpp', 'cs', 'cuda', 'python'] }
 
     " Text object for C-like if, while, function, class, ...
-    Plug 'D4KU/vim-textobj-headedblock', { 'for': ['c', 'cs', 'cuda', 'hlsl', 'glsl'] }
+    Plug 'D4KU/vim-textobj-headedblock', { 'for': ['c', 'cpp', 'cs', 'cuda', 'hlsl', 'glsl'] }
 
     " Copy text to windows clipboard
     Plug 'kana/vim-fakeclip'
@@ -406,8 +406,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         let g:formatdef_cs = 'clang-format -style=file'
         let g:formatters_cs = ['clangformat']
         let g:autoformat_verbosemode=1
-        nnoremap gL :<C-U>AutoformatLine<CR>
-        vnoremap gL :<C-U>'<,'>AutoformatLine<CR>
+        nnoremap g= :<C-U>AutoformatLine<CR>
+        vnoremap g= :<C-U>'<,'>AutoformatLine<CR>
 
     " Many more text objects
     Plug 'wellle/targets.vim'
@@ -481,6 +481,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Linting
     Plug 'dense-analysis/ale', { 'for': ['cs', 'python'] }
         nmap gl <Plug>(ale_lint)
+        nmap gL <Plug>(ale_fix)
         nmap zh <Plug>(ale_previous_wrap)
         nmap zl <Plug>(ale_next_wrap)
         nmap zH <Plug>(ale_first)
@@ -508,9 +509,12 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Template texts to insert automatically
     Plug 'honza/vim-snippets'
-
     Plug 'mathijs-bakker/vim-unity-snippets', { 'for': 'cs' }
         let g:UltiSnipsSnippetDirectories=['UltiSnips', 'UnitySnippets']
+
+    " Auto-generate tags
+    Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
+        let g:gutentags_modules = ['ctags', 'cscope']
 
     " Show 'Code Actions available' icon
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
@@ -552,7 +556,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nmap <expr> <Down>  &diff? ']czz' : '<Down>'
 
     " See command line output inside vim
-    Plug 'tpope/vim-dispatch'
+    " Plug 'tpope/vim-dispatch'
+
+    " Switch between source and header files
+    Plug 'vim-scripts/a.vim', { 'for': ['c', 'cpp'], 'on': 'A' }
 
         function! BuildYCM(info)
             if a:info.status == 'installed' || a:info.force
@@ -560,7 +567,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
             endif
         endfunction
     Plug 'ycm-core/YouCompleteMe', {
-        \   'for': ['python', 'c'],
+        \   'for': ['python', 'c', 'cpp'],
         \   'do': function('BuildYCM')
         \   }
         let g:ycm_autoclose_preview_window_after_insertion = 1
