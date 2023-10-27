@@ -7,31 +7,37 @@
 "     \ },
 "     \ }))
 
-let g:switch_custom_definitions =
-    \ [
-    \   ['==', '>=', '<='],
-    \   switch#Words(['and', 'or']),
-    \   switch#Words(['int', 'float', 'bool']),
-    \   switch#Words(['public', 'internal', 'protected', 'private']),
-    \   switch#Words(['abstract', 'override', 'virtual']),
-    \ ]
+if exists("g:loaded_switch")
+    let g:switch_custom_definitions =
+        \ [
+        \   ['==', '>=', '<='],
+        \   switch#Words(['and', 'or']),
+        \   switch#Words(['int', 'float', 'bool']),
+        \   switch#Words(['public', 'internal', 'protected', 'private']),
+        \   switch#Words(['abstract', 'override', 'virtual']),
+        \ ]
+endif
 
-onoremap iI <Esc><Cmd>call <SID>Indent(v:operator)<CR>
-vnoremap iI <Esc><Cmd>call <SID>Indent('v')<CR>
-function! s:Indent(operator)
-    let g:indent_object_ignore_blank_line = 0
-    execute 'normal ' . a:operator . 'ii'
-    let g:indent_object_ignore_blank_line = 1
-endfunction
-" One impossible case: with the cursor on line a you can't select
-" lines a and b exclusively via this plugin
-" aaaaaa
-"   bbbb
-" cccccc
+if exists("g:indent_object_ignore_blank_line")
+    onoremap iI <Esc><Cmd>call <SID>Indent(v:operator)<CR>
+    vnoremap iI <Esc><Cmd>call <SID>Indent('v')<CR>
+    function! s:Indent(operator)
+        let g:indent_object_ignore_blank_line = 0
+        execute 'normal ' . a:operator . 'ii'
+        let g:indent_object_ignore_blank_line = 1
+    endfunction
+    " One impossible case: with the cursor on line a you can't select
+    " lines a and b exclusively via this plugin
+    " aaaaaa
+    "   bbbb
+    " cccccc
+endif
 
-" Delete annoying commands
-delcommand DisableStripWhitespaceOnSave
-delcommand EnableStripWhitespaceOnSave
-delcommand ToggleStripWhitespaceOnSave
-delcommand ToggleWhitespace
-delcommand StripWhitespaceOnChangedLines
+if exists('g:loaded_better_whitespace_plugin')
+    " Delete annoying commands
+    delcommand DisableStripWhitespaceOnSave
+    delcommand EnableStripWhitespaceOnSave
+    delcommand ToggleStripWhitespaceOnSave
+    delcommand ToggleWhitespace
+    delcommand StripWhitespaceOnChangedLines
+endif

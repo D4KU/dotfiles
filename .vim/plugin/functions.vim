@@ -79,7 +79,9 @@ function! LargeFile(fname)
     if getfsize(a:fname) >= 100000
         let g:OmniSharp_highlighting = 1
         set nowrap
-        DisableWhitespace
+        if (":DisableWhitespace")
+            DisableWhitespace
+        endif
         call RemoveCursorMatch()
 
         augroup WSLCursorFix
@@ -88,7 +90,9 @@ function! LargeFile(fname)
     else
         let g:OmniSharp_highlighting = 3
         set wrap
-        EnableWhitespace
+        if (":EnableWhitespace")
+            EnableWhitespace
+        endif
         call AddCursorMatch()
 
         " Overwrite windows terminal's cursor style
