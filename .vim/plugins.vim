@@ -162,8 +162,24 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
                         \          call context#update('OptionSet')
         augroup END
 
+        function! InstallMinimap(info)
+            let l:url = 'https://api.github.com/repos/wfxr/code-minimap/releases/latest'
+            let l:pat = 'browser_download_url.*amd64.deb'
+            let l:trg = '~/.vim/minimap.deb'
+            let l:deb = trim(system('curl -s ' . l:url .
+                \ " | grep -o '" . l:pat . "' | grep -v musl | cut -c 25-"))
+
+            echowindow 'Downloading ' . l:deb . ' to ' . l:trg
+            call system('wget -nv -O ' . l:trg . ' ' . l:deb)
+            let l:dpkg = system('sudo dpkg --install ' . l:trg)
+            call system('rm ' . l:trg)
+
+            for line in l:dpkg->split('\n')
+                echowindow line
+            endfor
+        endfunction
     " File overview as scrollbar
-    Plug 'wfxr/minimap.vim', { 'on': 'MinimapToggle' }
+    Plug 'wfxr/minimap.vim', { 'on': 'MinimapToggle', 'do': function('InstallMinimap') }
         let g:minimap_base_highlight = 'Comment'
         let g:minimap_cursor_color = 'IlluminatedWord'
         let g:minimap_search_color = 'Pmenu'
