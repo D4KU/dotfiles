@@ -204,6 +204,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         " Jump over these signs:
         let g:wordmotion_prefix = '<Leader>'
         let g:wordmotion_spaces = '_-./\(\)\[\]'
+        let g:wordmotion_mappings =  { '<C-R><C-W>': '<C-R><C-I>' }
 
     " Vim motions on speed
     Plug 'easymotion/vim-easymotion'
@@ -530,7 +531,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Auto-generate tags
     Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
-        let g:gutentags_modules = ['ctags', 'cscope']
+        " let g:gutentags_modules = ['ctags', 'cscope']
 
     " Show 'Code Actions available' icon
     " Plug 'nickspoons/vim-sharpenup', { 'for': 'cs' }
@@ -575,7 +576,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Plug 'tpope/vim-dispatch'
 
     " Switch between source and header files
-    Plug 'vim-scripts/a.vim', { 'for': ['c', 'cpp'], 'on': 'A' }
+    Plug 'nacitar/a.vim', { 'for': ['c', 'cpp'], 'on': 'A' }
 
         function! BuildYCM(info)
             if a:info.status == 'installed' || a:info.force
