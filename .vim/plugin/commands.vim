@@ -24,6 +24,10 @@ command! -nargs=? V call fasd#v(<q-args>)
 " Substitute x, y, or z in variable name with given string
 command! -nargs=1 Xs call setline('.', substitute(getline('.'), '\c\<[xyz]\|[xyz]\>', <f-args>, 'g'))
 
+" Insert line number
+command! -nargs=* -range Ln call feedkeys(":<line1>,<line2>s/<args>/\\=printf('%04d',
+        \ line('.'))<C-Left><Left><Left><left><Left><Left><Left><Left>", 'n')
+
 " Add every opened file to fasd
 autocmd BufReadPost * silent call system('fasd -A '.expand('%'))
 

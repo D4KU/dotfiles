@@ -62,5 +62,3 @@ inoremap <C-X>z <C-G>u<Esc>[s1z=`]a<C-G>u
 nnoremap <Leader>n 76\|Bi"<CR>"<Esc>
 nnoremap <Leader>N 74\|Bi" +<CR>"<Esc>
 nnoremap <Leader>J JF"df"
-
-nnoremap <Leader>X :<C-U>call tools#substituteXYZ('')<Left><Left>
