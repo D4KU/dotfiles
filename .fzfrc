@@ -20,7 +20,7 @@ export FZF_DEFAULT_OPTS="
 --preview-window=border-none
 --bind='alt-q:cancel,alt-a:select-all,alt-x:deselect-all,alt-m:replace-query'
 --bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
---bind='alt-y:execute-silent(echo {} | clip.exe)'"
+--bind='alt-y:execute-silent(clip.exe <<< {})'"
 
 export FZF_CTRL_T_COMMAND='fdfind --type file'
 export FZF_CTRL_T_OPTS="--preview='$FZF_HI'"
@@ -37,10 +37,9 @@ export DOTBARE_FZF_DEFAULT_OPTS="--reverse --height=80%"
 
 # pass file list to fzf and execute command on selection
 _fzf_on_each() {
-  local out=$(echo $1 | fzf --multi --exit-0 \
-    --expect=alt-d,enter \
-    --preview-window=$(_fzf_preview_pos) \
-    --preview=$FZF_F_HI $2)
+  [ -z "$1" ] && return
+  local out=$(fzf --multi --expect=alt-d,enter --preview=$FZF_F_HI \
+   --preview-window=$(_fzf_preview_pos) $2 <<< $1)
   local key=$(head -1 <<< $out)
   local selection=$(tail +2 <<< $out)
   local files=()
@@ -76,7 +75,8 @@ ff() {
 
 # add file to gitignore
 agi() {
-  echo "$(git ls-tree HEAD --name-only --full-name $@ | fzf --multi --preview=$FZF_HI --preview-window=$(_fzf_preview_pos))" \
+  echo $(git ls-tree HEAD --name-only --full-name $@ | \
+    fzf --exit-0 --multi --preview=$FZF_HI --preview-window=$(_fzf_preview_pos)) \
   >> "$(git rev-parse --show-toplevel)/.gitignore"
 }
 
@@ -87,19 +87,19 @@ skipf() { awk '{$1=$1};1' | cut -d ' ' -f2- }
 
 # highlight command for 'gs'
 _gshi() {
-  local a=$(echo $1 | skipf | tr -d \")
+  local a=$(skipf <<< $1 | tr -d \")
 
   if [ -d "$a" ]; then
     ls -A1p "$a"
     return
   fi
 
-  if [ $(echo $1 | awk '{print $1}') = '??' ]; then
+  if [ $(awk '{print $1}' <<< $1) = '??' ]; then
     git diff --color=always --no-index -- /dev/null "$a"
     return
   fi
 
-  if [ ! "$(echo $1 | cut -c1-1)" = ' ' ]; then
+  if [ ! "$(cut -c1-1 <<< $1)" = ' ' ]; then
     local b='--cached'
   fi
   git diff --color=always $b -- "$a"
@@ -108,7 +108,7 @@ _gshi() {
 # git status with printing to command line on enter
 gs() {
   print -z $(git -c color.status=always -c status.relativePaths=true \
-    status --short $(echo $1) \
+    status --short $1 \
     | sort -ibr \
     | fzf --exit-0 --ansi \
     --height='80%' \
@@ -145,7 +145,7 @@ Patterns:
 
       # pipe stack to fzf
       # the first entry is an empty line and needs removal
-      cd "$(echo $dirs | sed '/^$/d' | fzf)"
+      cd "$(sed '/^$/d' <<< $dirs | fzf)"
       ;;
     *[!0-9]*)
       # not a pure number was passed
@@ -194,28 +194,21 @@ tm() {
     tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1")
     return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || echo "No sessions found"
-}
-
-# fs [FUZZY PATTERN] - Select tmux session
-fs() {
-  local session
-  session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --query="$1" --select-1 --exit-0) &&
-  tmux switch-client -t "$session"
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) \
+    && tmux $change -t "$session" || echo "No sessions found"
 }
 
 # ftpane - switch pane
-ftpane() {
+tp() {
   local panes current_window current_pane target target_window target_pane
   panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
   current_pane=$(tmux display-message -p '#I:#P')
   current_window=$(tmux display-message -p '#I')
 
-  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m) || return
+  target=$(grep -v "$current_pane" <<< $panes | fzf +m) || return
 
-  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
-  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+  target_window=$(awk 'BEGIN{FS=":|-"} {print$1}' <<< $target)
+  target_pane=$(awk 'BEGIN{FS=":|-"} {print$2}' <<< $target | cut -c 1)
 
   if [[ $current_window -eq $target_window ]]; then
     tmux select-pane -t ${target_window}.${target_pane}

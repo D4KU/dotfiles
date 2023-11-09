@@ -13,7 +13,7 @@ source ${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.zsh
 async-init() {
     # Make autosuggestions work
     [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-        export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+    export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
     source $HOME/.posixrc
     source $HOME/.fzf.zsh
@@ -40,10 +40,10 @@ async-init() {
     zle -N yank-to-clipboard
     zle -N up-directory
 
-    bindkey -v
-    bindkey -M vicmd '^Y' yank-to-clipboard
+    bindkey -v '^?' backward-delete-char
+    bindkey -a '^?' up-directory
+    bindkey -a '^Y' yank-to-clipboard
     bindkey -M visual '^Y' yank-to-clipboard
-    bindkey -M vicmd '^?' up-directory
     bindkey '^ ' forward-word
 }
 
@@ -91,11 +91,22 @@ vi-yank() {
 
 yank-to-clipboard() {
     zle vi-yank
-    echo "$CUTBUFFER" | clip.exe
+    clip.exe <<< $CUTBUFFER
 }
 
-# execute the last command again and insert output into command line
-redo() { print -z "$(fc -s -- -1)" }
+# get n-th last tmux output
+tl() {
+    ${IFS+"false"} && unset oldifs || oldifs="$IFS"
+    IFS=$'»' raw=($(tmux capture-pane -p | sed "s/^».*/$IFS/"))
+    ${oldifs+"false"} && unset IFS || IFS="$oldifs"
+
+    local filt=()
+    for i in "${raw[@]}"; do
+        [[ "$i" =~ "\S" ]] && filt+=($i)
+    done
+
+    print -z "$(head -n -1 <<< ${filt[-${1:-1}]} | tail +2)"
+}
 
 zinit light romkatv/powerlevel10k
 zinit wait lucid light-mode for \
