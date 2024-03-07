@@ -32,6 +32,8 @@ async-init() {
     setopt hist_ignore_space
     setopt share_history
 
+    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
     # Zle widgets
     zle -N vi-yank
     zle -N zle-line-init

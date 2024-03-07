@@ -91,6 +91,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " Preview registers
     Plug 'junegunn/vim-peekaboo'
         let g:peekaboo_window = 'vertical botright 90new'
+        " Because insert mapping kills visual block insert:
+        let g:peekaboo_ins_prefix = "<C-X>"
 
     " Show marks on left border
     " Plug 'kshenoy/vim-signature'
@@ -338,7 +340,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         vnoremap pp p
 
     " Sub-clause / function argument text object
-    Plug 'baabelfish/vim-argumentative'
+    Plug 'D4KU/vim-argumentative'
         let g:argumentative_no_mappings = 1
         nmap [, <Plug>Argumentative_Prev
         nmap ], <Plug>Argumentative_Next
@@ -419,7 +421,10 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         let g:pear_tree_smart_openers = 1
         let g:pear_tree_smart_closers = 1
 
-    Plug 'vim-autoformat/vim-autoformat', { 'for': 'cs', 'on': 'AutoformatLine' }
+    Plug 'vim-autoformat/vim-autoformat', {
+            \ 'for': ['c', 'cpp', 'cs'],
+            \ 'on': 'AutoformatLine'
+            \ }
         let g:formatdef_cs = 'clang-format -style=file'
         let g:formatters_cs = ['clangformat']
         let g:autoformat_verbosemode=1

@@ -39,6 +39,18 @@ cd() {
   fi
 }
 
+# mount Windows drive into WSL
+dmnt() {
+  if [ -z "$1" ]; then
+    echo "Usage: $0 DRIVE_LETTER_LOWER_CASE"
+    return 1
+  fi
+
+  sudo mkdir -p /mnt/$1
+  echo mount -t drvfs ${1:u}: /mnt/$1
+  sudo mount -t drvfs ${1:u}: /mnt/$1
+}
+
 # open Windows Explorer in working dir
 exp() { explorer.exe "$(wslpath -w "$PWD")" }
 
