@@ -263,3 +263,36 @@ class mnt(Command):
         drive = self.fm.thisdir.path[-1]
         cmd = "sudo mount -t drvfs " + drive.upper() + ": /mnt/" + drive
         self.fm.execute_command(cmd)
+
+
+# Abstraction of move_parent action with an arbitrary parent level
+class move_anchestor(Command):
+    def execute(self):
+        try:
+            m = int(self.arg(1)) # how many levels up to move
+            n = int(self.arg(2)) # move forward or backward
+        except ValueError:
+            self.fm.notify(f"{self.arg(0)} LVLS_UP STEPS", bad=True)
+            return
+
+        target = self.fm.thistab.at_level(-m)
+        if target is None:
+            return
+
+        # wrap around side movement
+        if target.pointer < -n:
+            n = -target.pointer
+
+        try:
+            # move root sideways to new root
+            target = target.files[target.pointer + n]
+
+            # take same path from new root that we had from old root
+            for i in range(m - 1, 0, -1):
+                parent = self.fm.thistab.at_level(-i)
+                target.load_content_if_outdated(schedule=False)
+                target = target.files[parent.pointer]
+        except IndexError:
+            return
+
+        self.fm.thistab.enter_dir(target)
