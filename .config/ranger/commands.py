@@ -289,6 +289,8 @@ class move_anchestor(Command):
 
             # take same path from new root that we had from old root
             for i in range(m - 1, 0, -1):
+                if not target.is_directory:
+                    break
                 parent = self.fm.thistab.at_level(-i)
                 target.load_content_if_outdated(schedule=False)
                 target = target.files[parent.pointer]

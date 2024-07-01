@@ -14,11 +14,15 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'junegunn/fzf.vim'
         let g:fzf_layout = { 'window': 'enew' }
 
+        " :Files with fdfind as source to search breath-first
+        command! -bang -nargs=? -complete=dir Ffiles call fzf#vim#files(<q-args>,
+            \ fzf#vim#with_preview({'source': 'fdfind --type file --hidden --no-ignore-vcs'}), <bang>0)
+
         " Thanks to clever-f plugin, : and , are free
         nnoremap <silent> ,         <Cmd>call fzf#smartpreview() <Bar> Buffers<CR>
         nnoremap <silent> :         <Cmd>call fzf#smartpreview() <Bar> History<CR>
-        nnoremap <silent> <Leader>. <Cmd>call fzf#smartpreview() <Bar> exec 'Files ' . expand('%:p:h')<CR>
-        nnoremap <silent> <Leader>, <Cmd>call fzf#smartpreview() <Bar> Files<CR>
+        nnoremap <silent> <Leader>. <Cmd>call fzf#smartpreview() <Bar> exec 'Ffiles ' . expand('%:p:h')<CR>
+        nnoremap <silent> <Leader>, <Cmd>call fzf#smartpreview() <Bar> Ffiles<CR>
         nnoremap <silent> <Leader>; <Cmd>call fzf#smartpreview() <Bar> Commands<CR>
         nnoremap <silent> <Leader>: <Cmd>call fzf#smartpreview() <Bar> History:<CR>
         nnoremap <silent> <Leader>/ <Cmd>call fzf#smartpreview() <Bar> History/<CR>

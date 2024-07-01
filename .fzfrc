@@ -22,12 +22,13 @@ export FZF_DEFAULT_OPTS="
 --bind='ctrl-/:toggle-preview,alt-n:jump,alt-v:execute(less -f {})'
 --bind='alt-y:execute-silent(clip.exe <<< {})'"
 
-export FZF_CTRL_T_COMMAND='fdfind --type file'
+export FZF_CTRL_T_COMMAND='fdfind --type file --hidden --no-ignore-vcs'
 export FZF_CTRL_T_OPTS="--preview='$FZF_HI'"
 export FZF_ALT_C_OPTS="--preview='$FZF_CD_HI'"
 
 export FORGIT_FZF_DEFAULT_OPTS="--bind='alt-n:jump'"
 export FORGIT_COPY_CMD='clip.exe'
+export FORGIT_DIFF_GIT_OPTS='--word-diff=color'
 
 export FORGIT_LOG_FZF_OPTS="
 --bind='ctrl-e${GLO_SUBSTR}show | vim -R -)'
