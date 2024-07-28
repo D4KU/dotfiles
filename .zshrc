@@ -19,7 +19,7 @@ async-init() {
     source $HOME/.fzf.zsh
 
     # File types to open with vim without prefixing their path with vim
-    alias -s {md,txt,json,cs,csv,cpp,h,vim,py,zsh,sh}=vim
+    alias -s {md,txt,json,cs,csv,cpp,h,vim}=vim
     alias git='noglob git'
 
     setopt auto_cd
@@ -121,3 +121,5 @@ zinit wait lucid light-mode for \
     d4ku/forgit \
     kazhala/dotbare \
     peterhurford/git-it-on.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

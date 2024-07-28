@@ -141,7 +141,7 @@ Patterns:
       do
         remain=$(dirname "$remain")
         # the stack: a string with paths separated by newlines
-        local dirs="${dirs}\n${remain}"
+        local dirs="${dirs}"$'\n'"${remain}"
       done
 
       # pipe stack to fzf

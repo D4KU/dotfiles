@@ -9,8 +9,6 @@ alias untar='tar -zxvf'
 alias groot='git rev-parse --show-toplevel'
 
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-export VISUAL=vim
-export EDITOR="$VISUAL"
 export BROWSER=firefox.exe
 export XDG_DATA_HOME="$HOME/.local/share"
 export MANPATH="/usr/local/man:$MANPATH"
