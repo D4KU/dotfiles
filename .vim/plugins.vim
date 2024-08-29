@@ -270,6 +270,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Comment text in and out
     Plug 'tpope/vim-commentary'
+        nmap gC yygccp
 
     " Ease session management
     " Plug 'tpope/vim-obsession'
@@ -285,7 +286,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Surround anything with anything
     Plug 'tpope/vim-surround'
-        nmap <expr> <Leader>c '<Plug>Csurround' . getline('.')[col('.') - 1]
+        nmap <expr> <Leader>r '<Plug>Csurround' . getline('.')[col('.') - 1]
 
     " Exchange text
     Plug 'tommcdo/vim-exchange'

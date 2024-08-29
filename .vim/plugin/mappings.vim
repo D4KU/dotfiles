@@ -38,12 +38,15 @@ nnoremap <Esc>h <C-W>5>
 " Make cl and ch useful
 nnoremap cl c2l
 nnoremap ch c2h
+nnoremap dl d2l
+nnoremap dh d2h
 
 " Paste without newline
 nnoremap <Leader>V i<CR><Esc>PkgJgJ
 " Paste without newline, remove indent whitespace
 nnoremap <Leader>v i<CR><Esc>l"_d0P"_d0kgJgJ
 
+" Go to next brace
 nnoremap ]{ <Cmd>call search('{', 'z')<CR>
 nnoremap [} <Cmd>call search('}', 'zb')<CR>
 
