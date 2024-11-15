@@ -16,24 +16,6 @@ import subprocess
 from ranger.core.loader import CommandLoader
 
 
-class wd(Command):
-    def execute(self):
-        command = "wd.sh path " + self.arg(1)
-        subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
-        stdout, _ = subpro.communicate()
-        if subpro.returncode == 0:
-            direc = os.path.abspath(stdout.decode('utf-8').rstrip('\n'))
-            self.fm.cd(direc)
-
-    def tab(self):
-        command = "wd.sh list | grep -oP '(?<=->\s\s).*'"
-        subpro = self.fm.execute_command(command, stdout=subprocess.PIPE)
-        stdout, _ = subpro.communicate()
-        if subpro.returncode == 0:
-            return stdout.splitlines()
-        return []
-
-
 # Any class that is a subclass of "Command" will be integrated into ranger as a
 # command.  Try typing ":my_edit<ENTER>" in ranger!
 class my_edit(Command):
@@ -92,11 +74,11 @@ class fzf_select(Command):
     def execute(self):
         if self.quantifier:
             # match only directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            command=r"find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
             -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         else:
             # match files and directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            command=r"find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
             -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
@@ -143,11 +125,11 @@ class fzf_bring(Command):
         import subprocess
         if self.quantifier:
             # match only directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            command=r"find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
             -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         else:
             # match files and directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            command=r"find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
             -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
