@@ -43,8 +43,9 @@ augroup ColorOverride
     autocmd!
     autocmd ColorScheme yin      call DarkColorsApply()
     autocmd ColorScheme despacio call DarkColorsApply() | hi Number ctermfg=9
-    autocmd ColorScheme yang     call colors_light#apply()
-    autocmd ColorScheme morning  call colors_light#apply()
+    autocmd ColorScheme yang     call LightColorsApply()
+    autocmd ColorScheme morning  call LightColorsApply()
+    autocmd ColorScheme *        call AnyColorsApply()
 augroup END
 
 " Disable things in large files
