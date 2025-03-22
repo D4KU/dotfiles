@@ -34,6 +34,8 @@ async-init() {
 
     zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
+    autoload edit-command-line
+
     # Zle widgets
     zle -N vi-yank
     zle -N zle-line-init
@@ -41,10 +43,11 @@ async-init() {
     zle -N accept-line
     zle -N yank-to-clipboard
     zle -N up-directory
+    zle -N edit-command-line
 
     bindkey -v '^?' backward-delete-char
-    bindkey -a '^?' up-directory
     bindkey -a '^Y' yank-to-clipboard
+    bindkey -a '^V' edit-command-line
     bindkey -M visual '^Y' yank-to-clipboard
     bindkey '^ ' forward-word
 }
@@ -121,5 +124,3 @@ zinit wait lucid light-mode for \
     d4ku/forgit \
     kazhala/dotbare \
     peterhurford/git-it-on.zsh
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

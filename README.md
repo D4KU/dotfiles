@@ -2,9 +2,9 @@ My personal system setup.
 Install via the following commands:
 
 ```
-sudo add-apt-repository ppa:jonathonf/vim
 sudo apt update
-sudo apt install vim zsh ranger ripgrep fd-find fasd python3-venv highlight unzip flake8 exuberant-ctags command-not-found clang-format python-is-python3 -y
+sudo apt install vim zsh ranger nnn ripgrep fd-find fasd python3-dev python3-venv python-is-python3 cmake build-essentials highlight unzip flake8 exuberant-ctags command-not-found clang-format -y
+sudo update-alternatives --set editor vim.basic
 
 python3 -m venv ~/venv
 ~/venv/bin/pip install thefuck grip tldr

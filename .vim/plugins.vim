@@ -1,13 +1,13 @@
 call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     " =========================== Tool integration ===========================
     " Ranger integration
-    Plug 'francoiscabrol/ranger.vim', { 'on': ['Ranger', 'RangerWorkingDirectory'] }
-        " Redirect the dependency on the BClose plugin to Bbye
-        command -bang Bclose Bwipeout
-        let g:ranger_map_keys = 0
-        " let g:ranger_replace_netrw = 1
-        nnoremap <silent> <Leader>f <Cmd>Ranger<CR>
-        nnoremap <silent> <Leader>F <Cmd>RangerWorkingDirectory<CR>
+    " Plug 'francoiscabrol/ranger.vim', { 'on': ['Ranger', 'RangerWorkingDirectory'] }
+    "     " Redirect the dependency on the BClose plugin to Bbye
+    "     command -bang Bclose Bwipeout
+    "     let g:ranger_map_keys = 0
+    "     " let g:ranger_replace_netrw = 1
+    "     nnoremap <silent> <Leader>f <Cmd>Ranger<CR>
+    "     nnoremap <silent> <Leader>F <Cmd>RangerWorkingDirectory<CR>
 
     " Fuzzy file finder
     Plug 'junegunn/fzf', { 'dir': '~/.local/share/fzf', 'do': './install --all' }
@@ -16,7 +16,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
         " :Files with fdfind as source to search breath-first
         command! -bang -nargs=? -complete=dir Ffiles call fzf#vim#files(<q-args>,
-            \ fzf#vim#with_preview({'source': 'fdfind --type file --hidden --no-ignore-vcs'}), <bang>0)
+            \ fzf#vim#with_preview({'source': $FZF_CTRL_T_COMMAND}), <bang>0)
 
         " Thanks to clever-f plugin, : and , are free
         nnoremap <silent> ,         <Cmd>call fzf#smartpreview() <Bar> Buffers<CR>
@@ -55,7 +55,7 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'christoomey/vim-tmux-navigator'
 
     " Git
-    Plug 'tpope/vim-fugitive', { 'on': ['G', 'Gdiffsplit'] }
+    " Plug 'tpope/vim-fugitive', { 'on': ['G', 'Gdiffsplit'] }
 
     " Zsh plugin manager
     " Plug 'zdharma-continuum/zinit', { 'dir': '~/.local/share/zinit' }
@@ -133,8 +133,9 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
 
     " Syntax highlighting for many languages
     Plug 'sheerun/vim-polyglot'
-        let g:polyglot_disabled = ['autoindent', 'csv.plugin']
+        let g:polyglot_disabled = ['python-compiler', 'csv.plugin']
         let g:python_highlight_all = 1
+        let g:python_slow_sync = 0
 
     " Scroll buffer smoothly
     Plug 'terryma/vim-smooth-scroll'
@@ -407,7 +408,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
     Plug 'paraduxos/vim-indent-object', { 'branch': 'new_branch' }
 
     " Automatically adjust shiftwidth to current document
-    Plug 'tpope/vim-sleuth'
+    " Included in polyglot autoindent
+    " Plug 'tpope/vim-sleuth'
 
     " Text-objects for markdown
     Plug 'coachshea/vim-textobj-markdown', { 'for': 'markdown' }
@@ -626,8 +628,8 @@ call plug#begin(has('win32') ? "~/vimfiles/plugged" : "~/.vim/plugged")
         nnoremap <silent> <F4> <Cmd>Goyo<CR>
 
     " Highlight current paragraph
-    Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-        nnoremap <silent> <Leader><F4> <Cmd>Limelight!!<CR>
+    " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+    "     nnoremap <silent> <Leader><F4> <Cmd>Limelight!!<CR>
 
     " Highlight bad word choices
     " Plug 'reedes/vim-wordy', { 'for': [ 'text', 'markdown' ] }

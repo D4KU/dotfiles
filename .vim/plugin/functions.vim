@@ -82,32 +82,11 @@ function! LargeFile(fname)
         if (":DisableWhitespace")
             DisableWhitespace
         endif
-        call RemoveCursorMatch()
-
-        augroup WSLCursorFix
-            autocmd!
-        augroup END
     else
         let g:OmniSharp_highlighting = 3
         set wrap
         if (":EnableWhitespace")
             EnableWhitespace
         endif
-        call AddCursorMatch()
-
-        " Overwrite windows terminal's cursor style
-        augroup WSLCursorFix
-            autocmd!
-            autocmd WinEnter,InsertLeave * call AddCursorMatch()
-            autocmd WinLeave,InsertEnter * call RemoveCursorMatch()
-        augroup END
     endif
-endfunction
-
-function! AddCursorMatch()
-    silent! call matchadd('Cursor', '\%#', 900, 88)
-endfunction
-
-function! RemoveCursorMatch()
-    silent! call matchdelete(88)
 endfunction

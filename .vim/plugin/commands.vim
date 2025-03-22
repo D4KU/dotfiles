@@ -3,7 +3,7 @@ command! Diff vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
     \ | wincmd p | diffthis
 
 " Delete Carriage Return (Windows line breaks)
-command! Dcr %s/$/
+command! Dcr e ++ff=unix | %s/$/
 
 " Pretty-print python
 command! PrettyPy %!python -m json.tool
